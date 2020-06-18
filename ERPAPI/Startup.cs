@@ -26,13 +26,20 @@ namespace ERPAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-         //配置跨域处理，允许所有来源：
+
             services.AddCors(options =>
-            options.AddPolicy("cor",
-            p => p.AllowAnyOrigin())
-            );
-            
+            {
+                // Policy 名稱 CorsPolicy 是自訂的，可以自己改
+                options.AddPolicy("myCors", policy =>
+                {
+                    // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
+                    policy.WithOrigins("https://localhost:44300", "http://localhost:53337")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

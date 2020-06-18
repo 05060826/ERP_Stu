@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ERPAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CapitalController : ControllerBase
     {
+        
     }
 }
