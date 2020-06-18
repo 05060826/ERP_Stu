@@ -18,9 +18,10 @@ namespace Business
             }
         }
         //显示
-        public List<AllotModel> ShowPage(int pageIndex,int pagesize)
+        public List<AllotModel> ShowPage(string AllotCode, int Sage, string WName, string WName1, int pageIndex, int pagesize)
         {
-            //
+            Dictionary<string, object> para = new Dictionary<string, object>();  
+            return null;
         }
     }
 }
