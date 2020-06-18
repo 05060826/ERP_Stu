@@ -49,11 +49,11 @@ namespace ERPAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors("myCors");
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("myCors");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
