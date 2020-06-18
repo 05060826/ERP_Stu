@@ -31,7 +31,7 @@ namespace ERPAPI
             services.AddCors(options =>
             {
                 // Policy 名稱 CorsPolicy 是自訂的，可以自己改
-                options.AddPolicy("myCors", policy =>
+                options.AddPolicy("getd", policy =>
                 {
                     // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
                     policy.WithOrigins("https://localhost:44300", "http://localhost:53337")
@@ -40,6 +40,7 @@ namespace ERPAPI
                             .AllowCredentials();
                 });
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,11 +50,11 @@ namespace ERPAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+            app.UseCors("getd");
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors("myCors");
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
