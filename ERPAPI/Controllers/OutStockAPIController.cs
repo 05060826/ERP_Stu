@@ -11,5 +11,9 @@ namespace ERPAPI.Controllers
     [ApiController]
     public class OutStockAPIController : ControllerBase
     {
+
+
+
+
     }
 }
