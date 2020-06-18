@@ -50,7 +50,7 @@ namespace ERPAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors("cor");
+            app.UseCors("myCors");
             app.UseHttpsRedirection();
 
             app.UseRouting();
