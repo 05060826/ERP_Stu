@@ -9,7 +9,7 @@ namespace ERPAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ERPController : ControllerBase
+    public class AllotController : ControllerBase
     {
 
 
