@@ -11,10 +11,8 @@ namespace DataAccess.Dapper
     /// <summary>
     /// Dapper访问数据库类
     /// </summary>
-    public static class DapperHelper<T> 
-       
+    public static class DapperHelper<T>       
     {
-
         static string strconn = "Data Source=192.168.1.126;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa";
 
         /// <summary>
@@ -27,12 +25,8 @@ namespace DataAccess.Dapper
 
             using (SqlConnection conn=new SqlConnection(strconn))
             {
-
-
                 return conn.Execute(sql);
-
-            }
-        
+            }        
         }
         /// <summary>
         /// 显示查询
@@ -42,13 +36,10 @@ namespace DataAccess.Dapper
 
         public static List<T> GetAll(string sql)
         {
-
             using (SqlConnection conn=new SqlConnection(strconn))
             {
                 return conn.Query<T>(sql).ToList();
-            }
-        
+            }       
         }
-
     }
 }
