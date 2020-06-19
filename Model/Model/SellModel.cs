@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Model
 {
+	/// <summary>
+	/// 销售人员表
+	/// </summary>
 	 public class SellModel
 	 {
 		 public int  SeId { get; set; }
