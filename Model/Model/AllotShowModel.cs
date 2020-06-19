@@ -26,6 +26,6 @@ namespace Model.Model
 		public string WName { get; set; }
 
 		public int TotalCount { get; set; }
-		public string user { get; set; }
+		
 	}
 }

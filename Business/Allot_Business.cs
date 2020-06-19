@@ -23,48 +23,22 @@ namespace Business
                 _sqlServerAccess = base.sqlServer;
             }
         }
-       public List<AllotShowModel>ListShow()
+        //分页显示
+        public List<AllotShowModel> ShowPageAllot( string AllotCode, DateTime Sage,string WName,string Eame, int pageindex = 1, int pagesize = 3)
         {
-            var list = new List<AllotShowModel>();
-            list = DapperHelper<AllotShowModel>.GetAll("select * from  Allot join Commodity  on Allot.Sid=Commodity.Sid join Warehouse  on Allot.Wid=Warehouse.WId");
+            Dictionary<string, object> parms = new Dictionary<string, object>();
+            parms.Add("@AllotCode", AllotCode);
+            parms.Add("@Sage", Sage);
+            parms.Add("@WName", WName);
+            parms.Add("@Eame", Eame);
+            parms.Add("@pagesize", pagesize);
+            parms.Add("@pageindex", pageindex);
+            parms.Add("@TotalCount", "");
+           var  data
+                = _sqlServerAccess.ExecSqlGetDataTable("proc_Page", parms, "@TotalCount", out string outStr);
+            List<AllotShowModel> list = Common.ReflectionHelper.DatatableToList<AllotShowModel>(data.Tables[0]);
             return list;
         }
-        string constr = "Data Source=192.168.1.113;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa";
-         /// 采用存储过程分页
-         /// </summary>
-         /// <param name="page"></param>
-         /// <param name="pageSize"></param>
-         /// <returns></returns>
-        public AllotShowModel GetPageByProcList(int page = 1, int pageSize = 10)
-         {
-             AllotShowModel model = new AllotShowModel();
-             var list = new List<AllotShowModel>();
-             //string sql = @"select Id,UserName,Nation,TrueName,Birthday,LocalAddressGender from UserInfo";
-            using (SqlConnection conn = new SqlConnection(constr))
-            {
-                conn.Open();
-                DynamicParameters parm = new DynamicParameters();
-                parm.Add("viewName", "AllotShowModel");
-                parm.Add("fieldName", "*");
-                parm.Add("keyName", "AllotId");
-                parm.Add("pageSize", pageSize);
-                parm.Add("@pageIndex", page);
-                parm.Add("orderString", "AllotId");
-                parm.Add("recordTotal", 0, DbType.Int32, ParameterDirection.Output);
-                //参数名得和存储过程的变量名相同（参数可以跳跃传，键值对方式即可）
-                //强类型
-                //list = conn.Query<UserInfo>("P_GridViewPager", new { viewName = "Edu_StudentSelectedCourse", fieldName = "*", keyName = "Id", pageSize = 20, pageNo = 1, orderString = "id" }, commandType: CommandType.StoredProcedure).ToList();
-                 //标准写法
-                 //list = conn.Query<UserInfo>(sql,commandType: CommandType.Text).AsList();
-                 //dapper扩展写法
-                 //list = conn.GetList<UserInfo>().AsList();
-                 list = conn.Query<AllotShowModel>("ProcViewPager", parm, commandType:CommandType.StoredProcedure).AsList();
-                 int totalCount = parm.Get<int>("@recordTotal");//返回总页数
-                 model.user = list.ToString();
-                 model.TotalCount = totalCount;
-                 conn.Close();
-             }
-             return model;
-         }
+
     }
 }
