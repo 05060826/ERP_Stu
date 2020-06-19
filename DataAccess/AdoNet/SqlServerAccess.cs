@@ -111,10 +111,11 @@ namespace DataAccess.AdoNet
                     command.Parameters.AddWithValue(item.Key,item.Value);
                 }
                 command.Parameters[outParmsName].Direction = ParameterDirection.Output;
-                outStr = command.Parameters[outParmsName].Value.ToString();
+                
                 SqlDataAdapter da = new SqlDataAdapter(command);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
+                outStr = command.Parameters[outParmsName].Value.ToString();
                 return ds;
             }
             
