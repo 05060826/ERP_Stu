@@ -1,7 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "ERP商品管理系统";
 }
-
 
 
 <!DOCTYPE html>
@@ -16,7 +15,7 @@
     <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
 
     <script>
-  /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
+        /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
     </script>
 </head>
 <body class="layui-layout-body">
@@ -95,7 +94,7 @@
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
                     <div class="layui-logo" lay-href="home/console.html">
-                        <span>layuiAdmin</span>
+                        <span>ERP商品管理系统</span>
                     </div>
 
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
@@ -348,16 +347,16 @@
                             </dl>
                         </li>
                         <li data-name="senior" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="高级" lay-direction="2">
-                                <i class="layui-icon layui-icon-senior"></i>
-                                <cite>高级</cite>
+                            <a href="javascript:;" lay-tips="资金管理" lay-direction="2">
+                                <i class="layui-icon layui-icon-rmb"></i>
+                                <cite>资金管理</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a layadmin-event="im">LayIM 通讯系统</a>
+                                    <a lay-href="Capital/Receipt">收款单列表</a>
                                 </dd>
                                 <dd data-name="echarts">
-                                    <a href="javascript:;">Echarts集成</a>
+                                    <a href="javascript:;">付款单列表</a>
                                     <dl class="layui-nav-child">
                                         <dd><a lay-href="senior/echarts/line.html">折线图</a></dd>
                                         <dd><a lay-href="senior/echarts/bar.html">柱状图</a></dd>
@@ -453,11 +452,11 @@
 
     <script src="../layuiadmin/layui/layui.js"></script>
     <script>
-  layui.config({
-    base: '../layuiadmin/' //静态资源所在路径
-  }).extend({
-    index: 'lib/index' //主入口模块
-  }).use('index');
+        layui.config({
+            base: '../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use('index');
     </script>
 </body>
 </html>
