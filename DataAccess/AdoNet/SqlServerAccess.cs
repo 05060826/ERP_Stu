@@ -14,7 +14,7 @@ namespace DataAccess.AdoNet
 
     public class SqlServerAccess
     {
-        readonly string strConnection = "Data Source=192.168.1.126;Initial Catalog=ERPDB;User ID=sa; pwd=123456";
+        readonly string strConnection = "Data Source=192.168.1.113;Initial Catalog=ERPDB;User ID=sa; pwd=123456";
 
         //System.Configuration.ConfigurationSettings.AppSettings["SqlServerConection"];        
 
@@ -111,10 +111,11 @@ namespace DataAccess.AdoNet
                     command.Parameters.AddWithValue(item.Key,item.Value);
                 }
                 command.Parameters[outParmsName].Direction = ParameterDirection.Output;
-                outStr = command.Parameters[outParmsName].Value.ToString();
+                
                 SqlDataAdapter da = new SqlDataAdapter(command);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
+                outStr = command.Parameters[outParmsName].Value.ToString();
                 return ds;
             }
             

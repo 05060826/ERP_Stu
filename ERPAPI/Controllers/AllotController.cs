@@ -23,8 +23,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public List<AllotModel> ShowPage(string AllotCode, int Sage, string WName, string WName1, int pageIndex, int pagesize)
         {
-            var list = _Business.ShowPage(AllotCode,Sage,WName,WName1,pageIndex,pagesize);
-            return list;
+            return null;
         }
         [HttpPost]
         public void ADD()

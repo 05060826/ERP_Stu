@@ -13,7 +13,7 @@ namespace DataAccess.Dapper
     /// </summary>
     public static class DapperHelper<T>       
     {
-        static string strconn = "Data Source=192.168.1.126;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa";
+        static string strconn = "Data Source=192.168.1.113;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa";
 
         /// <summary>
         /// 增删改
