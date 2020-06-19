@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business;
+using DataAccess.Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
@@ -23,8 +24,8 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public List<OutStock> ShowPage()
         {
-            var list = _Business.Select<OutStock>("select * from Clear a join Client b on a.ClientId=b.CLientId");
-            
+            //var list = _Business.Select<OutStock>("select * from Clear a join Client b on a.ClientId=b.CLientId");
+            List<OutStock> list = DapperHelper<OutStock>.GetAll("select * from Clear a join Client b on a.cliId=b.CLientId");
             return list;
         }
         [HttpPost]
