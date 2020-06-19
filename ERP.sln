@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{5F11678D-AA32-4831-8E86-38A83BCD050D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPMVC", "ERPMVC\ERPMVC.csproj", "{FAA2EE0E-40EC-42D0-B149-F1212C25275C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ERPMVC", "ERPMVC\ERPMVC.csproj", "{FAA2EE0E-40EC-42D0-B149-F1212C25275C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

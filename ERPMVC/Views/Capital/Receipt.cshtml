@@ -28,24 +28,27 @@
      </div>
 </div>
 <div class="layui-form">
-    <table  class="layui-table">
+    <table  class="layui-table" id="tb">
         <colgroup>
             <col width="150">
             <col width="200">
             <col>
         </colgroup>
-        <thead>
-            <tr>
-                <th><input type="checkbox" name="" lay-skin="primary"></th>
-                <th>昵称</th>
-                <th>加入时间</th>
-                <th>签名</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
+
+        <tr>
+            <th><input type="checkbox" name="" lay-skin="primary"></th>
+            <th>单据日期</th>
+            <th>单据编号</th>
+            <th>客户</th>
+            <th>收款金额</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+
     </table>
+</div>
+<div id="page">
+    
 </div>
 
 <script>
@@ -67,8 +70,35 @@
         var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
         form.render('checkbox');
     });
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+  
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号 
+            ,count: 50 //数据总数，从服务端得到
+        });
+    });
 
-    $.ajax({
-
+    $(function () {
+        var where = "";
+        var dateTime = "";
+        GetReceiptData(where,dateTime);
     })
+    function GetReceiptData(where,dateTime) {
+        $.ajax({
+            url: "https://localhost:44300/api/capital/getreceiptdata?where=" + where + "&dateTime=" + dateTime + "",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                var str = "";
+                $.each(result, function (i, n) {
+                    str += "<tr><td><input type='checkbox' name='' lay-skin='primary'></td><td>" + n.rTime + "</td><td>" + n.receiptCode + "</td><td>" + n.clientName + "</td><td>" + n.sMoney + "</td><td>" + n.remark + "</td><td><a style='color:#5FB878' href='#' >编辑</a><a style='color:#5FB878' href='#' >删除</a></td></tr>";
+                })
+                $("#tb tr:gt(0)").empty();
+                $("#tb").append(str);
+            }
+        });
+    }
+    
 </script>

@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Model;
-
+using Model.Model;
+using Model.OutModel;
 namespace ERPAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AllotController : ControllerBase
     {
@@ -19,11 +20,14 @@ namespace ERPAPI.Controllers
         {
             _Business = new Allot_Business();
         }
-
+        //分页
         [HttpGet]
-        public List<AllotModel> ShowPage(string AllotCode, int Sage, string WName, string WName1, int pageIndex, int pagesize)
+        public List<AllotShowModel> ShowPageAllot(string AllotCode, DateTime Sage, string WName, string Ename, int pageindex = 1, int pagesize = 3)
         {
-            var list = _Business.ShowPage(AllotCode,Sage,WName,WName1,pageIndex,pagesize);
+            var list = _Business.ShowPageAllot(AllotCode, Sage, WName, Ename, pageindex,pagesize);
+            var b = list.Skip((pageindex - 1) * pagesize).Take(pagesize);
+            List<AllotShowModel> model = new List<AllotShowModel>();
+            
             return list;
         }
         [HttpPost]
