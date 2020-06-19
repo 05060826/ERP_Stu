@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<!DOCTYPE html>
+
+<div class="layui-collapse">
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">筛选查询</h2>
+        <div class="layui-colla-content layui-show">
+            <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入单据号或客户或备注" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">日期:</label>
+             </div>
+            <div class="layui-inline">
+                <!-- 注意：这一层元素并不是必须的 -->
+                <input type="text" class="layui-input" id="test1">
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">查询结果</button>
+            </div>
+         </div>
+     </div>
+</div>
+<div class="layui-form">
+    <table  class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th><input type="checkbox" name="" lay-skin="primary"></th>
+                <th>昵称</th>
+                <th>加入时间</th>
+                <th>签名</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+
+<script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+
+        //…
+    });
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test1' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+        form.render('checkbox');
+    });
+
+    $.ajax({
+
+    })
+</script>

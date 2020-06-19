@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ERPMVC.Controllers
 {
-    public class CapitalController : Controller
+    public class PurchaseInfoController1 : Controller
     {
-        public IActionResult Receipt()
+        public IActionResult Index()
         {
             return View();
         }
