@@ -26,8 +26,13 @@ namespace Business.Puchase
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        bool add(PurchaseModel model);
+        int add(PurchaseModel model);
 
+        /// <summary>
+        /// 显示采购列表
+        /// </summary>
+        /// <returns></returns>
+        List<PurchaseModel> ShowPurchaseInfo();
 
     }
 }

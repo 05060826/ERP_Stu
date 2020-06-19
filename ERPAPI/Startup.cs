@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Business;
 using DataAccess;
 using Business.Puchase;
 
@@ -31,8 +30,9 @@ namespace ERPAPI
 
             services.AddControllers();
 
-            services.AddSingleton<IERP_Pcurhasedal, ERP_ProjectDal>();
             services.AddSingleton<IPurchaseInfo, PurchaseBll>();
+            services.AddSingleton<IERP_Pcurhasedal, ERP_ProjectDal>();
+            
 
             services.AddCors(options =>
             {

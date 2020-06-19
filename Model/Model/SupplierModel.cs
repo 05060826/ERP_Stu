@@ -8,8 +8,10 @@ namespace Model
 	/// <summary>
 	/// 供应商表
 	/// </summary>
+	/// 
 	 public class SupplierModel
 	 {
+	
 		 public int  Gid { get; set; }
 		 public string  Gname { get; set; }
 	 }
