@@ -20,7 +20,7 @@ namespace Business
 
         public List<T> Select<T>(string sql)
         {
-            return DapperHelper.GetAll<T>(sql);
+            return DapperHelper<T>.GetAll(sql);
         }
 
         public int Update(string sql)

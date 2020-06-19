@@ -33,7 +33,7 @@ namespace ERPAPI
 
             services.AddSingleton<IERP_Pcurhasedal, ERP_ProjectDal>();
             services.AddSingleton<IPurchaseInfo, PurchaseBll>();
-
+            services.AddSingleton<IBaseBusiness, Capital_Business>();
             services.AddCors(options =>
             {
                 // Policy 名稱 CorsPolicy 是自訂的，可以自己改
