@@ -5,6 +5,9 @@
 
 <h1>出货列表</h1>
 
+<input type="button" value="添加出货" id="Btn_Add" />
+
+
 <table id="tb" class="table table-bordered">
     <tr>
         <td>单据日期</td>
@@ -107,7 +110,10 @@
 
     }
 
+    $("#Btn_Add").click(function () {
+        location.href = "/OutStock/Create";
 
+    })
 
 
 </script>

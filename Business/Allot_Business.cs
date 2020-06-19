@@ -8,11 +8,11 @@ using System.Data;
 namespace Business
 {
     //仓库调拨表
-   public class Allot_Business:BaseBusiness
+   public class Business:BaseBusiness
     {
         SqlServerAccess _sqlServerAccess = null;
         //依赖注入
-        public Allot_Business ()
+        public Business ()
         {
             if (_sqlServerAccess==null)
             {
