@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Model
 {
+	/// <summary>
+	/// ¿Í»§±í
+	/// </summary>
 	 public class ClientModel
 	 {
 		 public int  CLientId { get; set; }

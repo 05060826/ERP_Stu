@@ -8,7 +8,7 @@ namespace ERPMVC.Controllers
 {
     public class CapitalController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Receipt()
         {
             return View();
         }

@@ -8,6 +8,7 @@ namespace ERPMVC.Controllers
 {
     public class OutStockController : Controller
     {
+        
         public IActionResult Index()
         {
             return View();
