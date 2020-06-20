@@ -27,8 +27,8 @@
         </div>
     </div>
 </div>
-<div style="width:50px;margin-left:950px" >
-    <button class="layui-btn" lay-submit lay-filter="formDemo">新增收款单</button>
+<div style="width:115px;float:right" >
+    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnAdd">新增收款单</button>
 </div>
 <div class="layui-form">
     <table class="layui-table" id="tb">
@@ -93,6 +93,9 @@
             var dateTime = $("#test1").val();
             GetReceiptData(where, dateTime);
         });
+        $("#btnAdd").click(function () {
+            window.location.href = "/Capital/Add";
+        })
     })
     function GetReceiptData(where, dateTime) {
         $.ajax({
