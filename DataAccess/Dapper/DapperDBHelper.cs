@@ -13,7 +13,7 @@ namespace DataAccess
     public static class DapperDBHelper<T> 
     {
         
-        private static string conStr = "Data Source=192.168.1.113;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;";
+        private static string conStr = "Data Source=192.168.1.117;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;";
         private static string addStr = "";
         private static string deleteStr = "";
         private static string editStr = "";

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Business;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Model;
 using Model.CapitalModel;
 
 namespace ERPAPI.Controllers
@@ -31,6 +32,28 @@ namespace ERPAPI.Controllers
                 sql += $" and RTime='{dateTime}'";
             }
             return _business.Select<DtoReceiptModel>(sql);
+        }
+        [HttpGet]
+        public int DelReceiptData(int receiptId)
+        {
+            string sql = "delete from  Receipt where ReceiptId="+ receiptId + "";
+            return _business.Delete(sql);
+        }
+        [HttpGet]
+        public List<ClientModel> GetClientData()
+        {
+            string sql = "select * from Client";
+            return _business.Select<ClientModel>(sql);
+        }
+        [HttpGet]
+        public List<ClearModel> GetClearData(string clearNumber="")
+        {
+            string sql = "select * from Clear where 1=1 ";
+            if (!string.IsNullOrEmpty(clearNumber))
+            {
+                sql += " and CleaNumber='" + clearNumber+"'";
+            }
+            return _business.Select<ClearModel>(sql);
         }
     }
 }

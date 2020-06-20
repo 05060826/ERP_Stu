@@ -71,12 +71,12 @@
                     </li>
                     <li class="layui-nav-item" lay-unselect>
                         <a href="javascript:;">
-                            <cite>贤心</cite>
+                            <cite>设置</cite>
                         </a>
                         <dl class="layui-nav-child">
                             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
                             <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                            <hr>
+                            
                             <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
                         </dl>
                     </li>
@@ -174,33 +174,31 @@
                         </li>
                         @*调拨页面*@
                         <li data-name="app" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="应用" lay-direction="2">
+                            <a href="javascript:;" lay-tips="仓库" lay-direction="2">
                                 <i class="layui-icon layui-icon-app"></i>
-                                <cite>应用</cite>
+                                <cite>仓库</cite>
                             </a>
                             <dl class="layui-nav-child">
 
                                 <dd data-name="content">
-                                    <a href="javascript:;">内容系统</a>
+                                    <a href="javascript:;">调拨</a>
                                     <dl class="layui-nav-child">
-                                        <dd data-name="list"><a lay-href="app/content/list.html">文章列表</a></dd>
-                                        <dd data-name="tags"><a lay-href="app/content/tags.html">分类管理</a></dd>
-                                        <dd data-name="comment"><a lay-href="app/content/comment.html">评论管理</a></dd>
+                                        <dd data-name="list"><a lay-href="/Allot/Index">调拨列表</a></dd>
+                                        <dd data-name="tags"><a lay-href="/Allot/ADD">新增调拨</a></dd>
+                                       
                                     </dl>
                                 </dd>
-                                <dd data-name="forum">
-                                    <a href="javascript:;">社区系统</a>
+                                <dd data-name="echarts">
+                                    <a href="javascript:;">盘点</a>
                                     <dl class="layui-nav-child">
-                                        <dd data-name="list"><a lay-href="app/forum/list.html">帖子列表</a></dd>
-                                        <dd data-name="replys"><a lay-href="app/forum/replys.html">回帖列表</a></dd>
+                                        <dd data-name="comment"><a lay-href="/Allot/Checks">盘点列表</a></dd>
+                                        <dd data-name="comment"><a lay-href="/Allot/Forms">盘点报表</a></dd>
                                     </dl>
                                 </dd>
-                                <dd>
-                                    <a lay-href="app/message/index.html">消息中心</a>
-                                </dd>
-                                <dd data-name="workorder">
-                                    <a lay-href="app/workorder/list.html">工单系统</a>
-                                </dd>
+                                
+
+
+
                             </dl>
                         </li> 
                         @*资金页面*@
@@ -212,13 +210,14 @@
                             <dl class="layui-nav-child">
                                 <dd>
                                     <a lay-href="Capital/Receipt">收款单列表</a>
-                                </dd>
-                                <dd data-name="echarts">
-                                    <a href="javascript:;">付款单列表</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="senior/echarts/line.html">折线图</a></dd>
-                                        <dd><a lay-href="senior/echarts/bar.html">柱状图</a></dd>
-                                        <dd><a lay-href="senior/echarts/map.html">地图</a></dd>
+                                        <dd><a lay-href="Capital/Add">新增收款单</a></dd>
+                                    </dl>
+                                </dd>
+                                <dd>
+                                    <a lay-href="Capital/PayMent">付款单列表</a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a lay-href="Capital/AddPayMent">新增付款单</a></dd>
                                     </dl>
                                 </dd>
                             </dl>
