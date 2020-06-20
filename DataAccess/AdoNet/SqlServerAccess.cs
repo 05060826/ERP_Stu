@@ -14,7 +14,7 @@ namespace DataAccess.AdoNet
 
     public class SqlServerAccess
     {
-        readonly string strConnection = "Data Source=192.168.1.117;Initial Catalog=ERPDB;User ID=sa; pwd=123456";
+        readonly string strConnection = "Data Source=192.168.1.117;Initial Catalog=ERPDB;User ID=sa; Pwd=123456";
 
         //System.Configuration.ConfigurationSettings.AppSettings["SqlServerConection"];        
 

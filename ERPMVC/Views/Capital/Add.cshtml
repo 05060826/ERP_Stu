@@ -1,0 +1,159 @@
+﻿
+@{
+    Layout = null;
+}
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<!DOCTYPE html>
+
+<div style="width:300px;float:right">
+    <button class="layui-btn" lay-submit lay-filter="formDemo">保存关新增</button>
+    <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">打印</button>
+    <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">保存</button>
+</div>
+<div class="layui-form">
+    <div class="layui-inline">
+        <label class="layui-form-label">付款客户:</label>
+    </div>
+    <div class="layui-inline">
+        <select name="city" lay-verify="required" id="kehu">
+        </select>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">单据编号:</label>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label" id="skdj"></label>
+    </div>
+</div>
+<div class="layui-form">
+    <table class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <tr>
+            <th></th>
+            <th>结算账户</th>
+            <th>收款金额</th>
+            <th>结算方式</th>
+            <th>备注</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+<div class="layui-form">
+    <table class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <tr>
+            <td></td>
+            <td>合计:</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+<div class="layui-form">
+    <div class="layui-inline">
+        <label class="layui-form-label">源单:</label>
+    </div>
+    <div class="layui-inline">
+        <select name="city" lay-filter="demo" lay-verify="required" id="yuan">
+        </select>
+    </div>
+</div>
+<script>
+    layui.use('form', function () {
+            var form = layui.form;
+            form.render(); //渲染页面
+    });
+
+    $(function () {
+        $.ajax({
+            url: "https://localhost:44300/api/capital/GetClientData",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                var str = "";
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.clientId + "'>" + n.clientName + "</option>";
+                })
+                $("#kehu").empty();
+                $("#kehu").append(str);
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render(); //渲染页面
+                });
+            }
+        });
+        $.ajax({
+            url: "https://localhost:44300/api/capital/GetClearData",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                var str = "";
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.cleaNumber + "'>" + n.cleaNumber + "</option>";
+                })
+                $("#yuan").empty();
+                $("#yuan").append(str);
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render(); //渲染页面
+                });
+            }
+        });
+    })
+    function SetReceiptCode() {
+        var moren = "SKDJ";
+        var now = new Date();
+        var time = now.getFullYear() + ((now.getMonth() + 1) < 10 ? "0" : "") + (now.getMonth() + 1) + (now.getDate() < 10 ? "0" : "") + now.getDate() + now.getHours() + now.getMinutes() + now.getSeconds();
+        $("#skdj").html(moren + time);
+    }
+    layui.use(['layer', 'jquery', 'form'], function () {
+            var layer = layui.layer,
+            $ = layui.jquery,
+            form = layui.form;
+
+        form.on('select(demo)', function (data) {
+            selectClear($("#yuan").val());
+        });
+    });
+    function selectClear(clearNumber) {
+        $.ajax({
+            url: "https://localhost:44300/api/capital/GetClearData?clearNumber=" + clearNumber + "",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+            }
+        });
+    }
+</script>
