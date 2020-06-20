@@ -27,6 +27,9 @@ namespace Model.OutModel
         public int CLientId { get; set; }
         public string ClientName { get; set; }
 
+        public int SeId { get; set; }
+        public string SeName { get; set; }
+     
 
 
     }
