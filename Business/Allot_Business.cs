@@ -11,34 +11,26 @@ using DataAccess.Dapper;
 namespace Business
 {
     //仓库调拨表
-   public class Allot_Business:BaseBusiness
+    public class Allot_Business : IBaseBusiness
     {
-        SqlServerAccess _sqlServerAccess = null;
-
-        //依赖注入
-        public Allot_Business ()
+        public int Add<T>(T t)
         {
-            if (_sqlServerAccess==null)
-            {
-                _sqlServerAccess = base.sqlServer;
-            }
-        }
-        //分页显示
-        public List<AllotShowModel> ShowPageAllot( string AllotCode, DateTime Sage,string WName,string Eame, int pageindex = 1, int pagesize = 3)
-        {
-            Dictionary<string, object> parms = new Dictionary<string, object>();
-            parms.Add("@AllotCode", AllotCode);
-            parms.Add("@Sage", Sage);
-            parms.Add("@WName", WName);
-            parms.Add("@Eame", Eame);
-            parms.Add("@pagesize", pagesize);
-            parms.Add("@pageindex", pageindex);
-            parms.Add("@TotalCount", "");
-           var  data
-                = _sqlServerAccess.ExecSqlGetDataTable("proc_Page", parms, "@TotalCount", out string outStr);
-            List<AllotShowModel> list = Common.ReflectionHelper.DatatableToList<AllotShowModel>(data.Tables[0]);
-            return list;
+            throw new NotImplementedException();
         }
 
+        public int Delete(string sql)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<T> Select<T>(string sql)
+        {
+            return DapperHelper<T>.GetAll(sql);
+        }
+
+        public int Update(string sql)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
