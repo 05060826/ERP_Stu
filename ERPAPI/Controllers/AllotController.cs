@@ -15,10 +15,10 @@ namespace ERPAPI.Controllers
     [ApiController]
     public class AllotController : ControllerBase
     {
-        Allot_Business _Business = null;
+        Business.Business _Business = null;
         public AllotController()
         {
-            _Business = new Allot_Business();
+            _Business = new Business.Business();
         }
         //分页
         [HttpGet]

@@ -24,7 +24,7 @@ namespace Business.Puchase
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool add(PurchaseModel model)
+        public int add(PurchaseModel model)
         {
             return _dal.add(model);
         }
@@ -39,6 +39,15 @@ namespace Business.Puchase
         {
             return _dal.showCommodity(gid);
         }
+        /// <summary>
+        /// 显示采购数据
+        /// </summary>
+        /// <returns></returns>
+        public List<PurchaseModel> ShowPurchaseInfo()
+        {
+            return _dal.ShowPurchaseInfo();
+        }
+
         /// <summary>
         /// 显示供应商
         /// </summary>

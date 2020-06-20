@@ -1,0 +1,198 @@
+﻿@model Model.ClearModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+@*@{
+        Layout = null;
+    }*@
+
+<h2>新增出货</h2>
+<table id="tb" class="table table-bordered">
+    <tr>
+        <td>商品</td>
+        <td>单位</td>
+        <td>仓库（批量）</td>
+        <td>数量</td>
+        <td>销售单价</td>
+        <td>折扣率（%）</td>
+        <td>折扣额</td>
+        <td>销售金额</td>
+        <td>操作</td>
+    </tr>
+
+</table>
+
+<h1>Create</h1>
+
+<h4>ClearModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                单据编号
+                @*value="CH+@ViewBag.CurrentDate.ToLongDateString()"*@
+
+                <input asp-for="CleaNumber" class="form-control" />
+                <span asp-validation-for="CleaNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CliId" class="control-label"></label>
+                <input asp-for="CliId" class="form-control" />
+                <span asp-validation-for="CliId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MId" class="control-label"></label>
+                <input asp-for="MId" class="form-control" />
+                <span asp-validation-for="MId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SId" class="control-label"></label>
+                <input asp-for="SId" class="form-control" />
+                <span asp-validation-for="SId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellMoney" class="control-label"></label>
+                <input asp-for="SellMoney" class="form-control" />
+                <span asp-validation-for="SellMoney" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rate" class="control-label"></label>
+                <input asp-for="Rate" class="form-control" />
+                <span asp-validation-for="Rate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Discount" class="control-label"></label>
+                <input asp-for="Discount" class="form-control" />
+                <span asp-validation-for="Discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SMoney" class="control-label"></label>
+                <input asp-for="SMoney" class="form-control" />
+                <span asp-validation-for="SMoney" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Addresses" class="control-label"></label>
+                <input asp-for="Addresses" class="form-control" />
+                <span asp-validation-for="Addresses" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CTime" class="control-label"></label>
+                <input asp-for="CTime" class="form-control" />
+                <span asp-validation-for="CTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AId" class="control-label"></label>
+                <input asp-for="AId" class="form-control" />
+                <span asp-validation-for="AId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CState" class="control-label"></label>
+                <input asp-for="CState" class="form-control" />
+                <span asp-validation-for="CState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsState" class="control-label"></label>
+                <input asp-for="IsState" class="form-control" />
+                <span asp-validation-for="IsState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+<script>
+    $(function () {
+        Show();
+
+    })
+    function Show() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/showIns",
+            type: "get",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                ShowList(result)
+
+            }
+        })
+
+    }
+
+
+    function ShowList(result) {
+        var str = "";
+
+
+
+        $("#tb tr:gt(0)").empty();
+        $.each(result, function (i, n) {
+
+            str += "<tr><td>" + n.sName + "</td>";
+            str += "<td>" + n.units + "</td>";
+            str += "<td>" + n.wName + "</td>";
+            str += "<td>" + n.number + "</td>";
+            str += "<td>" + n.sellMoney + "</td>";
+            str += "<td>" + n.discount + "</td>";
+            str += "<td>" + (n.number * n.sellMoney * n.discount) + "</td>";
+            str += "<td>" + n.sMoney + "</td>";
+
+            str += "<td><a href='javascript: Shan(" + n.clearId + ")'>删除|</a><a href='javascript: Xiu(" + n.clearId + ")'>修改|</a>  </td ></tr> ";
+
+        })
+        $("#tb").append(str);
+
+    }
+
+    function Shan(id) {
+
+
+
+    }
+    function Xiu(id) {
+
+
+    }
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

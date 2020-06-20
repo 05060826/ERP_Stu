@@ -23,10 +23,11 @@ namespace Model
 		/// 供应商Id
 		/// </summary>
 		 public int  GId { get; set; }
+		public string Gname { get; set; }
 		/// <summary>
 		/// 采购数量
 		/// </summary>
-		 public int  Number { get; set; }
+		public int  Number { get; set; }
 		/// <summary>
 		/// 折扣率
 		/// </summary>

@@ -30,7 +30,6 @@ namespace Business
             if (ds != null)
                 lst = ReflectionHelper.DatatableToList<T>(ds.Tables[0]);
 
-
             return lst;
         }
         //泛型修改
