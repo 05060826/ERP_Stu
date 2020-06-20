@@ -32,5 +32,11 @@ namespace ERPAPI.Controllers
             }
             return _business.Select<DtoReceiptModel>(sql);
         }
+        [HttpGet]
+        public int DelReceiptData(int receiptId)
+        {
+            string sql = "delete from  Receipt where ReceiptId="+ receiptId + "";
+            return _business.Delete(sql);
+        }
     }
 }

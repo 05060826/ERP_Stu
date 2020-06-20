@@ -3,22 +3,119 @@
     ViewData["Title"] = "Index";
 }
 
-<h1></h1>
+<h1>出货列表</h1>
+
+<input type="button" value="添加出货" id="Btn_Add" />
+
 
 <table id="tb" class="table table-bordered">
     <tr>
-        <td></td>
-
-
+        <td>单据日期</td>
+        <td>单据编号</td>
+        <td>客户</td>
+        <td>销售金额</td>
+        <td>优惠后金额</td>
+        <td>已付款</td>
+        <td>收款状态</td>
+        <td>操作</td>
 
     </tr>
 
-
-
-
-
-    
 </table>
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+<script>
+    $(function () {
+        Show();
+
+    })
+    function Show() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/show",
+            type: "get",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                ShowList(result)
+
+            }
+        })
+
+    }
+
+    //ClearId
+    //CleaNumber
+    //ClientId
+    //MId
+    //SId
+    //Number
+    //SellMoney
+    //Rate
+    //Discount
+    //SMoney
+    //Addresses
+    //CTime
+    //AId
+    //CState
+    //IsState
+    
+
+
+    function ShowList(result) {
+        var str = "";
+        var state = "";
+        
+
+        $("#tb tr:gt(0)").empty();
+        $.each(result, function (i, n) {
+
+            if (n.cState == 0) {
+                state="未付款"
+
+            }
+            else if (n.cState == 1) {
+                state = "已付款"
+            }
+            else if (n.cState == 2) {
+                state = "已退款"
+            }
+            else {
+                state = "未退款"
+            }
+
+            str += "<tr><td>" + n.cTime + "</td>";
+            str += "<td>" + n.cleaNumber + "</td>";
+            str += "<td>" + n.clientName + "</td>";
+            str += "<td>" + (n.number * n.sellMoney) + "</td>";
+            str += "<td>" + n.sMoney + "</td>";
+            str += "<td>" + n.sMoney + "</td>";
+            str += "<td>" + state +"</td>";
+            str += "<td><a href='javascript: Shan(" + n.ClearId + ")'>删除|</a><a href='javascript: Xiu(" + n.ClearId + ")'>修改|</a>  </td ></tr> ";
+            
+        })
+        $("#tb").append(str);
+
+    }
+
+    function Shan(id) {
+
+
+
+    }
+    function Xiu(id) {
+
+
+    }
+
+    $("#Btn_Add").click(function () {
+        location.href = "/OutStock/Create";
+
+    })
+
+
+</script>
 
 

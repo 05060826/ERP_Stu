@@ -1,4 +1,5 @@
 ﻿using DataAccess.Dapper;
+using Model.CapitalModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Business
 
         public int Delete(string sql)
         {
-            throw new NotImplementedException();
+            return DapperHelper<DtoReceiptModel>.CRD(sql);
         }
 
         public List<T> Select<T>(string sql)

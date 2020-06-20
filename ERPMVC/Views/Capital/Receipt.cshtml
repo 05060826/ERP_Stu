@@ -12,7 +12,7 @@
         <h2 class="layui-colla-title">筛选查询</h2>
         <div class="layui-colla-content layui-show">
             <div class="layui-input-inline">
-                <input type="password" name="password" required lay-verify="required" placeholder="请输入单据号或客户或备注" autocomplete="off" class="layui-input">
+                <input type="text" id="ReceiptCode" required lay-verify="required" placeholder="请输入单据号或客户或备注" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">日期:</label>
@@ -22,10 +22,13 @@
                 <input type="text" class="layui-input" id="test1">
             </div>
             <div class="layui-inline">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">查询结果</button>
+                <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnselect">查询结果</button>
             </div>
         </div>
     </div>
+</div>
+<div style="width:50px;margin-left:950px" >
+    <button class="layui-btn" lay-submit lay-filter="formDemo">新增收款单</button>
 </div>
 <div class="layui-form">
     <table class="layui-table" id="tb">
@@ -66,26 +69,40 @@
     //        ,count: 50 //数据总数，从服务端得到
     //    });
     //});
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test1' //指定元素
+        });
+    });
+
     layui.use(['form', 'layer'], function () {
         var form = layui.form;
         form.render(); //渲染页面
     });
 
     $(function () {
-        var where = "";
-        var dateTime = "";
+        var where = $("#ReceiptCode").val();
+        var dateTime = $("#test1").val();
         GetReceiptData(where, dateTime);
+        $("#btnselect").click(function () {
+            var where = $("#ReceiptCode").val();
+            var dateTime = $("#test1").val();
+            GetReceiptData(where, dateTime);
+        });
     })
     function GetReceiptData(where, dateTime) {
         $.ajax({
-            url: "https://localhost:44300/api/capital/getreceiptdata?where=" + where + "&dateTime=" + dateTime + "",
+            url: "https://localhost:44300/api/capital/GetReceiptData?where=" + where + "&dateTime=" + dateTime + "",
             type: "get",
             dataType: "json",
             success: function (result) {
-                //resultTable(result);
                 var str = "";
                 $.each(result, function (i, n) {
-                    str += "<tr><td><input type='checkbox' class='chk' width='30'  value='" + n.receiptId + "' /></td><td>" + n.rTime + "</td><td>" + n.receiptCode + "</td><td>" + n.clientName + "</td><td>" + n.sMoney + "</td><td>" + n.remark + "</td><td><a style='color:#5FB878' href='#' >编辑</a><a style='color:#5FB878' href='#' >删除</a></td></tr>";
+                    str += "<tr><td><input type='checkbox' class='chk' width='30'  value='" + n.receiptId + "' /></td><td>" + n.rTime + "</td><td>" + n.receiptCode + "</td><td>" + n.clientName + "</td><td>" + n.sMoney + "</td><td>" + n.remark + "</td><td><a style='color:#5FB878' href='#' >编辑</a><a style='color:#5FB878' href='#' onclick='del("+ n.receiptId +")'>删除</a></td></tr>";
                 })
                 $("#tb tr:gt(0)").empty();
                 $("#tb").append(str);
@@ -93,6 +110,23 @@
                     var form = layui.form;
                     form.render('checkbox'); //渲染页面
                 });
+            }
+        });
+    }
+    function del(ReceiptId) {
+        $.ajax({
+            url: "https://localhost:44300/api/capital/DelReceiptData?receiptId=" + ReceiptId + "",
+            type: "get",
+            dataType: "text",
+            success: function (result) {
+                if (result > 0) {
+                    alert("删除成功");
+                    GetReceiptData(where, dateTime);
+                }
+                else {
+                    alert("删除失败");
+                    GetReceiptData(where, dateTime);
+                }
             }
         });
     }

@@ -18,7 +18,7 @@ namespace Model
 		/// <summary>
 		/// 客户Id
 		/// </summary>
-		 public int  ClientId { get; set; }
+		 public int  CliId { get; set; }
 		/// <summary>
 		/// 销售人员Id
 		/// </summary>
