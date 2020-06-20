@@ -12,5 +12,17 @@ namespace ERPMVC.Controllers
         {
             return View();
         }
+        public IActionResult Add()
+        {
+            return View();
+        }
+        public IActionResult PayMent()
+        {
+            return View();
+        }
+        public IActionResult AddPayMent()
+        {
+            return View();
+        }
     }
 }
