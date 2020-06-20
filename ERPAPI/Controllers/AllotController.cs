@@ -15,12 +15,12 @@ namespace ERPAPI.Controllers
     [ApiController]
     public class AllotController : ControllerBase
     {
-        Business.Business _Business = null;
+        Allot_Business _Business = null;
         public AllotController()
         {
-            _Business = new Business.Business();
+            _Business = new Allot_Business();
         }
-        //分页
+        //查询
         [HttpGet]
         public List<AllotShowModel> ShowPageAllot(string AllotCode, DateTime Sage, string WName, string Ename)
         {
