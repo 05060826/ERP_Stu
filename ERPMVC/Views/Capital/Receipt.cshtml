@@ -16,7 +16,7 @@
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">日期:</label>
-             </div>
+            </div>
             <div class="layui-inline">
                 <!-- 注意：这一层元素并不是必须的 -->
                 <input type="text" class="layui-input" id="test1">
@@ -24,11 +24,11 @@
             <div class="layui-inline">
                 <button class="layui-btn" lay-submit lay-filter="formDemo">查询结果</button>
             </div>
-         </div>
-     </div>
+        </div>
+    </div>
 </div>
 <div class="layui-form">
-    <table  class="layui-table" id="tb">
+    <table class="layui-table" id="tb">
         <colgroup>
             <col width="150">
             <col width="200">
@@ -36,7 +36,7 @@
         </colgroup>
 
         <tr>
-            <th><input type="checkbox" name="" lay-skin="primary"></th>
+            <th><input type="checkbox" lay-skin="primary"></th>
             <th>单据日期</th>
             <th>单据编号</th>
             <th>客户</th>
@@ -47,58 +47,53 @@
 
     </table>
 </div>
-<div id="page">
-    
-</div>
+@*<div id="page">
+
+    </div>*@
+<table id="demo"></table>
 
 <script>
     //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
     layui.use('element', function () {
         var element = layui.element;
+    });
 
-        //…
-    });
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
-
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#test1' //指定元素
-        });
-    });
-    layui.use('form', function () {
-        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-        form.render('checkbox');
-    });
-    layui.use('laypage', function(){
-        var laypage = layui.laypage;
-  
-        //执行一个laypage实例
-        laypage.render({
-            elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号 
-            ,count: 50 //数据总数，从服务端得到
-        });
+    //layui.use('laypage', function(){
+    //    var laypage = layui.laypage;
+    //    //执行一个laypage实例
+    //    laypage.render({
+    //        elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
+    //        ,count: 50 //数据总数，从服务端得到
+    //    });
+    //});
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        form.render(); //渲染页面
     });
 
     $(function () {
         var where = "";
         var dateTime = "";
-        GetReceiptData(where,dateTime);
+        GetReceiptData(where, dateTime);
     })
-    function GetReceiptData(where,dateTime) {
+    function GetReceiptData(where, dateTime) {
         $.ajax({
             url: "https://localhost:44300/api/capital/getreceiptdata?where=" + where + "&dateTime=" + dateTime + "",
             type: "get",
             dataType: "json",
             success: function (result) {
+                //resultTable(result);
                 var str = "";
                 $.each(result, function (i, n) {
-                    str += "<tr><td><input type='checkbox' name='' lay-skin='primary'></td><td>" + n.rTime + "</td><td>" + n.receiptCode + "</td><td>" + n.clientName + "</td><td>" + n.sMoney + "</td><td>" + n.remark + "</td><td><a style='color:#5FB878' href='#' >编辑</a><a style='color:#5FB878' href='#' >删除</a></td></tr>";
+                    str += "<tr><td><input type='checkbox' class='chk' width='30'  value='" + n.receiptId + "' /></td><td>" + n.rTime + "</td><td>" + n.receiptCode + "</td><td>" + n.clientName + "</td><td>" + n.sMoney + "</td><td>" + n.remark + "</td><td><a style='color:#5FB878' href='#' >编辑</a><a style='color:#5FB878' href='#' >删除</a></td></tr>";
                 })
                 $("#tb tr:gt(0)").empty();
                 $("#tb").append(str);
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render('checkbox'); //渲染页面
+                });
             }
         });
     }
-    
 </script>
