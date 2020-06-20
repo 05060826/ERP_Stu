@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataAccess;
 using Model;
 using Business.Puchase;
-
+using ERPAPI.DatasModel;
 namespace ERPAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -30,7 +30,7 @@ namespace ERPAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public bool add(PurchaseModel model)
+        public int add(PurchaseModel model)
         {
             return _bll.add(model);
         }
@@ -55,7 +55,16 @@ namespace ERPAPI.Controllers
             return _bll.showSupplier();
         }
 
+        [HttpGet]
 
+
+        public List<PurchaseModel> ShowAllInfo()
+        {
+
+            return _bll.ShowPurchaseInfo();
+        
+        
+        }
 
     }
 }

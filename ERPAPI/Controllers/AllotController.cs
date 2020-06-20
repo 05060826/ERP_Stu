@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Model;
 using Model.Model;
-
+using Model.OutModel;
 namespace ERPAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -25,6 +25,9 @@ namespace ERPAPI.Controllers
         public List<AllotShowModel> ShowPageAllot(string AllotCode, DateTime Sage, string WName, string Ename, int pageindex = 1, int pagesize = 3)
         {
             var list = _Business.ShowPageAllot(AllotCode, Sage, WName, Ename, pageindex,pagesize);
+            var b = list.Skip((pageindex - 1) * pagesize).Take(pagesize);
+            List<AllotShowModel> model = new List<AllotShowModel>();
+            
             return list;
         }
         [HttpPost]
