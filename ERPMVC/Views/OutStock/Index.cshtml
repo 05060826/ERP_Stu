@@ -18,7 +18,7 @@
     <input type="text" placeholder="请输入单据号或客户或备注" id="where" />
     日期：<input type="date" id="date" />
     <select id="xiao">
-        <option value="-1" disabled>销售人员</option>
+       
     </select>
     <select id="shou">
         <option value="-1" >收款状态</option>
@@ -61,8 +61,7 @@
 
     $(function () {
         Xiao();
-        Show();
-
+        
     })
 
     function Xiao() {
@@ -78,11 +77,10 @@
                 str += "<option value='-1'>销售人员</option>"
                 $.each(result, function (i,n) {
                     str += "<option value='"+n.seId+"' >"+n.seName+"</option>"
-
                 })
                 $("#xiao").append(str);
 
-
+                Show();
             }
         })
 
@@ -93,19 +91,18 @@
     })
 
 
-
     function Show() {
         var where = $("#where").val();
         var date = $("#date").val();
         var xiao = parseInt($("#xiao").val());
         var shou = parseInt($("#shou").val());
         //
-        alert(where/+date/+xiao/+shou)
+        alert(where)
+
         $.ajax({
-            url: "https://localhost:44300/api/show?where = " + where + " & date=" + date + " & xiao" + xiao + " & shou=" + shou,
+            url: "https://localhost:44300/api/show?where="+where +"&date="+date + "&xiao="+xiao +"&shou=" + shou ,
             type: "get",
-            dataType: "json",
-            contentType: "application/json",
+            dataType: "json",            
             success: function (result) {
                 ShowList(result)
 

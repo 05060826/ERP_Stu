@@ -48,11 +48,11 @@ namespace ERPAPI.Controllers
                 sql += "and  a.CTime='" + date + "' ";
 
             }
-            if (xiao != -1)
+            if (xiao != -1 )
             {
                 sql += "and  c.SeId='" + xiao + "' ";
             }
-            if (shou != -1)
+            if (shou != -1 )
             {
                 sql += "and  a.CState='" + shou + "' ";
             }
