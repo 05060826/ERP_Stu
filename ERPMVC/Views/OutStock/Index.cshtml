@@ -28,7 +28,7 @@
         <option value="3" >未退款</option>
 
     </select>
-    <button type="button" class="layui-btn layui-btn-radius" id="Cha">查询</button>
+    <button type="button" class="layui-btn layui-btn-radius" id="Cha">查询结果</button>
 
 </p>
 
@@ -60,8 +60,7 @@
 
 
     $(function () {
-        Xiao();
-        
+        Xiao();        
     })
 
     function Xiao() {
@@ -96,8 +95,7 @@
         var date = $("#date").val();
         var xiao = parseInt($("#xiao").val());
         var shou = parseInt($("#shou").val());
-        //
-        alert(where)
+       
 
         $.ajax({
             url: "https://localhost:44300/api/show?where="+where +"&date="+date + "&xiao="+xiao +"&shou=" + shou ,

@@ -24,8 +24,7 @@ namespace ERPAPI.Controllers
         [Route("showXiao")]
         [HttpGet]
         public List<SellModel> ShowXiao()
-        {
-            
+        {            
             List<SellModel> list = DapperHelper<SellModel>.GetAll("select * from Sell");
             return list;
         }
