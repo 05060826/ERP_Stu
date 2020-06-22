@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Model.OutModel;
 
 namespace ERPMVC.Controllers
 {
@@ -15,6 +16,11 @@ namespace ERPMVC.Controllers
         }
         public IActionResult Create()
         {
+            return View();
+        }
+        public IActionResult Inserts()
+        {
+             
             return View();
         }
     }

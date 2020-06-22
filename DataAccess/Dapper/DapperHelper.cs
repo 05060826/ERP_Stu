@@ -37,8 +37,20 @@ namespace DataAccess.Dapper
         {
             using (SqlConnection conn=new SqlConnection(strconn))
             {
+                
                 return conn.Query<T>(sql).ToList();
             }       
         }
+        //获取单条信息Id
+        public static int GetId(string sql)
+        {
+            using (SqlConnection conn = new SqlConnection(strconn))
+            {
+                return Convert.ToInt32(conn.ExecuteScalar(sql));
+            }
+        }
+
+
+
     }
 }

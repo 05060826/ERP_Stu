@@ -5,27 +5,24 @@
 
 <h1>出货列表</h1>
 
-
-<button type="button" class="layui-btn layui-btn-normal">添加出货</button>
 <script src="~/layuiadmin/layui/layui.js"></script>
 <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 @*<script src="~b/jquery/dist/jquery.js"></script>*@
 
+<button type="button" class="layui-btn layui-btn-normal" id="Btn_Add">添加出货</button>
 
-<button type="button" class="layui-btn layui-btn-normal">添加出货</button>
 
 <p>
     <input type="text" placeholder="请输入单据号或客户或备注" id="where" />
     日期：<input type="date" id="date" />
     <select id="xiao">
-       
     </select>
     <select id="shou">
-        <option value="-1" >收款状态</option>
-        <option value="0" >未付款</option>
-        <option value="1" >已付款</option>
-        <option value="2" >已退款</option>
-        <option value="3" >未退款</option>
+        <option value="-1">收款状态</option>
+        <option value="0">未付款</option>
+        <option value="1">已付款</option>
+        <option value="2">已退款</option>
+        <option value="3">未退款</option>
 
     </select>
     <button type="button" class="layui-btn layui-btn-radius" id="Cha">查询结果</button>
@@ -60,13 +57,14 @@
 
 
     $(function () {
-        Xiao();        
+        Xiao();
+      
     })
 
     function Xiao() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showXiao?",
+            url: "https://localhost:44300/api/showXiao",
             type: "get",
             dataType: "json",
             contentType: "application/json",
@@ -74,8 +72,8 @@
                 $("#xiao").empty();
                 var str = "";
                 str += "<option value='-1'>销售人员</option>"
-                $.each(result, function (i,n) {
-                    str += "<option value='"+n.seId+"' >"+n.seName+"</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.seId + "' >" + n.seName + "</option>"
                 })
                 $("#xiao").append(str);
 
@@ -84,7 +82,7 @@
         })
 
     }
-
+   
     $("#Cha").click(function () {
         Show();
     })
@@ -95,12 +93,12 @@
         var date = $("#date").val();
         var xiao = parseInt($("#xiao").val());
         var shou = parseInt($("#shou").val());
-       
+
 
         $.ajax({
-            url: "https://localhost:44300/api/show?where="+where +"&date="+date + "&xiao="+xiao +"&shou=" + shou ,
+            url: "https://localhost:44300/api/show?where=" + where + "&date=" + date + "&xiao=" + xiao + "&shou=" + shou,
             type: "get",
-            dataType: "json",            
+            dataType: "json",
             success: function (result) {
                 ShowList(result)
 
@@ -138,7 +136,7 @@
             str += "<td>" + n.sMoney + "</td>";
             str += "<td>" + n.sMoney + "</td>";
             str += "<td>" + state + "</td>";
-            str += "<td><a href='javascript: Shan(" + n.ClearId + ")'>删除|</a><a href='javascript: Xiu(" + n.ClearId + ")'>修改|</a>  </td ></tr></tbody> ";
+            str += "<td><a href='javascript: Shan(" + n.clearId + ")'>删除|</a><a href='javascript: Xiu(" + n.clearId + ")'>修改|</a></td ></tr></tbody> ";
 
         })
         $("#tb").append(str);
@@ -147,6 +145,15 @@
 
     function Shan(id) {
 
+        $.ajax({
+            url: "https://localhost:44300/api/shan?shanId=" + id,
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                ShowList(result)
+
+            }
+        })
 
 
     }
