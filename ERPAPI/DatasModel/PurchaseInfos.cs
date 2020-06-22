@@ -16,7 +16,7 @@ namespace ERPAPI.DatasModel
 		/// <summary>
 		/// 商品Id
 		/// </summary>
-		public int SId { get; set; }
+		public int SId			{ get; set; }
 		/// <summary>
 		/// 商品单价
 		/// </summary>
@@ -53,7 +53,7 @@ namespace ERPAPI.DatasModel
 		/// <summary>
 		/// 付款状态（）
 		/// </summary>
-		public int PayMent { get; set; }
+		public int  PayMent { get; set; }
 		/// <summary>
 		/// 备注
 		/// </summary>

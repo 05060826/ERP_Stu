@@ -97,6 +97,7 @@
             window.location.href = "/Capital/Add";
         })
     })
+    //显示数据
     function GetReceiptData(where, dateTime) {
         $.ajax({
             url: "https://localhost:44300/api/capital/GetReceiptData?where=" + where + "&dateTime=" + dateTime + "",
@@ -116,6 +117,7 @@
             }
         });
     }
+    //删除数据
     function del(ReceiptId) {
         $.ajax({
             url: "https://localhost:44300/api/capital/DelReceiptData?receiptId=" + ReceiptId + "",
