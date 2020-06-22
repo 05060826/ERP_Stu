@@ -22,7 +22,6 @@ namespace DataAccess.Dapper
         /// <returns></returns>
         public static int CRD(string sql)
         {
-
             using (SqlConnection conn=new SqlConnection(strconn))
             {
                 return conn.Execute(sql);

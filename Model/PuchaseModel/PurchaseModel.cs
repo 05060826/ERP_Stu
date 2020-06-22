@@ -51,7 +51,7 @@ namespace Model
 		/// <summary>
 		/// ¸¶¿î×´Ì¬£¨£©
 		/// </summary>
-		 public int  PayMent { get; set; }
+		 public int   PayMent { get; set; }
 		/// <summary>
 		/// ±¸×¢
 		/// </summary>
