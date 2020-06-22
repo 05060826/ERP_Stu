@@ -58,10 +58,40 @@ namespace ERPAPI.Controllers
         [HttpGet]
 
 
-        public List<PurchaseModel> ShowAllInfo()
+        public List<PurchaseInfos> ShowAllInfo(string  gname,DateTime time,int state)
         {
 
-            return _bll.ShowPurchaseInfo();
+           var list= _bll.ShowPurchaseInfo();
+
+          
+            List<PurchaseInfos> showlist = (from p in list
+                                            select new
+                                              PurchaseInfos
+                                            {
+                                                ReceIptsId = p.ReceIptsId,
+                                                ReceIptsCode = p.ReceIptsCode,
+                                                Gname=p.Gname,
+                                                Discount=p.Discount,
+                                                CMoney=p.CMoney,
+                                                Datetime=p.Datetime,
+                                                PayMent=p.PayMent,
+                                            }).ToList();
+
+
+            if (string.IsNullOrEmpty(gname))
+            {
+                showlist = showlist.Where(m => m.Gname.Contains(gname)).ToList();
+            }
+            if (time!=null)
+            {
+                showlist = showlist.Where(m => m.Datetime == time).ToList();
+            }
+            //if ()
+            //{
+            //    showlist=
+            //}
+
+            return showlist;
         
         
         }

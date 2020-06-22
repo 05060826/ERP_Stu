@@ -34,6 +34,7 @@
     <div>
         <table class=" tab table-bordered" >
             <tr>
+                <td>单据Id</td>
                 <td>单据日期</td>
                 <td>单据编号</td>
                 <td>供应商</td>
@@ -65,18 +66,15 @@
                 $("#tab1").empty();
                 $(data).each(function ()
                 {
-
-                  
-
                   var   str = '<tr>' +
-                        '<td>' + this.ReceIptsId + '</td>' +
-                        '<td>' + this.Datetime + '</td>' +
-                        '<td>' + this.ReceIptsCode + '</td>' +
-                        '<td>' + this.Gname + '</td>' +
-                        '<td>' + this.CMoney + '</td>' +
-                        '<td>' + this.Datetime + '</td>' +
-                        '<td>' + this.PayMent + '</td>' +
-                        '<td><a href="javascript:updateInfo(' + this.ReceIptsId + ')">编辑</a> <a href="javascript:deleteInfo(' + this.ReceIptsId + ')">删除</a> </td>'
+                        '<td>' + this.receIptsId + '</td>' +
+                        '<td>' + this.datetime + '</td>' +
+                        '<td>' + this.receIptsCode + '</td>' +
+                        '<td>' + this.gname + '</td>' +
+                      '<td>' + this.cMoney + '</td>' +
+                      '<td>' + (this.cMoney - this.discount)+ '</td>' +
+                        '<td>' + (this.payMent==1?"已付款":"未付款")+ '</td>' +
+                        '<td><a href="javascript:updateInfo(' + this.receIptsId + ')">编辑</a> <a href="javascript:deleteInfo(' + this.receIptsId + ')">删除</a> </td>'
 
 
                         + '</tr>';
