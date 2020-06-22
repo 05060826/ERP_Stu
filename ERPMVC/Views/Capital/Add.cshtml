@@ -92,7 +92,11 @@
 <script>
     layui.use('form', function () {
             var form = layui.form;
-            form.render(); //渲染页面
+        form.render(); //渲染页面
+        //下拉框改变
+        form.on('select(demo)', function (data) {
+            selectClear($("#yuan").val());
+        });
     });
 
     $(function () {
@@ -111,7 +115,7 @@
                     var form = layui.form;
                     form.render(); //渲染页面
                 });
-            }
+            }           
         });
         $.ajax({
             url: "https://localhost:44300/api/capital/GetClearData",
@@ -130,6 +134,7 @@
                 });
             }
         });
+        SetReceiptCode();
     })
     function SetReceiptCode() {
         var moren = "SKDJ";
@@ -137,15 +142,6 @@
         var time = now.getFullYear() + ((now.getMonth() + 1) < 10 ? "0" : "") + (now.getMonth() + 1) + (now.getDate() < 10 ? "0" : "") + now.getDate() + now.getHours() + now.getMinutes() + now.getSeconds();
         $("#skdj").html(moren + time);
     }
-    layui.use(['layer', 'jquery', 'form'], function () {
-            var layer = layui.layer,
-            $ = layui.jquery,
-            form = layui.form;
-
-        form.on('select(demo)', function (data) {
-            selectClear($("#yuan").val());
-        });
-    });
     function selectClear(clearNumber) {
         $.ajax({
             url: "https://localhost:44300/api/capital/GetClearData?clearNumber=" + clearNumber + "",

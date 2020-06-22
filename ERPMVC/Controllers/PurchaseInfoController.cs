@@ -12,5 +12,20 @@ namespace ERPMVC.Controllers
         {
             return View();
         }
+
+        public IActionResult AddPurchas()
+        {
+            return View();
+        }
+
+        public IActionResult UpdatePurchas()
+        {
+            return View();
+        }
+
+        public IActionResult ShowUpdatePurchas()
+        {
+            return View();
+        }
     }
 }

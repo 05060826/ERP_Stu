@@ -5,39 +5,102 @@
 
 <h1>出货列表</h1>
 
-<input type="button" value="添加出货" id="Btn_Add" />
+
+<button type="button" class="layui-btn layui-btn-normal">添加出货</button>
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+@*<script src="~b/jquery/dist/jquery.js"></script>*@
 
 
-<table id="tb" class="table table-bordered">
-    <tr>
-        <td>单据日期</td>
-        <td>单据编号</td>
-        <td>客户</td>
-        <td>销售金额</td>
-        <td>优惠后金额</td>
-        <td>已付款</td>
-        <td>收款状态</td>
-        <td>操作</td>
+<button type="button" class="layui-btn layui-btn-normal">添加出货</button>
 
-    </tr>
+<p>
+    <input type="text" placeholder="请输入单据号或客户或备注" id="where" />
+    日期：<input type="date" id="date" />
+    <select id="xiao">
+       
+    </select>
+    <select id="shou">
+        <option value="-1" >收款状态</option>
+        <option value="0" >未付款</option>
+        <option value="1" >已付款</option>
+        <option value="2" >已退款</option>
+        <option value="3" >未退款</option>
+
+    </select>
+    <button type="button" class="layui-btn layui-btn-radius" id="Cha">查询结果</button>
+
+</p>
+
+
+<table id="tb" class="layui-table" lay-skin="line">
+    <thead>
+        <tr>
+            <td>单据日期</td>
+            <td>单据编号</td>
+            <td>客户</td>
+            <td>销售金额</td>
+            <td>优惠后金额</td>
+            <td>已付款</td>
+            <td>收款状态</td>
+            <td>操作</td>
+
+        </tr>
+
+    </thead>
+
 
 </table>
+
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 
 <script>
-    $(function () {
-        Show();
 
+
+    $(function () {
+        Xiao();        
     })
-    function Show() {
+
+    function Xiao() {
 
         $.ajax({
-            url: "https://localhost:44300/api/show",
+            url: "https://localhost:44300/api/showXiao?",
             type: "get",
             dataType: "json",
             contentType: "application/json",
+            success: function (result) {
+                $("#xiao").empty();
+                var str = "";
+                str += "<option value='-1'>销售人员</option>"
+                $.each(result, function (i,n) {
+                    str += "<option value='"+n.seId+"' >"+n.seName+"</option>"
+                })
+                $("#xiao").append(str);
+
+                Show();
+            }
+        })
+
+    }
+
+    $("#Cha").click(function () {
+        Show();
+    })
+
+
+    function Show() {
+        var where = $("#where").val();
+        var date = $("#date").val();
+        var xiao = parseInt($("#xiao").val());
+        var shou = parseInt($("#shou").val());
+       
+
+        $.ajax({
+            url: "https://localhost:44300/api/show?where="+where +"&date="+date + "&xiao="+xiao +"&shou=" + shou ,
+            type: "get",
+            dataType: "json",            
             success: function (result) {
                 ShowList(result)
 
@@ -46,34 +109,16 @@
 
     }
 
-    //ClearId
-    //CleaNumber
-    //ClientId
-    //MId
-    //SId
-    //Number
-    //SellMoney
-    //Rate
-    //Discount
-    //SMoney
-    //Addresses
-    //CTime
-    //AId
-    //CState
-    //IsState
-    
-
-
     function ShowList(result) {
         var str = "";
         var state = "";
-        
+
 
         $("#tb tr:gt(0)").empty();
         $.each(result, function (i, n) {
 
             if (n.cState == 0) {
-                state="未付款"
+                state = "未付款"
 
             }
             else if (n.cState == 1) {
@@ -86,15 +131,15 @@
                 state = "未退款"
             }
 
-            str += "<tr><td>" + n.cTime + "</td>";
+            str += "<tbody><tr><td>" + n.cTime + "</td>";
             str += "<td>" + n.cleaNumber + "</td>";
             str += "<td>" + n.clientName + "</td>";
             str += "<td>" + (n.number * n.sellMoney) + "</td>";
             str += "<td>" + n.sMoney + "</td>";
             str += "<td>" + n.sMoney + "</td>";
-            str += "<td>" + state +"</td>";
-            str += "<td><a href='javascript: Shan(" + n.ClearId + ")'>删除|</a><a href='javascript: Xiu(" + n.ClearId + ")'>修改|</a>  </td ></tr> ";
-            
+            str += "<td>" + state + "</td>";
+            str += "<td><a href='javascript: Shan(" + n.ClearId + ")'>删除|</a><a href='javascript: Xiu(" + n.ClearId + ")'>修改|</a>  </td ></tr></tbody> ";
+
         })
         $("#tb").append(str);
 
