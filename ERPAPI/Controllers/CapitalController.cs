@@ -48,10 +48,10 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public List<ClearModel> GetClearData(string clearNumber="")
         {
-            string sql = "select * from Clear where 1=1 ";
+            string sql = "select * from Clear where 1=1 and CState=0 ";
             if (!string.IsNullOrEmpty(clearNumber))
             {
-                sql += " and CleaNumber='" + clearNumber+ "' and CState=0";
+                sql += " and CleaNumber='" + clearNumber+ "'";
             }
             return _business.Select<ClearModel>(sql);
         }

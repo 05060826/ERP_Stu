@@ -28,7 +28,7 @@
     </div>
 </div>
 <div class="layui-form">
-    <table class="layui-table" id="tb">
+    <table class="layui-table" id="tb" lay-filter='mon'>
         <colgroup>
             <col width="150">
             <col width="200">
@@ -97,6 +97,9 @@
         form.on('select(demo)', function (data) {
             selectClear($("#yuan").val());
         });
+        //table.on('edit(mon)', function (obj) {
+        //    $("#zong").html($("#money").val());
+        //});        
     });
 
     $(function () {
@@ -155,13 +158,15 @@
             success: function (result) {
                 var str = "";
                 $.each(result, function (i, n) {
-                    str += "<tr><td></td><td>" + n.aId + "</td><td>" + n.sMoney + "</td><td><input type='text' id='ReceiptCode' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;'></td><td><input type='text' id='ReceiptCode' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;'></td></tr>";
-                    
-                })
-                
+                    str += "<tr><td></td><td>" + n.aId + "</td><td><input type='text' id='money'  required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' value='" + n.sMoney + "'></td><td><select id='fang' lay-verify='required'><option value='微信'>微信</option><option value='支付宝'>支付宝</option><option value='现金'>现金</option></select></td><td><input type='text' id='ReceiptCode' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;'></td></tr>";                   
+                })               
                 $("#tb tr:gt(0)").empty();
                 $("#tb").append(str);
-                $("#zong").html(result[0].sMoney);
+                $("#zong").html($("#money").val());
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render(); //渲染页面
+                });
             }
         });
     }
