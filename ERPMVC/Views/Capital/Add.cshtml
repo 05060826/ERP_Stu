@@ -28,7 +28,7 @@
     </div>
 </div>
 <div class="layui-form">
-    <table class="layui-table">
+    <table class="layui-table" id="tb">
         <colgroup>
             <col width="150">
             <col width="200">
@@ -65,7 +65,7 @@
     </table>
 </div>
 <div class="layui-form">
-    <table class="layui-table">
+    <table class="layui-table" id="tt">
         <colgroup>
             <col width="150">
             <col width="200">
@@ -74,7 +74,7 @@
         <tr>
             <td></td>
             <td>合计:</td>
-            <td></td>
+            <td id="zong"></td>
             <td></td>
             <td></td>
         </tr>
@@ -91,7 +91,7 @@
 </div>
 <script>
     layui.use('form', function () {
-            var form = layui.form;
+        var form = layui.form;
         form.render(); //渲染页面
         //下拉框改变
         form.on('select(demo)', function (data) {
@@ -100,6 +100,7 @@
     });
 
     $(function () {
+        //显示客户
         $.ajax({
             url: "https://localhost:44300/api/capital/GetClientData",
             type: "get",
@@ -115,8 +116,9 @@
                     var form = layui.form;
                     form.render(); //渲染页面
                 });
-            }           
+            }
         });
+        //显示源单
         $.ajax({
             url: "https://localhost:44300/api/capital/GetClearData",
             type: "get",
@@ -132,10 +134,13 @@
                     var form = layui.form;
                     form.render(); //渲染页面
                 });
+                var clearNumber = $("#yuan").val();
+                selectClear(clearNumber);
             }
         });
         SetReceiptCode();
     })
+    //拼接单据号
     function SetReceiptCode() {
         var moren = "SKDJ";
         var now = new Date();
@@ -148,8 +153,17 @@
             type: "get",
             dataType: "json",
             success: function (result) {
-                console.log(result);
+                var str = "";
+                $.each(result, function (i, n) {
+                    str += "<tr><td></td><td>" + n.aId + "</td><td>" + n.sMoney + "</td><td><input type='text' id='ReceiptCode' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;'></td><td><input type='text' id='ReceiptCode' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;'></td></tr>";
+                    
+                })
+                
+                $("#tb tr:gt(0)").empty();
+                $("#tb").append(str);
+                $("#zong").html(result[0].sMoney);
             }
         });
     }
 </script>
+

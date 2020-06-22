@@ -22,7 +22,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public List<DtoReceiptModel> GetReceiptData(DateTime? dateTime=null,string where="")
         {
-            string sql = "select * from Receipt r join Clear c on r.ClearId=c.ClearId join Client cl on r.ClientId=cl.CLientId where 1=1";
+            string sql = "select * from Receipt r join Clear c on r.ClearId=c.ClearId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
             if (!string.IsNullOrEmpty(where))
             {
                 sql += $" and r.ReceiptCode='{where}' ";
@@ -36,7 +36,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public int DelReceiptData(int receiptId)
         {
-            string sql = "delete from  Receipt where ReceiptId="+ receiptId + "";
+            string sql = "update from  Receipt set isstate=0 where ReceiptId="+ receiptId + "";
             return _business.Delete(sql);
         }
         [HttpGet]
@@ -51,7 +51,7 @@ namespace ERPAPI.Controllers
             string sql = "select * from Clear where 1=1 ";
             if (!string.IsNullOrEmpty(clearNumber))
             {
-                sql += " and CleaNumber='" + clearNumber+"'";
+                sql += " and CleaNumber='" + clearNumber+ "' and CState=0";
             }
             return _business.Select<ClearModel>(sql);
         }
