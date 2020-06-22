@@ -22,16 +22,12 @@ namespace ERPAPI.Controllers
         }
         //查询
         [HttpGet]
-        public List<AllotShowModel> ShowPageAllot(string AllotCode, DateTime Sage, string WName, string Ename)
+        public List<AllotShowModel> ShowPageAllot(string AllotCode,  string WName, string Ename)
         {
             string sql = "select *from Allot join Commodity  on Allot.Sid=Commodity.Sid join Warehouse  on Allot.Wid=Warehouse.WId join ExportStoreroom on Allot.Eid=ExportStoreroom.EId where 1=1";
             if (!string.IsNullOrEmpty(AllotCode))
             {
                 sql += $"and Allot.AllotCode like'{AllotCode}'";
-            }
-            if (Sage!=null)
-            {
-                sql += $" and Allot.ATime='{Sage}'";
             }
             if (!string.IsNullOrEmpty(WName))
             {
