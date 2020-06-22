@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 
 <div style="width:300px;float:right">
-    <button class="layui-btn" lay-submit lay-filter="formDemo">保存关新增</button>
+    <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="AddAndClose()">保存关新增</button>
     <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">打印</button>
     <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">保存</button>
 </div>
@@ -17,7 +17,7 @@
         <label class="layui-form-label">付款客户:</label>
     </div>
     <div class="layui-inline">
-        <select name="city" lay-verify="required" id="kehu">
+        <select name="city" lay-filter="dk" lay-verify="required" id="kehu">
         </select>
     </div>
     <div class="layui-inline">
@@ -97,9 +97,6 @@
         form.on('select(demo)', function (data) {
             selectClear($("#yuan").val());
         });
-        //table.on('edit(mon)', function (obj) {
-        //    $("#zong").html($("#money").val());
-        //});        
     });
 
     $(function () {
@@ -111,7 +108,7 @@
             success: function (result) {
                 var str = "";
                 $.each(result, function (i, n) {
-                    str += "<option value='" + n.clientId + "'>" + n.clientName + "</option>";
+                    str += "<option value='" + n.cLientId + "'>" + n.clientName + "</option>";
                 })
                 $("#kehu").empty();
                 $("#kehu").append(str);
@@ -158,7 +155,7 @@
             success: function (result) {
                 var str = "";
                 $.each(result, function (i, n) {
-                    str += "<tr><td></td><td>" + n.aId + "</td><td><input type='text' id='money'  required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' value='" + n.sMoney + "'></td><td><select id='fang' lay-verify='required'><option value='微信'>微信</option><option value='支付宝'>支付宝</option><option value='现金'>现金</option></select></td><td><input type='text' id='ReceiptCode' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;'></td></tr>";                   
+                    str += "<tr><td id='clearid' style='display:none' >"+n.clearId+"</td><td></td><td id='aid'>" + n.aId + "</td><td><input type='text' id='money' onchange='GetMoney()' lay-filter='mon' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' value='" + n.sMoney + "'></td><td><select id='fang' lay-verify='required'><option value='微信'>微信</option><option value='支付宝'>支付宝</option><option value='现金'>现金</option></select></td><td><input type='text'  required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' id='remark'></td></tr>";                   
                 })               
                 $("#tb tr:gt(0)").empty();
                 $("#tb").append(str);
@@ -166,9 +163,30 @@
                 layui.use('form', function () {
                     var form = layui.form;
                     form.render(); //渲染页面
-                });
+                });               
             }
         });
     }
+    function GetMoney() {
+        $("#zong").html($("#money").val());
+    }
+    function AddAndClose() {        
+        var obj = {};
+        obj.ReceiptCode = $("#skdj").html();
+        obj.ClientId = parseInt($.trim($("#kehu").val()));
+        obj.ClearId = parseInt($("#clearid").html());
+        obj.CNumber = $("#zong").html();
+        obj.Aid = $("#aid").html();
+        obj.Remark = $("#remark").val();
+        $.ajax({
+            url: "https://localhost:44300/api/capital/AddReceiptData",
+            data: JSON.stringify(obj),
+            type: "post",
+            dataType: "text",
+            contentType: "application/json",
+            success: function (result) {
+                alert(result);
+            }
+        })
+    }
 </script>
-

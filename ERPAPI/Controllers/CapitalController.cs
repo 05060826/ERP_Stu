@@ -55,5 +55,12 @@ namespace ERPAPI.Controllers
             }
             return _business.Select<ClearModel>(sql);
         }
+        [HttpPost]
+        public int AddReceiptData(ReceiptModel model)
+        {
+            model.RTime = DateTime.Now;
+            model.IsState = 1;
+            return _business.Add<ReceiptModel>(model);
+        }
     }
 }
