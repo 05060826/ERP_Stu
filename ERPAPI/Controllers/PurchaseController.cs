@@ -58,7 +58,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
 
 
-        public List<PurchaseInfos> ShowAllInfo(string  gname,DateTime time,int state)
+        public List<PurchaseInfos> ShowAllInfo(string  gname,DateTime time,int state,int pageIndex=1,int pageSize=3)
         {
 
            var list= _bll.ShowPurchaseInfo();
@@ -78,18 +78,32 @@ namespace ERPAPI.Controllers
                                             }).ToList();
 
 
+            //供货商名称查询
             if (string.IsNullOrEmpty(gname))
             {
                 showlist = showlist.Where(m => m.Gname.Contains(gname)).ToList();
             }
+            //时间查询
             if (time!=null)
             {
                 showlist = showlist.Where(m => m.Datetime == time).ToList();
             }
-            //if ()
-            //{
-            //    showlist=
-            //}
+            //状态查询
+            if (state==0)
+            {
+                showlist = showlist.Where(m => m.PayMent.Equals(state)).ToList();
+            }
+            if (state==1)
+            {
+                showlist = showlist.Where(m => m.PayMent.Equals(state)).ToList();
+            }
+            //总条数
+            var totalCount = showlist.Count();
+            //总页数
+            var totalPage = totalCount / pageSize + (totalCount % pageSize);
+
+            showlist = showlist.Skip(pageIndex * pageSize).Take(pageSize).ToList();
+
 
             return showlist;
         
