@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Model;
+using Model.AarehouseModel;
 using Model.Model;
 using Model.OutModel;
+
+
 namespace ERPAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -22,7 +25,7 @@ namespace ERPAPI.Controllers
         }
         //查询
         [HttpGet]
-        public List<AllotShowModel> ShowPageAllot(string AllotCode,  string WName, string Ename)
+        public List<AllotController> ShowPageAllot(string AllotCode,  string WName, string Ename)
         {
             string sql = "select *from Allot join Commodity  on Allot.Sid=Commodity.Sid join Warehouse  on Allot.Wid=Warehouse.WId join ExportStoreroom on Allot.Eid=ExportStoreroom.EId where 1=1";
             if (!string.IsNullOrEmpty(AllotCode))
@@ -37,7 +40,7 @@ namespace ERPAPI.Controllers
             {
                 sql += $"and ExportStoreroom.Ename like'{Ename}'";
             }
-            return _Business.Select<AllotShowModel>(sql);
+            return _Business.Select<AllotController>(sql);
         }
         
         [HttpPost]
@@ -54,6 +57,20 @@ namespace ERPAPI.Controllers
         public void Update()
         {
 
+        }
+        //盘点表数据
+        public List<ChecksShowModel> CheckShowModel(string WName,string Ename)
+        {
+            string sql = "select *from Checks join Warehouse on Checks.Cid =Warehouse.WId join Commodity on Checks.Cid=Commodity.Sid where 1=1";
+            if (!string.IsNullOrEmpty(WName))
+            {
+                sql += $"and Warehouse.WName like'{WName}'";
+            }
+            if (!string.IsNullOrEmpty(Ename))
+            {
+                sql += $"and ExportStoreroom.Ename like'{Ename}'";
+            }
+            return _Business.Select<ChecksShowModel>(sql);
         }
     }
 }

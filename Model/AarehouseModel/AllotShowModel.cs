@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.Model
+namespace Model.AarehouseModel
 {
 	//调拨显示模型
-  public  class AllotShowModel
-    {
+  public  class ChecksShowModel
+	{
 		public int AllotId { get; set; }
 		public string AllotCode { get; set; }
 		public int Sid { get; set; }
@@ -26,6 +26,8 @@ namespace Model.Model
 		public string WName { get; set; }
 
 		public int TotalCount { get; set; }
-		
+
+		public int EId { get; set; }
+		public string Ename { get; set; }
 	}
 }
