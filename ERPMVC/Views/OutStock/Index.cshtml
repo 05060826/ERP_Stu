@@ -8,6 +8,8 @@
 <script src="~/layuiadmin/layui/layui.js"></script>
 <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 @*<script src="~b/jquery/dist/jquery.js"></script>*@
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
 
 <button type="button" class="layui-btn layui-btn-normal" id="Btn_Add">添加出货</button>
 
@@ -57,7 +59,6 @@
 
 
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
 
 
 <script>
@@ -69,7 +70,7 @@
 
     $(function () {
         Xiao();
-      
+
     })
 
     function Xiao() {
@@ -93,7 +94,7 @@
         })
 
     }
-   
+
     $("#Cha").click(function () {
         Show('First');
     })
@@ -110,18 +111,17 @@
                 pageNumber = 1;
                 break;
             case 'Prv':
-                if (pageNumber-1!=0)
-                {
+                if (pageNumber - 1 != 0) {
                     pageNumber = pageNumber - 1;
                 }
                 else {
                     pageNumber = 1;
 
-                }              
+                }
                 break;
             case 'Next':
                 if (pageNumber + 1 > count) {
-                    pageNumber = count; 
+                    pageNumber = count;
                 }
                 else {
                     pageNumber = pageNumber + 1;
@@ -136,7 +136,7 @@
         }
 
         $.ajax({
-            url: "https://localhost:44300/api/show?pageSize=" + pageSize + "&pageNumber=" + pageNumber+"&where=" + where + "&date=" + date + "&xiao=" + xiao + "&shou=" + shou,
+            url: "https://localhost:44300/api/show?pageSize=" + pageSize + "&pageNumber=" + pageNumber + "&where=" + where + "&date=" + date + "&xiao=" + xiao + "&shou=" + shou,
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -198,7 +198,7 @@
 
     }
     function Xiu(id) {
-
+        Location.href = "/OutStock/update?id="+id;
 
     }
 

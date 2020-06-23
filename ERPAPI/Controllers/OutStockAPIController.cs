@@ -30,7 +30,7 @@ namespace ERPAPI.Controllers
             List<OutStock> outs = null;
             if (count > 0)
             {  
-                 outs=Show(1,3).list;                
+                 outs=Show(3,1).list;                
             }          
             return outs;            
         }

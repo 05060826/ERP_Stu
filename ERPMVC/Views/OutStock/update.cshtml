@@ -1,36 +1,44 @@
-﻿@model Model.OutModel.Insert
+﻿@model Model.ClearModel
 
 @{
-    ViewData["Title"] = "Inserts";
+    ViewData["Title"] = "update";
 }
 
-<h1>Inserts</h1>
+<h1>update</h1>
 
-<h4>Insert</h4>
+
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+@*<script src="~b/jquery/dist/jquery.js"></script>*@
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+<h4>修改出货列表</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Inserts">
+        <form asp-action="update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="CleaNumber" class="control-label"></label>
                 <input asp-for="CleaNumber" class="form-control" />
                 <span asp-validation-for="CleaNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CliName" class="control-label"></label>
-                <input asp-for="CliName" class="form-control" />
-                <span asp-validation-for="CliName" class="text-danger"></span>
+                <label asp-for="CliId" class="control-label"></label>
+                <input asp-for="CliId" class="form-control" />
+                <span asp-validation-for="CliId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MName" class="control-label"></label>
-                <input asp-for="MName" class="form-control" />
-                <span asp-validation-for="MName" class="text-danger"></span>
+                <label asp-for="MId" class="control-label"></label>
+                <input asp-for="MId" class="form-control" />
+                <span asp-validation-for="MId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SName" class="control-label"></label>
-                <input asp-for="SName" class="form-control" />
-                <span asp-validation-for="SName" class="text-danger"></span>
+                <label asp-for="SId" class="control-label"></label>
+                <input asp-for="SId" class="form-control" />
+                <span asp-validation-for="SId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Number" class="control-label"></label>
@@ -73,7 +81,17 @@
                 <span asp-validation-for="AId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="CState" class="control-label"></label>
+                <input asp-for="CState" class="form-control" />
+                <span asp-validation-for="CState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsState" class="control-label"></label>
+                <input asp-for="IsState" class="form-control" />
+                <span asp-validation-for="IsState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -82,4 +100,44 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+<script>
+    $(function () {
+        var id =  @ViewBag.id;
+        if (id != -1) {
+
+            fan();
+        }
+       
+
+
+    })
+
+
+    function Xiao() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/showXiao",
+            type: "get",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                $("#xiao").empty();
+                var str = "";
+                str += "<option value='-1'>销售人员</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.seId + "' >" + n.seName + "</option>"
+                })
+                $("#xiao").append(str);
+
+                Show('First');
+            }
+        })
+
+
+
+
+
+</script>
 

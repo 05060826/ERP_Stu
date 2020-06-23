@@ -18,9 +18,10 @@ namespace ERPMVC.Controllers
         {
             return View();
         }
-        public IActionResult Inserts()
+        public IActionResult update(int id=-1)
         {
-             
+
+            ViewBag.Id = id;
             return View();
         }
     }
