@@ -1,15 +1,18 @@
-﻿@model Model.ClearModel
+﻿@model Model.OutModel.Insert
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Inserts";
 }
 
 
 
 <h2>新增出货</h2>
 
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+
 <p>
-    客户：<input type="text" placeholder="符号家" id="where" />
+    客户：<input type="text" placeholder="符号家" id="client" />
 
     <select id="xiao">
     </select>
@@ -34,89 +37,123 @@
 
 </table>
 
-<h1>Create</h1>
-
-<h4>ClearModel</h4>
+<input type="hidden" id="allMoney"/>
+<input type="hidden" id="realMoney" />
+<h4>Insert</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Inserts">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            <div class="form-group">
-                单据编号
-                @*value="CH+@ViewBag.CurrentDate.ToLongDateString()"*@
 
-                <input asp-for="CleaNumber" class="form-control" />
-                <span asp-validation-for="CleaNumber" class="text-danger"></span>
+            <div class="form-group">
+                <p>
+                    客户：
+                    <input asp-for="CliName" id="CliName" class="form-control" />
+                    <span asp-validation-for="CliName" class="text-danger"></span>
+                </p>
+
             </div>
             <div class="form-group">
-                <label asp-for="CliId" class="control-label"></label>
-                <input asp-for="CliId" class="form-control" />
-                <span asp-validation-for="CliId" class="text-danger"></span>
+                <p>
+                    销售人员：
+                    <input asp-for="MName" id="MName" class="form-control" />
+                    <span asp-validation-for="MName" class="text-danger"></span>
+                </p>
+
             </div>
             <div class="form-group">
-                <label asp-for="MId" class="control-label"></label>
-                <input asp-for="MId" class="form-control" />
-                <span asp-validation-for="MId" class="text-danger"></span>
+                <p>
+                    商品名称：
+                    <input asp-for="SName" id="SName" class="form-control" />
+                    <span asp-validation-for="SName" class="text-danger"></span>
+                </p>
+            </div>
+
+            <div class="form-group">
+                <p>
+                    数量：
+                    <input asp-for="Number" id="Number" class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </p>
+
             </div>
             <div class="form-group">
-                <label asp-for="SId" class="control-label"></label>
-                <input asp-for="SId" class="form-control" />
-                <span asp-validation-for="SId" class="text-danger"></span>
+                <p>
+                    价格：
+                    <input asp-for="SellMoney" id="SellMoney" class="form-control" />
+                    <span asp-validation-for="SellMoney" class="text-danger"></span>
+                </p>
+
             </div>
             <div class="form-group">
-                <label asp-for="Number" class="control-label"></label>
-                <input asp-for="Number" class="form-control" />
-                <span asp-validation-for="Number" class="text-danger"></span>
+                <p>
+                    折扣率：
+                    <input asp-for="Rate" id="Rate" class="form-control" />
+                    <span asp-validation-for="Rate" class="text-danger"></span>
+                </p>
+
+
             </div>
             <div class="form-group">
-                <label asp-for="SellMoney" class="control-label"></label>
-                <input asp-for="SellMoney" class="form-control" />
-                <span asp-validation-for="SellMoney" class="text-danger"></span>
+                <p>
+                    折扣额：
+                    <input asp-for="Discount" id="Discount" class="form-control" />
+                    <span asp-validation-for="Discount" class="text-danger"></span>
+                </p>
+
             </div>
             <div class="form-group">
-                <label asp-for="Rate" class="control-label"></label>
-                <input asp-for="Rate" class="form-control" />
-                <span asp-validation-for="Rate" class="text-danger"></span>
+                <p>
+                    优惠后金额：
+                    <input asp-for="SMoney" id="SMoney" class="form-control" />
+                    <span asp-validation-for="SMoney" class="text-danger"></span>
+                </p>
+
             </div>
             <div class="form-group">
-                <label asp-for="Discount" class="control-label"></label>
-                <input asp-for="Discount" class="form-control" />
-                <span asp-validation-for="Discount" class="text-danger"></span>
+                <p>
+                    地址：
+                    <input asp-for="Addresses" id="Addresses" class="form-control" />
+                    <span asp-validation-for="Addresses" class="text-danger"></span>
+                </p>
+
             </div>
             <div class="form-group">
-                <label asp-for="SMoney" class="control-label"></label>
-                <input asp-for="SMoney" class="form-control" />
-                <span asp-validation-for="SMoney" class="text-danger"></span>
+                <p>
+                    添加时间：
+                    <input asp-for="CTime" id="CTime" class="form-control" />
+                    <span asp-validation-for="CTime" class="text-danger"></span>
+                </p>
             </div>
             <div class="form-group">
-                <label asp-for="Addresses" class="control-label"></label>
-                <input asp-for="Addresses" class="form-control" />
-                <span asp-validation-for="Addresses" class="text-danger"></span>
+
+                <p>
+                    结算账户：
+                    <select id="AId" class="form-control">
+                    </select>
+                </p>
+
             </div>
             <div class="form-group">
-                <label asp-for="CTime" class="control-label"></label>
-                <input asp-for="CTime" class="form-control" />
-                <span asp-validation-for="CTime" class="text-danger"></span>
+
+                <p>
+                    仓库：
+                    <select id="WId" class="form-control">
+                    </select>
+                </p>
+
+            </div>
+
+            <div class="form-group">
+                <p>
+                    供应商：
+                    <select id="GId" class="form-control">
+                    </select>
+                </p>
             </div>
             <div class="form-group">
-                <label asp-for="AId" class="control-label"></label>
-                <input asp-for="AId" class="form-control" />
-                <span asp-validation-for="AId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CState" class="control-label"></label>
-                <input asp-for="CState" class="form-control" />
-                <span asp-validation-for="CState" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsState" class="control-label"></label>
-                <input asp-for="IsState" class="form-control" />
-                <span asp-validation-for="IsState" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="button" value="添加出货" id="insert" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -145,19 +182,104 @@
         var m = myDate.getMinutes();          //获取当前分钟数(0-59)
         var s = myDate.getSeconds();
 
-        var now = year + getNow(month) + getNow(date) + getNow(h) + getNow(m) +  getNow(s);
-        $("#bian").html("CH"+now)
+        var now = year + getNow(month) + getNow(date) + getNow(h) + getNow(m) + getNow(s);
+        $("#bian").html("CH" + now)
 
-        Show();
 
+        Xiao();
+        Pay();
+        Cang();
+        Gong();
     })
-    function Show() {
+
+    function Xiao() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showIns",
+            url: "https://localhost:44300/api/showXiao",
             type: "get",
             dataType: "json",
-            contentType: "application/json",
+            success: function (result) {
+                $("#xiao").empty();
+                var str = "";
+                str += "<option value='-1'>销售人员</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.seId + "' >" + n.seName + "</option>"
+                })
+                $("#xiao").append(str);
+
+                Show();
+            }
+        })
+
+    }
+    function Pay() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/showPay",
+            type: "get",
+            dataType: "json",          
+            success: function (result) {
+                $("#AId").empty();
+                var str = "";
+                str += "<option value='-1'>请选择结算账户</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.aId + "' >" + n.accountName + "</option>"
+                })
+                $("#AId").append(str);
+
+            }
+        })
+
+    }
+    function Cang() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/showCang",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                $("#WId").empty();
+                var str = "";
+                str += "<option value='-1'>请选择仓库</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.wId + "' >" + n.wName + "</option>"
+                })
+                $("#WId").append(str);
+
+            }
+        })
+
+    }
+
+    function Gong() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/showGong",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                $("#GId").empty();
+                var str = "";
+                str += "<option value='-1'>请选择供应商</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.gId + "' >" + n.gname + "</option>"
+                })
+                $("#GId").append(str);
+
+            }
+        })
+
+    }
+
+    function Show() {
+        var client = $("#client").val();
+        var xiao = parseInt($("#xiao").val());
+        var date = $("#date").val();
+
+        $.ajax({
+            url: "https://localhost:44300/api/showIns?client=" + client + "&xiao=" + xiao + "&date=" + date,
+            type: "get",
+            dataType: "json",
             success: function (result) {
                 ShowList(result)
 
@@ -169,8 +291,6 @@
 
     function ShowList(result) {
         var str = "";
-
-
 
         $("#tb tr:gt(0)").empty();
         $.each(result, function (i, n) {
@@ -190,6 +310,122 @@
         $("#tb").append(str);
 
     }
+    $("#Cha").click(function () {
+        Show();
+    })
+
+  //  public string CleaNumber { get; set; }--
+		///// <summary>
+		///// 客户Id
+		///// </summary>
+		//public int CliName { get; set; }--
+		///// <summary>
+		///// 销售人员Id
+		///// </summary>
+		//public int MName { get; set; }--
+		///// <summary>
+		///// 商品Id
+		///// </summary>
+		//public int SName { get; set; }--
+		///// <summary>
+		///// 数量
+		///// </summary>
+		//public int Number { get; set; }--
+		///// <summary>
+		///// 销售单价
+		///// </summary>
+		//public double SellMoney { get; set; }--
+		///// <summary>
+		///// 折扣率
+		///// </summary>
+		//public double Rate { get; set; }--
+		///// <summary>
+		///// 折扣金额
+		///// </summary>
+		//public double Discount { get; set; }--
+		///// <summary>
+		///// 销售金额
+		///// </summary>
+		//public double SMoney { get; set; }
+		///// <summary>
+		///// 收货地址
+		///// </summary>
+		//public string Addresses { get; set; }--
+		///// <summary>
+		///// 出货单据日期
+		///// </summary>
+		//public DateTime CTime { get; set; }--
+		///// <summary>
+		///// 结算账户
+		///// </summary>
+		//public int AId { get; set; }--
+
+    $("#insert").click(function () {
+        list = {};
+        list.CleaNumber = $("#bian").html();
+        list.CliName = $("#CliName").val();
+        list.MName = $("#MName").val();
+        list.SName = $("#SName").val();
+        list.Number = parseInt($("#Number").val());
+        list.SellMoney = parseFloat($("#SellMoney").val());
+        list.Rate = parseFloat($("#Rate").val());
+        list.Discount = parseFloat($("#Discount").val())
+        list.SMoney = parseFloat($("#SMoney").val());
+        list.Addresses = $("#Addresses").val();
+        list.CTime = $("#CTime").val();
+        list.AId = parseInt( $("#AId").val());
+        list.WId = parseInt($("#WId").val());
+        list.GId = parseInt($("#GId").val());
+
+
+        $.ajax({
+            url: "https://localhost:44300/api/insert",
+            data: JSON.stringify(list),
+            type: "post",
+            dataType: "text",
+            contentType:"application/json",
+            success: function (result) {
+                if (result > 0) {
+                    alert("添加成功")
+
+                }
+            }
+        })
+        
+
+
+
+
+
+    })
+    $("#Rate").change(function () {
+        change();
+    });
+    $("#SellMoney").change(function () {
+        change();
+    })
+    $("#Number").change(function () {
+        change();
+    })
+
+    function change() {
+        $("#allMoney").val(parseInt($("#Number").val()) * parseFloat($("#SellMoney").val()))
+        $("#realMoney").val(parseInt($("#Number").val()) * parseFloat($("#SellMoney").val()) * parseFloat($("#Rate").val()))
+        $("#Discount").val($("#allMoney").val() * $("#Rate").val())
+        $("#SMoney").val($("#allMoney").val() - $("#allMoney").val() * $("#Rate").val())
+
+    }
+
+
+   
+   
+
+
+    function loadMoney() {
+        
+
+    }
+
 
     function Shan(id) {
 
@@ -206,18 +442,8 @@
         return s < 10 ? '0' + s : s;
     }
 
-    //var myDate = new Date();
-
-    //var year = myDate.getFullYear();        //获取当前年
-    //var month = myDate.getMonth() + 1;   //获取当前月
-    //var date = myDate.getDate();            //获取当前日
 
 
-    //var h = myDate.getHours();              //获取当前小时数(0-23)
-    //var m = myDate.getMinutes();          //获取当前分钟数(0-59)
-    //var s = myDate.getSeconds();
-
-    //var now = year + '-' + getNow(month) + "-" + getNow(date) + " " + getNow(h) + ':' + getNow(m) + ":" + getNow(s);
 
 
 </script>

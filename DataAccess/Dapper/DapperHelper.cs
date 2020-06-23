@@ -13,7 +13,7 @@ namespace DataAccess.Dapper
     /// </summary>
     public static class DapperHelper<T>       
     {
-        static string strconn = "Data Source=192.168.1.116;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456";
+        static string strconn = "Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456";
 
         /// <summary>
         /// 增删改
@@ -22,7 +22,6 @@ namespace DataAccess.Dapper
         /// <returns></returns>
         public static int CRD(string sql)
         {
-
             using (SqlConnection conn=new SqlConnection(strconn))
             {
                 return conn.Execute(sql);
@@ -38,8 +37,20 @@ namespace DataAccess.Dapper
         {
             using (SqlConnection conn=new SqlConnection(strconn))
             {
+                
                 return conn.Query<T>(sql).ToList();
             }       
         }
+        //获取单条信息Id
+        public static int GetId(string sql)
+        {
+            using (SqlConnection conn = new SqlConnection(strconn))
+            {
+                return Convert.ToInt32(conn.ExecuteScalar(sql));
+            }
+        }
+
+
+
     }
 }
