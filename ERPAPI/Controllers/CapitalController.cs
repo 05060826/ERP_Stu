@@ -83,17 +83,10 @@ namespace ERPAPI.Controllers
             Dictionary<string, object> obj = new Dictionary<string, object>();
 
             //前台通过key值获得对应的value值
-
             obj.Add("code", 0);
-
             obj.Add("msg", "");
-
             obj.Add("count", 1000);
-
             obj.Add("data", list);
-
-            // array.add(obj);
-
             return JsonConvert.SerializeObject(obj); ;
         }
         [HttpGet]
