@@ -36,7 +36,6 @@ namespace Common
             {
                 string n = item.Name;
                 object v = item.GetValue(t, null);
-
                 //不传值的属性不拼接到sql
                 if (v != null)
                 {

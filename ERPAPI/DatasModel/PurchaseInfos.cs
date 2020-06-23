@@ -63,6 +63,11 @@ namespace ERPAPI.DatasModel
 		/// </summary>
 		public int IsState { get; set; }
 
+		/// <summary>
+		/// 总页数
+		/// </summary>
+        public int TotalPage { get; set; }
 
-	}
+
+    }
 }
