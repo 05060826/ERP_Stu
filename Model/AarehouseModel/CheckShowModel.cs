@@ -10,6 +10,7 @@ namespace Model.AarehouseModel
 		public class ChecksShowModel
 		{
 			public int Cid { get; set; }
+			public string WName { get; set; }
 			/// <summary>
 			/// 仓库Id
 			/// </summary>
@@ -46,8 +47,6 @@ namespace Model.AarehouseModel
 			/// 供应商Id
 			/// </summary>
 			public int GId { get; set; }
-
-			public string WName { get; set; }
 		}
 	}
 }
