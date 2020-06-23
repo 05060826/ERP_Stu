@@ -7,9 +7,10 @@ using System.Text;
 
 namespace Business
 {
-   public class BaseBusiness : IBaseBusiness
+    //继承业务类
+    public class BaseBusiness : IBaseBusiness
     {
-        public SqlServerAccess sqlServer = new SqlServerAccess();
+        public  SqlServerAccess sqlServer = new SqlServerAccess();
         //泛型添加
         public int Add<T>(T t)
         {
