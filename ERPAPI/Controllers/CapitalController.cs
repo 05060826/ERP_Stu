@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business;
+using DataAccess.Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
@@ -60,7 +61,8 @@ namespace ERPAPI.Controllers
         {
             model.RTime = DateTime.Now;
             model.IsState = 1;
-            return _business.Add<ReceiptModel>(model);
+            string sql = $"insert into Receipt (ReceiptCode,ClientId,ClearId,CNumber,Aid,RTime,Remark,IsState) values('{model.ReceiptCode}','{model.ClientId}','{model.ClearId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
+            return DapperHelper<ReceiptModel>.CRD(sql);
         }
     }
 }
