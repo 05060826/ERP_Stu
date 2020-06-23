@@ -39,10 +39,6 @@ namespace Model.AarehouseModel
 			/// </summary>
 			public int CheckNumber { get; set; }
 			/// <summary>
-			/// 仓库Id
-			/// </summary>
-			public int WId { get; set; }
-			/// <summary>
 			/// 商品单价
 			/// </summary>
 			public double Price { get; set; }

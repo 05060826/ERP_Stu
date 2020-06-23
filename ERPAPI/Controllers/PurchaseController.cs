@@ -55,15 +55,26 @@ namespace ERPAPI.Controllers
             return _bll.showSupplier();
         }
 
+        /// <summary>
+        /// 结算账户
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-
-
-        public List<PurchaseInfos> ShowAllInfo(string  gname,DateTime time,int state,int pageIndex=1,int pageSize=3)
+        public List<AccountModel> AccountModels()
         {
 
-           var list= _bll.ShowPurchaseInfo();
+            return _bll.AccountModels();
+        }
 
-          
+
+        [HttpGet]
+        //显示采购列表
+        public PageShow ShowAllInfo(string  gname=null,DateTime? time=null,int state=1,int pageIndex=1,int pageSize=3)
+        {
+
+                 var list= _bll.ShowPurchaseInfo();
+           
+
             List<PurchaseInfos> showlist = (from p in list
                                             select new
                                               PurchaseInfos
@@ -79,7 +90,7 @@ namespace ERPAPI.Controllers
 
 
             //供货商名称查询
-            if (string.IsNullOrEmpty(gname))
+            if (gname!=null)
             {
                 showlist = showlist.Where(m => m.Gname.Contains(gname)).ToList();
             }
@@ -100,12 +111,21 @@ namespace ERPAPI.Controllers
             //总条数
             var totalCount = showlist.Count();
             //总页数
-            var totalPage = totalCount / pageSize + (totalCount % pageSize);
+          var totalPage = totalCount / pageSize + (totalCount % pageSize > 0 ? 1 : 0);
 
-            showlist = showlist.Skip(pageIndex * pageSize).Take(pageSize).ToList();
+            showlist = showlist.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            PageShow pageShowlist = new PageShow();
 
 
-            return showlist;
+            pageShowlist.ShowList = showlist;
+            pageShowlist.ToTalCount = totalCount;
+            pageShowlist.PageTotal = totalPage;
+    
+
+           
+            
+            return pageShowlist;
         
         
         }

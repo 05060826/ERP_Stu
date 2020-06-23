@@ -17,17 +17,18 @@
     <div>
         <table class="tab table-bordered">
             <tr>
-            <td>
-                <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注" />
-                
-                <select id="stateid">
-                    <option value="1">已付款</option>
-                    <option value="0">未付款</option>
+                <td>
+                    <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注" />
 
-                </select>
-                日期：<input id="texTime" type="date" />
-                <input id="ButtonSel" type="button" value="查询结果" onclick="btnsel()"/>
-            </td>
+                    <select id="stateid">
+                        <option value="1">已付款</option>
+                        <option value="0">未付款</option>
+
+                    </select>
+                    日期：<input id="texTime" type="date" />
+                    <input id="ButtonSel" type="button" value="查询结果" onclick="btnsel()" />
+                    <input id="ButtonAdd" type="button" value="新增采购" onclick="btnAdd()" />
+                </td>
             </tr>
         </table>
     </div>
@@ -47,24 +48,55 @@
 
             </tbody>
         </table>
+        <div>
+            <input id="Button1" type="button" value="首页" onclick="showpage('first')" />
+            <input id="Button1" type="button" value="上一页" onclick="showpage('prv')"  />
+            当前第<label id="pageindex">1</label>页/总共<label id="totalPage"></label>页
+            /每页<label id="pagesize">2</label>条/总共<label id="totalCount"></label>条
+
+
+            <input id="Button1" type="button" value="下一页" onclick="showpage('next')"  />
+            <input id="Button1" type="button" value="尾页"  onclick="showpage('last')" />
+
+
+        </div>
     </div>
 
 </body>
 </html>
 <script>
     //首次加载
+    $(function () {
+        btnsel();
+        showpage();
+    });
     
-
     function btnsel()
     {
+        //供货商名称
+        var gname = $("#texNmae").val();
+        //时间
+        var times = $("#texTime").val();
+        //状态
+        var tates = $("#stateid").val();
+        //当前第几页
+        var indes = $("#pageindex").text();
+        //每页多少条
+        var sizes = $("#pagesize").text();
+
+       
+
+
         $.ajax({
-            url: "https://localhost:44300/api/Purchase/ShowAllInfo",
+            url: "https://localhost:44300/api/Purchase/ShowAllInfo?gname=" + gname + "&&time=" + times + "&&state=" + tates + "&&pageIndex=" + indes + "&&pageSize=" + sizes,
             type: "get",
             dataType:"json",
             success: function (data)
             {
+                $("#totalCount").text(data.toTalCount);
+                $("#totalPage").text(data.pageTotal);
                 $("#tab1").empty();
-                $(data).each(function ()
+                $(data.showList).each(function ()
                 {
                   var   str = '<tr>' +
                         '<td>' + this.receIptsId + '</td>' +
@@ -85,6 +117,66 @@
 
 
         })
+
+    }
+
+    //分页
+    function showpage(name)
+    {
+        //当前第几页
+        var index = Number($("#pageindex").text());
+        //每页多少条
+        //var size = Number($("#pagesize").text());
+        ////总条数
+        //var tatal = Number($("#totalCount").text());
+        //总页数
+        var pagetatal = Number($("#totalPage").text());
+        
+        switch (name) {
+
+            case 'first':
+                index= 1
+                break;
+            case 'prv':
+                if (index > 1) {
+                    index--;
+                }
+                else
+                {
+                    $("#pageindex").text(1);
+
+                }
+
+                break;
+            case 'next':
+
+                if (index < pagetatal) {
+                    index++;
+                }
+                else {
+
+                    $("#pageindex").text(pagetatal);
+
+                }
+
+                break;
+            case 'last':
+
+                index = pagetatal;
+                break;
+            default:
+                break;
+
+                
+        }
+        $("#pageindex").text(index);
+        btnsel();
+
+    };
+    //新增采购
+    function btnAdd()
+    {
+        location.href = "/PurchaseInfo/AddPurchas";
 
     }
     //修改跳转到退货页面反填数据修改状态

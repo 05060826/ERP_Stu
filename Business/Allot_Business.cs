@@ -8,11 +8,18 @@ using Dapper;
 using Model.Model;
 using System.Data.SqlClient;
 using DataAccess.Dapper;
+using Model.AarehouseModel;
+
 namespace Business
 {
     //仓库调拨表
-    public class Allot_Business : IBaseBusiness
+    public class Allot_Business
     {
+        BaseBusiness _baseBusiness = null;
+        public Allot_Business()
+        {
+            _baseBusiness = new  BaseBusiness();
+        }
         //添加
         public int Add<T>(T t)
         {
@@ -24,14 +31,42 @@ namespace Business
             throw new NotImplementedException();
         }
         //显示 查询 调拨表
-        public List<T> Select<T>(string sql)
+        public List<AllotShowModel> ShowPageAllot(string AllotCode = null, string WName = null, string Ename = null)
         {
-            return DapperHelper<T>.GetAll(sql);
+            string sql = "select *from Allot join Commodity  on Allot.Sid=Commodity.Sid join Warehouse  on Allot.Wid=Warehouse.WId join ExportStoreroom on Allot.Eid=ExportStoreroom.EId where 1=1";
+            if (!string.IsNullOrEmpty(AllotCode))
+            {
+                sql += $"and Allot.AllotCode like'%{AllotCode}%'";
+            }
+            if (!string.IsNullOrEmpty(WName))
+            {
+                sql += $"and Warehouse.WName like'%{WName}%'";
+            }
+            if (!string.IsNullOrEmpty(Ename))
+            {
+                sql += $"and ExportStoreroom.Ename like'%{Ename}%'";
+            }
+            return _baseBusiness.Select<AllotShowModel>(sql);
         }
         //修改
         public int Update(string sql)
         {
             throw new NotImplementedException();
+        }
+
+        //盘点表数据
+        public List<CheckShowModel> CheckShowModel(string WName, string Ename)
+        {
+            string sql = "select *from Checks join Warehouse on Checks.Cid =Warehouse.WId join Commodity on Checks.Cid=Commodity.Sid where 1=1";
+            if (!string.IsNullOrEmpty(WName))
+            {
+                sql += $"and Warehouse.WName like'{WName}'";
+            }
+            if (!string.IsNullOrEmpty(Ename))
+            {
+                sql += $"and ExportStoreroom.Ename like'{Ename}'";
+            }
+            return _baseBusiness.Select<CheckShowModel>(sql);
         }
     }
 }

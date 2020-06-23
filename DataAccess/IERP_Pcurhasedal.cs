@@ -31,6 +31,11 @@ namespace DataAccess
         /// </summary>
         /// <returns></returns>
         List<PurchaseModel> ShowPurchaseInfo();
+        /// <summary>
+        /// 显示结算账户信息
+        /// </summary>
+        /// <returns></returns>
+        List<AccountModel> AccountModels();
 
     }
 }

@@ -8,7 +8,7 @@ namespace ERPMVC.Controllers
 {
     public class AllotController : Controller
     {
-        public IActionResult Index()
+        public IActionResult ShowTable()
         {
             return View();
         }

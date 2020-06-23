@@ -10,7 +10,7 @@
 <div style="width:300px;float:right">
     <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="AddAndClose()">保存关新增</button>
     <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">打印</button>
-    <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">保存</button>
+    <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo" onclick="Add()">保存</button>
 </div>
 <div class="layui-form">
     <div class="layui-inline">
@@ -175,8 +175,8 @@
         obj.ReceiptCode = $("#skdj").html();
         obj.ClientId = parseInt($.trim($("#kehu").val()));
         obj.ClearId = parseInt($("#clearid").html());
-        obj.CNumber = $("#zong").html();
-        obj.Aid = $("#aid").html();
+        obj.CNumber = parseFloat($("#zong").html());
+        obj.Aid = parseInt($("#aid").html());
         obj.Remark = $("#remark").val();
         $.ajax({
             url: "https://localhost:44300/api/capital/AddReceiptData",
@@ -185,7 +185,30 @@
             dataType: "text",
             contentType: "application/json",
             success: function (result) {
-                alert(result);
+                if (result > 0) {
+                    location.href = "/Capital/Receipt";
+                }
+            }
+        })
+    }
+    function Add() {        
+        var obj = {};
+        obj.ReceiptCode = $("#skdj").html();
+        obj.ClientId = parseInt($.trim($("#kehu").val()));
+        obj.ClearId = parseInt($("#clearid").html());
+        obj.CNumber = parseFloat($("#zong").html());
+        obj.Aid = parseInt($("#aid").html());
+        obj.Remark = $("#remark").val();
+        $.ajax({
+            url: "https://localhost:44300/api/capital/AddReceiptData",
+            data: JSON.stringify(obj),
+            type: "post",
+            dataType: "text",
+            contentType: "application/json",
+            success: function (result) {
+                if (result > 0) {
+                    location.href = "/Capital/Add";
+                }
             }
         })
     }

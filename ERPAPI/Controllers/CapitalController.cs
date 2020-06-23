@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business;
+using DataAccess.Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.CapitalModel;
+using Newtonsoft.Json;
 
 namespace ERPAPI.Controllers
 {
@@ -60,7 +62,69 @@ namespace ERPAPI.Controllers
         {
             model.RTime = DateTime.Now;
             model.IsState = 1;
-            return _business.Add<ReceiptModel>(model);
+            string sql = $"insert into Receipt (ReceiptCode,ClientId,ClearId,CNumber,Aid,RTime,Remark,IsState) values('{model.ReceiptCode}','{model.ClientId}','{model.ClearId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
+            return DapperHelper<ReceiptModel>.CRD(sql);
+        }
+
+
+        [HttpGet]
+        public string GetPayMentData(DateTime? dateTime = null, string where = "")
+        {
+            string sql = "select * from PayMent r join Purchase c on r.ReceIptsId=c.ReceIptsId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
+            if (!string.IsNullOrEmpty(where))
+            {
+                sql += $" and r.PaymentCode='{where}' ";
+            }
+            if (dateTime != null)
+            {
+                sql += $" and RTime='{dateTime}'";
+            }
+            List<DtoPayMentModel> list= _business.Select<DtoPayMentModel>(sql);
+            Dictionary<string, object> obj = new Dictionary<string, object>();
+
+            //前台通过key值获得对应的value值
+
+            obj.Add("code", 0);
+
+            obj.Add("msg", "");
+
+            obj.Add("count", 1000);
+
+            obj.Add("data", list);
+
+            // array.add(obj);
+
+            return JsonConvert.SerializeObject(obj); ;
+        }
+        [HttpGet]
+        public int DelPayMentData(int paymentId)
+        {
+            string sql = "update from  PayMent set isstate=0 where PaymentId=" + paymentId + "";
+            return _business.Delete(sql);
+        }
+        [HttpGet]
+        public List<ClientModel> GetClientPData()
+        {
+            string sql = "select * from Client";
+            return _business.Select<ClientModel>(sql);
+        }
+        [HttpGet]
+        public List<PurchaseModel> GetClearPData(string receIptsCode = "")
+        {
+            string sql = "select * from Purchase where 1=1 ";
+            if (!string.IsNullOrEmpty(receIptsCode))
+            {
+                sql += " and ReceIptsCode='" + receIptsCode + "'";
+            }
+            return _business.Select<PurchaseModel>(sql);
+        }
+        [HttpPost]
+        public int AddPayMentData(PaymentModel model)
+        {
+            model.RTime = DateTime.Now;
+            model.IsState = 1;
+            //string sql = $"insert into Receipt (ReceiptCode,ClientId,ClearId,CNumber,Aid,RTime,Remark,IsState) values('{model.ReceiptCode}','{model.ClientId}','{model.ClearId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
+            return DapperHelper<PaymentModel>.CRD("");
         }
     }
 }

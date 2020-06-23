@@ -17,6 +17,14 @@ namespace Business.Puchase
 
 
         }
+        /// <summary>
+        /// 显示结算账户
+        /// </summary>
+        /// <returns></returns>
+        public List<AccountModel> AccountModels()
+        {
+            return _dal.AccountModels();
+        }
 
         /// <summary>
         /// 添加采购

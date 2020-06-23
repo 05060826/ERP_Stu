@@ -5,7 +5,7 @@ using System.Text;
 namespace Model.AarehouseModel
 {
 	//调拨显示模型
-  public  class ChecksShowModel
+  public  class AllotShowModel
 	{
 		public int AllotId { get; set; }
 		public string AllotCode { get; set; }
@@ -18,7 +18,6 @@ namespace Model.AarehouseModel
 		public int IsState { get; set; }
 
 		public string SName { get; set; }
-		public int WId { get; set; }
 		public string Price { get; set; }
 		public int GId { get; set; }
 
