@@ -24,13 +24,13 @@ namespace ERPAPI.Controllers
             _Business = new Allot_Business();
         }
         //查询
-        [HttpGet]
-        public List<AllotShowModel> ShowPageAllot(string AllotCode=null, string WName=null, string Ename=null)
-        {
-            var list = _Business.ShowPageAllot(AllotCode,WName,Ename);
-            return list;
-        }
-       
+        //[HttpGet]
+        //public List<AllotShowModel> ShowPageAllot(string AllotCode=null, string WName=null, string Ename=null)
+        //{
+        //    var list = _Business.ShowPageAllot(AllotCode, WName, Ename);
+        //    return list;
+        //}
+
         [HttpPost]
         public void ADD()
         {
@@ -46,11 +46,11 @@ namespace ERPAPI.Controllers
         {
 
         }
-        //盘点表数据
-        public List<CheckShowModel> CheckShowModel(string WName,string Ename)
-        {
-            var list = _Business.CheckShowModel(WName,Ename);
-            return list;
-        }
+        ////盘点表数据
+        //public List<CheckShowModel> CheckShowModel(string WName,string Ename)
+        //{
+        //    var list = _Business.CheckShowModel(WName,Ename);
+        //    return list;
+        //}
     }
 }

@@ -70,7 +70,6 @@ namespace ERPAPI.Controllers
             return list;
         }
         
-
         //显示出货商品（可查询）
         [Route("show")]
         [HttpGet]
