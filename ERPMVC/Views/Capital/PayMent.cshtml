@@ -84,12 +84,12 @@
                 , totalRow: true
                 , cols: [[
                     { type: 'checkbox', fixed: 'left' }
-                    , { field: 'PaymentId', title: 'ID', width: 120, edit: 'text' }
-                    , { field: 'RTime', title: '单据日期', width: 120, edit: 'text' }
-                    , { field: 'PaymentCode', title: '单据编号', width: 120, sort: true, totalRow: true }
-                    , { field: 'ClientName', title: '客户', width: 120, edit: 'text', sort: true }
-                    , { field: 'CNumber', title: '付款金额', width: 120, sort: true, totalRow: true }
-                    , { field: 'Remark', title: '备注', width: 120 }
+                    , { field: 'PaymentId', title: 'ID', width: 150, edit: 'text' }
+                    , { field: 'RTime', title: '单据日期', width: 150, edit: 'text' }
+                    , { field: 'PaymentCode', title: '单据编号', width: 150, sort: true, totalRow: true }
+                    , { field: 'ClientName', title: '客户', width: 150, edit: 'text', sort: true }
+                    , { field: 'CNumber', title: '付款金额', width: 150, sort: true, totalRow: true }
+                    , { field: 'Remark', title: '备注', width: 150 }
                     , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
                 ]]
                 , done: function () {
@@ -104,7 +104,7 @@
         table.on('tool(test)', function (obj) {
             var data = obj.data;
             if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('确定要删除嘛?', function (index) {
                     $.ajax({
                         url: "https://localhost:44300/api/capital/DelPayMentData?paymentId=" + obj.data.PaymentId + "",
                         type: "get",

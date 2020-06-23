@@ -142,7 +142,7 @@
     })
     //拼接单据号
     function SetReceiptCode() {
-        var moren = "SKDJ";
+        var moren = "FKDJ";
         var now = new Date();
         var time = now.getFullYear() + ((now.getMonth() + 1) < 10 ? "0" : "") + (now.getMonth() + 1) + (now.getDate() < 10 ? "0" : "") + now.getDate() + now.getHours() + now.getMinutes() + now.getSeconds();
         $("#skdj").html(moren + time);
