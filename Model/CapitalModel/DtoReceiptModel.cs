@@ -15,7 +15,7 @@ namespace Model.CapitalModel
 		public DateTime RTime { get; set; }
 		public string Remark { get; set; }
 		public int IsState { get; set; }
-		public string SMoney { get; set; }
+		public double SMoney { get; set; }
 		public string ClientName { get; set; }
 	}
 }

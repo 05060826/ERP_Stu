@@ -7,4 +7,152 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <!DOCTYPE html>
 
+<div class="layui-collapse">
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">筛选查询</h2>
+        <div class="layui-colla-content layui-show">
+            <div class="layui-input-inline">
+                <input type="text" id="ReceiptCode" required lay-verify="required" placeholder="请输入单据号或客户或备注" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">日期:</label>
+            </div>
+            <div class="layui-inline">
+                <!-- 注意：这一层元素并不是必须的 -->
+                <input type="text" class="layui-input" id="test1">
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnselect">查询结果</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width:115px;float:right">
+    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnAdd">新增收款单</button>
+</div>
+<div class="layui-form">
+    @*<table class="layui-table" id="tb">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
 
+            <tr>
+                <th><input type="checkbox" lay-skin="primary"></th>
+                <th>单据日期</th>
+                <th>单据编号</th>
+                <th>客户</th>
+                <th>付款金额</th>
+                <th>备注</th>
+                <th>操作</th>
+            </tr>
+
+        </table>*@
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+@*<div id="page">
+
+    </div>*@
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+
+    //layui.use('laypage', function(){
+    //    var laypage = layui.laypage;
+    //    //执行一个laypage实例
+    //    laypage.render({
+    //        elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
+    //        ,count: 50 //数据总数，从服务端得到
+    //    });
+    //});
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test1' //指定元素
+        });
+    });
+
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        form.render(); //渲染页面
+    });
+
+    $(function () {
+        var where = $("#ReceiptCode").val();
+        var dateTime = $("#test1").val();
+        GetReceiptData(where, dateTime);
+        $("#btnselect").click(function () {
+            var where = $("#ReceiptCode").val();
+            var dateTime = $("#test1").val();
+            GetReceiptData(where, dateTime);
+        });
+        $("#btnAdd").click(function () {
+            window.location.href = "/Capital/AddPayMent";
+        })
+    })
+    //显示数据
+    function GetReceiptData(where, dateTime) {
+        layui.use('table', function () {
+            var table = layui.table;
+
+            table.render({
+                elem: '#test'
+                , url: 'https://localhost:44300/api/capital/GetPayMentData?where=' + where + '&dateTime=' + dateTime + ''
+                , title: '用户数据表'
+                , totalRow: true
+                , cols: [[
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'PaymentId', title: '单据日期', width: 120, edit: 'text' }
+                    , { field: 'RTime', title: '单据日期', width: 120, edit: 'text' }
+                    , { field: 'PaymentCode', title: '单据编号', width: 120, sort: true, totalRow: true }
+                    , { field: 'ClientName', title: '客户', width: 120, edit: 'text', sort: true }
+                    , { field: 'CMoney', title: '付款金额', width: 120, sort: true, totalRow: true }
+                    , { field: 'Remark', title: '备注', width: 120 }
+                    , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
+                ]]
+                , done: function () {
+                    $("[data-field='PaymentId']").css('display', 'none');
+                }
+                , page: true
+            });
+        });
+    }
+    layui.use('table', function () {
+        var table = layui.table;
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        url: "https://localhost:44300/api/capital/DelPayMentData?paymentId=" + obj.data.PaymentId + "",
+                        type: "get",
+                        dataType: "text",
+                        success: function (result) {
+                            if (result > 0) {
+                                alert("删除成功");
+                                GetReceiptData(where, dateTime);
+                            }
+                            else {
+                                alert("删除失败");
+                                GetReceiptData(where, dateTime);
+                            }
+                        }
+                    });
+                });
+            } else if (obj.event === 'edit') {
+                layer.alert('编辑行：<br>' + JSON.stringify(data))
+            }
+        });
+    });
+</script>
