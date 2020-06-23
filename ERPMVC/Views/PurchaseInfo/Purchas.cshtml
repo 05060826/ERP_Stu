@@ -26,7 +26,7 @@
 
                     </select>
                     日期：<input id="texTime" type="date" />
-                    <input id="ButtonSel" type="button" value="查询结果" onclick="btnsel()" />
+                    <input id="ButtonSel" type="button" value="查询结果" onclick="btnCha()" />
                     <input id="ButtonAdd" type="button" value="新增采购" onclick="btnAdd()" />
                 </td>
             </tr>
@@ -67,11 +67,11 @@
 <script>
     //首次加载
     $(function () {
-        btnsel();
+        btnCha();
         showpage();
     });
     
-    function btnsel()
+    function btnCha()
     {
         //供货商名称
         var gname = $("#texNmae").val();
@@ -119,10 +119,20 @@
         })
 
     }
+   
+    ////显示数据
+    //function btnsel()
+    //{
+
+
+    //}
 
     //分页
     function showpage(name)
     {
+       
+     
+      
         //当前第几页
         var index = Number($("#pageindex").text());
         //每页多少条
@@ -131,18 +141,17 @@
         //var tatal = Number($("#totalCount").text());
         //总页数
         var pagetatal = Number($("#totalPage").text());
-        
+
         switch (name) {
 
             case 'first':
-                index= 1
+                index = 1
                 break;
             case 'prv':
                 if (index > 1) {
                     index--;
                 }
-                else
-                {
+                else {
                     $("#pageindex").text(1);
 
                 }
@@ -167,10 +176,11 @@
             default:
                 break;
 
-                
+
         }
         $("#pageindex").text(index);
-        btnsel();
+
+        btnCha();
 
     };
     //新增采购
