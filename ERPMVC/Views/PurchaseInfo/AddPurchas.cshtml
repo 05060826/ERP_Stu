@@ -20,16 +20,14 @@
     <div>
         <table>
             @*<tr>
-                <td>单据编号
-                </td>
-                <td><label id="num"></label></td>
-            </tr>*@
+            <td>单据编号
+            </td>
+            <td><label id="num"></label></td>
+        </tr>*@
             <tr>
                 <td>供应商：</td>
                 <td>
                     <select id="gonghuo">
-                        
-
                     </select>
                 </td>
             </tr>
@@ -39,10 +37,11 @@
             </tr>
             <tr>
                 <td>商品：</td>
-                <td><select id="goods">
-                <option></option>
+                <td>
+                    <select id="goods">
+                        <option></option>
 
-            </select>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -51,15 +50,11 @@
             </tr>
             <tr>
                 <td>仓库</td>
-                <td><label id="c"></label></td>
-            </tr>
-            <tr>
-                <td>采购数量</td>
-                <td><input id="TextNum" type="text" /></td>
+                <td><label id="cu"></label></td>
             </tr>
             <tr>
                 <td>商品单价</td>
-                <td><label id="p"></label></td>
+                <td><label id="pr"></label></td>
             </tr>
             <tr>
                 <td>折扣率</td>
@@ -68,6 +63,10 @@
             <tr>
                 <td>折扣额</td>
                 <td><label id="mony"></label></td>
+            </tr>
+            <tr>
+                <td>采购数量</td>
+                <td><input id="TextNum" type="text" /></td>
             </tr>
             <tr>
                 <td>采购金额</td>
@@ -79,10 +78,12 @@
             </tr>
             <tr>
                 <td>结算账户</td>
-                <td><select id="account">
-                <option></option>
+                <td>
+                    <select id="account">
+                        <option></option>
 
-            </select></td>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td><input id="Button1" type="button" value="保存新增" /></td>
@@ -100,20 +101,93 @@
     {
         dropGong();
         dropaccount();
+        //供货商下拉框内容改变事件
         dropGoods($("#gonghuo").val());
         $("#gonghuo").change(function ()
         {
 
             dropGoods($("#gonghuo").val());
         })
-
+        //商品内容改变事件
         $("#goods").change(function ()
         {
+            var goodsId = $("#goods").val();
 
+            $.ajax({
+
+                url: "https://localhost:44300/api/Purchase/ShowCommdityInfo?sid=" + goodsId,
+                type: "get",
+                success: function (data)
+                {
+                   
+
+                    $("#da").text(data.units);
+                    $("#cu").text(data.wName);
+                    $("#pr").text(data.price);
+
+                }
+
+
+            })
 
         })
 
+       
+
+        //折扣率改变事件
+        $("#TextZL").change(function () {
+
+            count();
+
+
+           
+            //if ($("#TextNum").text == null)
+            //{
+            //    $("#cmony").text(0);
+            //}
+            //else
+            //{
+            //    //数量文本框内容改变事件
+            //    $("#TextNum").change(function () {
+
+            //        count();
+
+            //    });
+
+
+
+            //}
+           
+
+        })
+       
+            
     })
+
+    function count()
+    {
+        //商品单价
+        var price = Number($("#pr").text());
+        //商品数量
+        var snum = Number($("#TextNum").val());
+        //折扣率
+        var zkl = Number($("#TextZL").val());
+        //折扣额
+        var zke = Number($("#mony").text());
+        //采购金额
+        var sumcomy = Number($("#cmony").text());
+
+        //折扣额
+        zke = price * zkl;
+        //采购金额
+        sumcomy = snum * price - zke;
+
+
+
+
+
+    }
+
 
     //供货商信息
     function dropGong()
@@ -125,6 +199,7 @@
             success: function (data)
             {
                 $("#gonghuo").empty();
+                $("#gonghuo").append('<option value="">请选择</option>')
                 $(data).each(function ()
                 {
 
@@ -147,6 +222,7 @@
             type: "get",
             success: function (data) {
                 $("#goods").empty();
+                $("#goods").append('<option value="">请选择</option>')
                 $(data).each(function () {
 
                     $("#goods").append('<option value="' + this.sid + '">' + this.sName + '</option>')

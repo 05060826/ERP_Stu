@@ -65,6 +65,17 @@ namespace ERPAPI.Controllers
 
             return _bll.AccountModels();
         }
+        [HttpGet]
+
+        /// <summary>
+        /// 根据商品id查询商品信息
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public CommodityModel ShowCommdityInfo(int sid)
+        {
+            return _bll.ShowCommdityInfo(sid);
+        }
 
 
         [HttpGet]
@@ -128,6 +139,14 @@ namespace ERPAPI.Controllers
             return pageShowlist;
         
         
+        }
+
+
+        [HttpGet]
+        public List<PurchaseModel> ShowInfo()
+        {
+
+            return _bll.ShowPurchaseInfo();
         }
 
     }

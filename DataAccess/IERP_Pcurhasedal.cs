@@ -37,5 +37,12 @@ namespace DataAccess
         /// <returns></returns>
         List<AccountModel> AccountModels();
 
+
+        /// <summary>
+        /// 根据商品id查询商品信息
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        CommodityModel ShowCommdityInfo(int sid);
     }
 }
