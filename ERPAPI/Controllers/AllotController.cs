@@ -25,24 +25,12 @@ namespace ERPAPI.Controllers
         }
         //查询
         [HttpGet]
-        public List<AllotController> ShowPageAllot(string AllotCode,  string WName, string Ename)
+        public List<AllotShowModel> ShowPageAllot(string AllotCode=null, string WName=null, string Ename=null)
         {
-            string sql = "select *from Allot join Commodity  on Allot.Sid=Commodity.Sid join Warehouse  on Allot.Wid=Warehouse.WId join ExportStoreroom on Allot.Eid=ExportStoreroom.EId where 1=1";
-            if (!string.IsNullOrEmpty(AllotCode))
-            {
-                sql += $"and Allot.AllotCode like'{AllotCode}'";
-            }
-            if (!string.IsNullOrEmpty(WName))
-            {
-                sql += $"and Warehouse.WName like'{WName}'";
-            }
-            if (!string.IsNullOrEmpty(Ename))
-            {
-                sql += $"and ExportStoreroom.Ename like'{Ename}'";
-            }
-            return _Business.Select<AllotController>(sql);
+            var list = _Business.ShowPageAllot(AllotCode,WName,Ename);
+            return list;
         }
-        
+       
         [HttpPost]
         public void ADD()
         {
@@ -59,18 +47,10 @@ namespace ERPAPI.Controllers
 
         }
         //盘点表数据
-        public List<ChecksShowModel> CheckShowModel(string WName,string Ename)
+        public List<CheckShowModel> CheckShowModel(string WName,string Ename)
         {
-            string sql = "select *from Checks join Warehouse on Checks.Cid =Warehouse.WId join Commodity on Checks.Cid=Commodity.Sid where 1=1";
-            if (!string.IsNullOrEmpty(WName))
-            {
-                sql += $"and Warehouse.WName like'{WName}'";
-            }
-            if (!string.IsNullOrEmpty(Ename))
-            {
-                sql += $"and ExportStoreroom.Ename like'{Ename}'";
-            }
-            return _Business.Select<ChecksShowModel>(sql);
+            var list = _Business.CheckShowModel(WName,Ename);
+            return list;
         }
     }
 }
