@@ -19,11 +19,11 @@
 
     <div>
         <table>
-            @*<tr>
+            <tr>
             <td>单据编号
             </td>
             <td><label id="num"></label></td>
-        </tr>*@
+        </tr>
             <tr>
                 <td>供应商：</td>
                 <td>
@@ -86,7 +86,7 @@
                 </td>
             </tr>
             <tr>
-                <td><input id="Button1" type="button" value="保存新增" /></td>
+                <td><input id="Button1" type="button" value="保存新增" onclick="btnadd()" /></td>
             </tr>
         </table>
     </div>
@@ -102,7 +102,7 @@
         dropGong();
         dropaccount();
         //供货商下拉框内容改变事件
-        dropGoods($("#gonghuo").val());
+       // dropGoods($("#gonghuo").val());
         $("#gonghuo").change(function ()
         {
 
@@ -117,50 +117,47 @@
 
                 url: "https://localhost:44300/api/Purchase/ShowCommdityInfo?sid=" + goodsId,
                 type: "get",
-                success: function (data)
-                {
-                   
+                success: function (data) {
+
 
                     $("#da").text(data.units);
                     $("#cu").text(data.wName);
                     $("#pr").text(data.price);
 
+
                 }
 
 
-            })
+            });
+
+            //商品单价
+                $("#pr").text(null),
+                //商品数量
+                $("#TextNum").val(null),
+                //折扣率
+                $("#TextZL").val(null),
+                //折扣额
+                $("#mony").text(null),
+                //采购金额
+                $("#cmony").text(null)
 
         })
 
        
 
         //折扣率改变事件
-        $("#TextZL").change(function () {
-
+        $("#TextZL").change(function ()
+        {
             count();
-
-
-           
-            //if ($("#TextNum").text == null)
-            //{
-            //    $("#cmony").text(0);
-            //}
-            //else
-            //{
-            //    //数量文本框内容改变事件
-            //    $("#TextNum").change(function () {
-
-            //        count();
-
-            //    });
-
-
-
-            //}
-           
+            //数量文本框内容改变事件
+            $("#TextNum").change(function () {
+                count();
+            });
 
         })
-       
+
+
+        
             
     })
 
@@ -179,12 +176,13 @@
 
         //折扣额
         zke = price * zkl;
+        $("#mony").text(zke);
         //采购金额
         sumcomy = snum * price - zke;
+        if (snum!=0) {
 
-
-
-
+            $("#cmony").text(sumcomy);
+        }
 
     }
 
@@ -255,6 +253,32 @@
 
     }
 
+    function dajubian()
+    {
+        var myDate = new Date();
 
+        var year = myDate.getFullYear();//获取当前年
+        var month = myDate.getMonth(); //获取当前月
+        var date = myDate.getDate();    //获取当前日
+
+        var hour = myDate.getHours();       //获取当前小时数（0-23）
+        var mintue = myDate.getMinutes();  //获取当前分钟数
+        var secound = myDate.getSeconds();  
+
+        var now = year + getNow(month)
+    }
+    //判断是否在前面加0
+    function getNow(s)
+    {
+        return s < 10 ? '0' + s : s;
+    }
+    //保存数据
+    function btnadd()
+    {
+
+
+
+
+    }
 
 </script>

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataAccess;
 using Model;
-using Business.Puchase;
 using ERPAPI.DatasModel;
 namespace ERPAPI.Controllers
 {
@@ -15,13 +14,13 @@ namespace ERPAPI.Controllers
     public class PurchaseController : ControllerBase
     {
 
-        private IPurchaseInfo _bll;
+        private IERP_Pcurhasedal _dal;
 
-        public PurchaseController(IPurchaseInfo purchaseInfo)
+        public PurchaseController(IERP_Pcurhasedal purchaseInfo)
         {
 
 
-            _bll = purchaseInfo;
+            _dal = purchaseInfo;
 
         }
         [HttpPost]
@@ -32,7 +31,7 @@ namespace ERPAPI.Controllers
         /// <returns></returns>
         public int add(PurchaseModel model)
         {
-            return _bll.add(model);
+            return _dal.add(model);
         }
 
         [HttpGet]
@@ -43,7 +42,7 @@ namespace ERPAPI.Controllers
         /// <returns></returns>
         public List<CommodityModel> showCommodity(int gid)
         {
-            return _bll.showCommodity(gid);
+            return _dal.showCommodity(gid);
         }
         [HttpGet]
         /// <summary>
@@ -52,7 +51,7 @@ namespace ERPAPI.Controllers
         /// <returns></returns>
         public List<SupplierModel> showSupplier()
         {
-            return _bll.showSupplier();
+            return _dal.showSupplier();
         }
 
         /// <summary>
@@ -63,7 +62,7 @@ namespace ERPAPI.Controllers
         public List<AccountModel> AccountModels()
         {
 
-            return _bll.AccountModels();
+            return _dal.AccountModels();
         }
         [HttpGet]
 
@@ -74,7 +73,7 @@ namespace ERPAPI.Controllers
         /// <returns></returns>
         public CommodityModel ShowCommdityInfo(int sid)
         {
-            return _bll.ShowCommdityInfo(sid);
+            return _dal.ShowCommdityInfo(sid);
         }
 
 
@@ -83,7 +82,7 @@ namespace ERPAPI.Controllers
         public PageShow ShowAllInfo(string  gname=null,DateTime? time=null,int state=1,int pageIndex=1,int pageSize=3)
         {
 
-                 var list= _bll.ShowPurchaseInfo();
+                 var list= _dal.ShowPurchaseInfo();
            
 
             List<PurchaseInfos> showlist = (from p in list
@@ -146,7 +145,7 @@ namespace ERPAPI.Controllers
         public List<PurchaseModel> ShowInfo()
         {
 
-            return _bll.ShowPurchaseInfo();
+            return _dal.ShowPurchaseInfo();
         }
 
     }
