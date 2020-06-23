@@ -35,13 +35,22 @@ namespace Business.Puchase
         {
             return _dal.add(model);
         }
+        /// <summary>
+        /// 根据商品id查询商品信息
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public CommodityModel ShowCommdityInfo(int sid)
+        {
+            return _dal.ShowCommdityInfo(sid);
+        }
 
-        
-       /// <summary>
-       /// 根据供应商id获取商品
-       /// </summary>
-       /// <param name="gid"></param>
-       /// <returns></returns>
+
+        /// <summary>
+        /// 根据供应商id获取商品
+        /// </summary>
+        /// <param name="gid"></param>
+        /// <returns></returns>
         public List<CommodityModel> showCommodity(int gid)
         {
             return _dal.showCommodity(gid);
