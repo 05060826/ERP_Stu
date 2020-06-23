@@ -24,17 +24,12 @@
             <td>单位</td>
             <td>系统库存</td>
             <td>盘点库存</td>
-            <td>盈盈盘亏</td>
+            <td>盘盈盘亏</td>
             <td>备注</td>
         </tr>
     </thead>
     <tbody id="tab1"></tbody>
 </table>
-
-
-
-
-
 <script>
     $(function () {
         ShowList();
@@ -44,21 +39,22 @@
         var WName = $("#Cname").val();
         var Ename = $("#Sname").val();
         $.ajax({
-            url: "https://localhost:44300/api/Allot/CheckShowModel?WName=" + code + "&Ename=" + Ename,
+            url: "https://localhost:44300/api/Allot/CheckShowModel?WName=" + WName + "&Ename=" + Ename,
             type: "get",
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 $("#tab1").empty();
                 $(data).each(function () {
                     var str = '<tr>' +
-                        '<td>' + this.wName + '</td>' +
-                        '<td>' + this.Sid + '</td>' +
-                        '<td>' + this.SName + '</td>' +
-                        '<td>' + this.Specification + '</td>' +
-                        '<td>' + this.Units + '</td>' +
-                        '<td>' + this.SystemNumber + '</td>' +
-                        '<td>' + this.CheckNumber + '</td>' +
-                        '<td><a href="javascript:updateInfo(' + this.AllotId + ')">编辑</a> <a href="javascript:deleteInfo(' + this.AllotId + ')">删除</a> </td>'
+                        '<td>' + this.wname + '</td>' +
+                        '<td>' + this.sid + '</td>' +
+                        '<td>' + this.sName + '</td>' +
+                        '<td>' + this.specification + '</td>' +
+                        '<td>' + this.units + '</td>' +
+                        '<td>' + this.systemNumber + '</td>' +
+                        '<td>' + this.checknumber + '</td>' +
+                        '<td><a href="javascript:updateInfo(' + this.allotId + ')">编辑</a> <a href="javascript:deleteInfo(' + this.allotId + ')">删除</a> </td>'
                         + '</tr>';
                     $("#tab1").append(str);
                 })
@@ -67,8 +63,20 @@
     }
 
     function Del(id) {
-
-
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/Update?Id=" + id,
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data > 0) {
+                    alert("删除成功");
+                }
+                else {
+                    alert("删除失败");
+                }
+             
+            }
+        })
 
     }
     function Upd(id) {

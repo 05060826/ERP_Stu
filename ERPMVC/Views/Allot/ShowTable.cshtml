@@ -46,17 +46,17 @@
     $(function () {
         ShowList();
     });
-
-       
     function ShowList() {
         var code = $("#Num").val();
         var WName = $("#Cname").val()
         var Ename = $("#Rname").val()
         $.ajax({
+            
             url: "https://localhost:44300/api/Allot/ShowPageAllot?AllotCode=" + code + "&&WName=" + WName + "&&Ename=" + Ename,
             type: "get",
             dataType: "json",
             success: function (data) {
+
                 $("#tab1").empty();
                 $(data).each(function () {
                     var str = '<tr>' +

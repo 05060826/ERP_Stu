@@ -15,20 +15,12 @@ namespace Business
     //仓库调拨表
     public class Allot_Business 
     {
-        BaseBusiness _baseBusiness = null;
-        public Allot_Business()
-        {
-            _baseBusiness = new BaseBusiness();
-        }
+        
         //添加
-        public int Add<T>(T t)
+        public int Add<AllotModel>(Model.AllotModel Allot)
         {
-            throw new NotImplementedException();
-        }
-        //删除
-        public int Delete(string sql)
-        {
-            throw new NotImplementedException();
+           var  sql =$"insert into Allot values '{Allot.AllotCode}','{Allot.Sid}','{Allot.Number}','{Allot.Units}','{Allot.Units}','{Allot.Wid}','{Allot.Eid}','{Allot.ATime}','{Allot.Remark}','{Allot.IsState}'";
+            return DapperHelper<AllotModel>.CRD(sql);
         }
         //显示 查询 调拨表
         public List<AllotShowModel> ShowPageAllot(string AllotCode = null, string WName = null, string Ename = null)
@@ -46,12 +38,13 @@ namespace Business
             {
                 sql += $"and ExportStoreroom.Ename like'{Ename}'";
             }
-            return _baseBusiness.Select<AllotShowModel>(sql);
+            return DapperHelper<AllotShowModel>.GetAll(sql);
         }
         //修改
-        public int Update(string sql)
+        public int Update(int  Id)
         {
-            throw new NotImplementedException();
+            var str = $"update Allot  set IsState=0 where AllotId={Id}";
+            return DapperHelper<AllotModel>.CRD(str);
         }
         //盘点表数据
         public List<CheckShowModel> CheckShowModel(string WName, string Sname)
@@ -65,8 +58,8 @@ namespace Business
             {
                 sql += $"and  Commodity.SName like '%{Sname}%''";
             }
-            return _baseBusiness.Select<CheckShowModel>(sql);
-            
+            return DapperHelper<CheckShowModel>.GetAll(sql);
+
         }
     }
 }

@@ -30,21 +30,15 @@ namespace ERPAPI.Controllers
             var list = _Business.ShowPageAllot(AllotCode,WName,Ename);
             return list;
         }
-       
         [HttpPost]
         public void ADD()
         {
 
         }
-        [HttpDelete]
-        public void Delete()
+        [HttpPost]
+        public int Update(int Id)
         {
-
-        }
-        [HttpPut]
-        public void Update()
-        {
-
+            return _Business.Update(Id);
         }
         [HttpGet]
         //盘点表数据
