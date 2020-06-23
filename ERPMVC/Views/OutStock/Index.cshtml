@@ -48,12 +48,23 @@
 
 
 </table>
+<p>
+    <a href="javascript:Show('First')">首页</a>
+    <a href="javascript:Show('Prv')">上一页</a>
+    <a href="javascript:Show('Next')">下一页</a>
+    <a href="javascript:Show('Last')">尾页</a>
+</p>
+
 
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 
 <script>
+
+    var pageSize = 3;
+    var pageNumber = 1;
+    var count = 0;
 
 
     $(function () {
@@ -77,31 +88,60 @@
                 })
                 $("#xiao").append(str);
 
-                Show();
+                Show('First');
             }
         })
 
     }
    
     $("#Cha").click(function () {
-        Show();
+        Show('First');
     })
 
 
-    function Show() {
+    function Show(pan) {
         var where = $("#where").val();
         var date = $("#date").val();
         var xiao = parseInt($("#xiao").val());
         var shou = parseInt($("#shou").val());
 
+        switch (pan) {
+            case 'First':
+                pageNumber = 1;
+                break;
+            case 'Prv':
+                if (pageNumber-1!=0)
+                {
+                    pageNumber = pageNumber - 1;
+                }
+                else {
+                    pageNumber = 1;
+
+                }              
+                break;
+            case 'Next':
+                if (pageNumber + 1 > count) {
+                    pageNumber = count; 
+                }
+                else {
+                    pageNumber = pageNumber + 1;
+
+                }
+                break;
+            case 'Last':
+                pageNumber = count;
+                break;
+            default: break;
+
+        }
 
         $.ajax({
-            url: "https://localhost:44300/api/show?where=" + where + "&date=" + date + "&xiao=" + xiao + "&shou=" + shou,
+            url: "https://localhost:44300/api/show?pageSize=" + pageSize + "&pageNumber=" + pageNumber+"&where=" + where + "&date=" + date + "&xiao=" + xiao + "&shou=" + shou,
             type: "get",
             dataType: "json",
             success: function (result) {
-                ShowList(result)
-
+                ShowList(result.list)
+                count = result.count;
             }
         })
 
@@ -164,9 +204,7 @@
 
     $("#Btn_Add").click(function () {
         location.href = "/OutStock/Create";
-
     })
-
 
 </script>
 
