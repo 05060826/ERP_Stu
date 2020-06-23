@@ -27,33 +27,12 @@
         </div>
     </div>
 </div>
-<div style="width:115px;float:right">
-    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnAdd">新增收款单</button>
+<div class="layui-inline" style="width:115px;float:right">
+    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnAdd">新增付款单</button>
 </div>
 <div class="layui-form">
-    @*<table class="layui-table" id="tb">
-            <colgroup>
-                <col width="150">
-                <col width="200">
-                <col>
-            </colgroup>
-
-            <tr>
-                <th><input type="checkbox" lay-skin="primary"></th>
-                <th>单据日期</th>
-                <th>单据编号</th>
-                <th>客户</th>
-                <th>付款金额</th>
-                <th>备注</th>
-                <th>操作</th>
-            </tr>
-
-        </table>*@
     <table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
-@*<div id="page">
-
-    </div>*@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -65,14 +44,6 @@
         var element = layui.element;
     });
 
-    //layui.use('laypage', function(){
-    //    var laypage = layui.laypage;
-    //    //执行一个laypage实例
-    //    laypage.render({
-    //        elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
-    //        ,count: 50 //数据总数，从服务端得到
-    //    });
-    //});
 
     layui.use('laydate', function () {
         var laydate = layui.laydate;
@@ -109,15 +80,15 @@
             table.render({
                 elem: '#test'
                 , url: 'https://localhost:44300/api/capital/GetPayMentData?where=' + where + '&dateTime=' + dateTime + ''
-                , title: '用户数据表'
+                , title: '付款单列表'
                 , totalRow: true
                 , cols: [[
                     { type: 'checkbox', fixed: 'left' }
-                    , { field: 'PaymentId', title: '单据日期', width: 120, edit: 'text' }
+                    , { field: 'PaymentId', title: 'ID', width: 120, edit: 'text' }
                     , { field: 'RTime', title: '单据日期', width: 120, edit: 'text' }
                     , { field: 'PaymentCode', title: '单据编号', width: 120, sort: true, totalRow: true }
                     , { field: 'ClientName', title: '客户', width: 120, edit: 'text', sort: true }
-                    , { field: 'CMoney', title: '付款金额', width: 120, sort: true, totalRow: true }
+                    , { field: 'CNumber', title: '付款金额', width: 120, sort: true, totalRow: true }
                     , { field: 'Remark', title: '备注', width: 120 }
                     , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
                 ]]

@@ -22,7 +22,7 @@ namespace ERPAPI.Controllers
             _business = business;
         }
         [HttpGet]
-        public List<DtoReceiptModel> GetReceiptData(DateTime? dateTime=null,string where="")
+        public string GetReceiptData(DateTime? dateTime=null,string where="")
         {
             string sql = "select * from Receipt r join Clear c on r.ClearId=c.ClearId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
             if (!string.IsNullOrEmpty(where))
@@ -33,7 +33,15 @@ namespace ERPAPI.Controllers
             {
                 sql += $" and RTime='{dateTime}'";
             }
-            return _business.Select<DtoReceiptModel>(sql);
+            List<DtoReceiptModel> list= _business.Select<DtoReceiptModel>(sql);
+            Dictionary<string, object> obj = new Dictionary<string, object>();
+
+            //前台通过key值获得对应的value值
+            obj.Add("code", 0);
+            obj.Add("msg", "");
+            obj.Add("count", list.Count);
+            obj.Add("data", list);
+            return JsonConvert.SerializeObject(obj);
         }
         [HttpGet]
         public int DelReceiptData(int receiptId)
@@ -85,9 +93,9 @@ namespace ERPAPI.Controllers
             //前台通过key值获得对应的value值
             obj.Add("code", 0);
             obj.Add("msg", "");
-            obj.Add("count", 1000);
+            obj.Add("count", list.Count);
             obj.Add("data", list);
-            return JsonConvert.SerializeObject(obj); ;
+            return JsonConvert.SerializeObject(obj);
         }
         [HttpGet]
         public int DelPayMentData(int paymentId)
