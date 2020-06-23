@@ -46,6 +46,7 @@ namespace ERPAPI.Controllers
         {
 
         }
+        [HttpGet]
         //盘点表数据
         public List<CheckShowModel> CheckShowModel(string WName,string Ename)
         {
