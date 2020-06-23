@@ -39,7 +39,7 @@ namespace ERPAPI.Controllers
         public int DelReceiptData(int receiptId)
         {
             string sql = "update from  Receipt set isstate=0 where ReceiptId="+ receiptId + "";
-            return _business.Delete(sql);
+            return _business.Update(sql);
         }
         [HttpGet]
         public List<ClientModel> GetClientData()
@@ -93,7 +93,7 @@ namespace ERPAPI.Controllers
         public int DelPayMentData(int paymentId)
         {
             string sql = "update from  PayMent set isstate=0 where PaymentId=" + paymentId + "";
-            return _business.Delete(sql);
+            return _business.Update(sql);
         }
         [HttpGet]
         public List<ClientModel> GetClientPData()
