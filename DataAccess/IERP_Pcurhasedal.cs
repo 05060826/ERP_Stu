@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
+using Model.PuchasesInfoModel;
 
 namespace DataAccess
 {
@@ -18,19 +19,19 @@ namespace DataAccess
         /// </summary>
         /// <param name="gid">供应商Id</param>
         /// <returns></returns>
-        List<CommodityModel> showCommodity(int gid);
+        List<ComityModel> showCommodity(int gid);
 
         /// <summary>
         /// 添加采购表单
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        int add(PurchaseModel model);
+        int add(PurchModel model);
         /// <summary>
         /// 显示采购列表
         /// </summary>
         /// <returns></returns>
-        List<PurchaseModel> ShowPurchaseInfo();
+        List<PurchModel> ShowPurchaseInfo();
         /// <summary>
         /// 显示结算账户信息
         /// </summary>
@@ -43,6 +44,6 @@ namespace DataAccess
         /// </summary>
         /// <param name="sid"></param>
         /// <returns></returns>
-        CommodityModel ShowCommdityInfo(int sid);
+        ComityModel ShowCommdityInfo(int sid);
     }
 }

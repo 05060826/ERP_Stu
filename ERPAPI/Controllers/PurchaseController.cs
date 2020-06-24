@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataAccess;
 using Model;
+using Model.PuchasesInfoModel;
 using ERPAPI.DatasModel;
 namespace ERPAPI.Controllers
 {
@@ -29,7 +30,7 @@ namespace ERPAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public int add(PurchaseModel model)
+        public int  AddPurCg(PurchModel model)
         {
             return _dal.add(model);
         }
@@ -40,7 +41,7 @@ namespace ERPAPI.Controllers
         /// </summary>
         /// <param name="gid"></param>
         /// <returns></returns>
-        public List<CommodityModel> showCommodity(int gid)
+        public List<ComityModel> showCommodity(int gid)
         {
             return _dal.showCommodity(gid);
         }
@@ -71,7 +72,7 @@ namespace ERPAPI.Controllers
         /// </summary>
         /// <param name="sid"></param>
         /// <returns></returns>
-        public CommodityModel ShowCommdityInfo(int sid)
+        public ComityModel ShowCommdityInfo(int sid)
         {
             return _dal.ShowCommdityInfo(sid);
         }
@@ -79,24 +80,24 @@ namespace ERPAPI.Controllers
 
         [HttpGet]
         //显示采购列表
-        public PageShow ShowAllInfo(string  gname=null,DateTime? time=null,int state=1,int pageIndex=1,int pageSize=3)
+        public PageShow ShowAllInfo(string  gname=null,DateTime? time= null,int state= 0, int pageIndex=1,int pageSize=3)
         {
 
-                 var list= _dal.ShowPurchaseInfo();
+                 var showlist = _dal.ShowPurchaseInfo();
            
 
-            List<PurchaseInfos> showlist = (from p in list
-                                            select new
-                                              PurchaseInfos
-                                            {
-                                                ReceIptsId = p.ReceIptsId,
-                                                ReceIptsCode = p.ReceIptsCode,
-                                                Gname=p.Gname,
-                                                Discount=p.Discount,
-                                                CMoney=p.CMoney,
-                                                Datetime=p.Datetime,
-                                                PayMent=p.PayMent,
-                                            }).ToList();
+            //List<PurchaseInfos> showlist = (from p in list
+            //                                select new
+            //                                  PurchaseInfos
+            //                                {
+            //                                    ReceIptsId = p.ReceIptsId,
+            //                                    ReceIptsCode = p.ReceIptsCode,
+            //                                    Gname=p.Gname,
+            //                                    Discount=p.Discount,
+            //                                    CMoney=p.CMoney,
+            //                                    Datetime=p.Datetime,
+            //                                    PayMent=p.PayMent,
+            //                                }).ToList();
 
 
             //供货商名称查询
@@ -142,7 +143,7 @@ namespace ERPAPI.Controllers
 
 
         [HttpGet]
-        public List<PurchaseModel> ShowInfo()
+        public List<PurchModel> ShowInfo()
         {
 
             return _dal.ShowPurchaseInfo();

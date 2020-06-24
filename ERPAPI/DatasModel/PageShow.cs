@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Model;
+using Model.PuchasesInfoModel;
 
 namespace ERPAPI.DatasModel
 {
     public class PageShow
     {
 
-        public List<PurchaseInfos> ShowList { get; set; }
+        public List<PurchModel> ShowList { get; set; }
         /// <summary>
         /// 总条数
         /// </summary>

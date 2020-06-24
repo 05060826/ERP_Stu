@@ -99,6 +99,7 @@
     //首次加载
     $(function ()
     {
+        dajubian();
         dropGong();
         dropaccount();
         //供货商下拉框内容改变事件
@@ -160,7 +161,7 @@
         
             
     })
-
+    //折扣额采购总额计算公式
     function count()
     {
         //商品单价
@@ -240,19 +241,20 @@
             type: "get",
             success: function (data) {
                 $("#account").empty();
+                $("#account").append('<option value=0>请选择</option>')
                 $(data).each(function () {
 
                     $("#account").append('<option value="' + this.aId + '">' + this.accountName + '</option>')
 
-                })
+                });
 
             }
-        })
+        });
 
 
 
     }
-
+    //单据编号随机生成
     function dajubian()
     {
         var myDate = new Date();
@@ -265,7 +267,13 @@
         var mintue = myDate.getMinutes();  //获取当前分钟数
         var secound = myDate.getSeconds();  
 
-        var now = year + getNow(month)
+        var now = year + getNow(month) + getNow(date) + getNow(hour) + getNow(mintue) + getNow(secound);
+
+        var nums = Math.random();
+        //生成四位随机数
+        out = Math.floor(Math.random() * 10000);
+        
+        $("#num").text("CG" + now + out);
     }
     //判断是否在前面加0
     function getNow(s)
@@ -275,6 +283,71 @@
     //保存数据
     function btnadd()
     {
+
+        //单据编号
+        var danju = $("#num").text();
+        //供应商编号
+        var gongId = parseInt($("#gonghuo").val());
+        //单据日期
+        var time = $("#Text1").val();
+        //商品Id
+        var goodsId = parseInt($("#goods").val());
+        //折扣率
+        var zkl = parseFloat($("#TextZL").val());
+        //折扣额
+        var dismoney = parseFloat($("#mony").text());
+        //采购数量
+        var cgnum = parseInt($("#TextNum").val());
+        //采购金额
+        var caAllmoney = parseFloat($("#cmony").text());
+        //备注
+        var stack = $("#TextTask").val();
+        //结算账户Id
+        var accountId = parseInt($("#account").val());
+
+        var state;
+        if (accountId == 0) {
+            state = 0;
+        }
+        else
+        {
+            state = 1;
+        }
+        var obj = {};
+        obj.ReceIptsCode = danju;
+        obj.SId = goodsId;
+        obj.GId = gongId;
+        obj.Number = cgnum;
+        obj.Rate = zkl;
+        obj.Discount = dismoney;
+        obj.CMoney = caAllmoney;
+        obj.AId = accountId;
+        obj.Datetime = time;
+        obj.Remark = stack;
+        obj.PayMent = state;
+        obj.IsState = 1;
+
+       // console.log(obj);
+        $.ajax({
+
+            url: "https://localhost:44300/api/Purchase/AddPurCg",
+            type: "post",
+            data: JSON.stringify(obj),
+            dataType:"json",
+            contentType:"application/json",
+            success: function (data)
+            {
+
+                if (data > 0) {
+                    alert("添加成功");
+                    location.href = "/PurchaseInfo/Purchas";
+                }
+                else
+                {
+                    alert("添加失败");
+                }
+            }
+        })
 
 
 
