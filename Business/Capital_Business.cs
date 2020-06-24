@@ -28,7 +28,7 @@ namespace Business
         //修改
         public int Update(string sql)
         {
-            throw new NotImplementedException();
+            return DapperHelper<DtoReceiptModel>.CRD(sql);
         }
     }
 }
