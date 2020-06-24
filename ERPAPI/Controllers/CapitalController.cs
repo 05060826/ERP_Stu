@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.CapitalModel;
+using Model.PuchasesInfoModel;
 using Newtonsoft.Json;
 using Model.PuchasesInfoModel;
 
