@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using Model.CapitalModel;
+using Model.PuchasesInfoModel;
 using Newtonsoft.Json;
 
 namespace ERPAPI.Controllers
@@ -110,14 +111,14 @@ namespace ERPAPI.Controllers
             return _business.Select<ClientModel>(sql);
         }
         [HttpGet]
-        public List<PurchaseModel> GetPurchaseData(string receIptsCode = "")
+        public List<PurchModel> GetPurchaseData(string receIptsCode = "")
         {
             string sql = "select * from Purchase where 1=1 ";
             if (!string.IsNullOrEmpty(receIptsCode))
             {
                 sql += " and ReceIptsCode='" + receIptsCode + "'";
             }
-            return _business.Select<PurchaseModel>(sql);
+            return _business.Select<PurchModel>(sql);
         }
         [HttpPost]
         public int AddPayMentData(PaymentModel model)

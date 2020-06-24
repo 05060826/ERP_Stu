@@ -2,7 +2,10 @@
 @{
     Layout = null;
 }
+
+
 <link href="~/style.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,15 +40,36 @@
             <img src="~/images/avtar.png" />
         </div>
         <form>
-            <input type="text" class="text" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}">
+            <input type="text" class="text" id="UserName" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}">
             <div class="key">
-                <input type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+                <input type="password" value="Password" id="UserPass" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
             </div>
         </form>
         <div class="signin">
-            <input type="submit" value="Login">
+            <input type="button" value="Login" onclick="login()">
         </div>
     </div>
 </body>
 </html>
 
+<script>
+    function login() {
+        var UserName = $("#UserName").val();
+        var UserPass = $("#UserPass").val();
+        var obj = {};
+        obj.UserName = UserName;
+        obj.UserPass = UserPass;
+        $.ajax({
+            url: "https://localhost:44300/api/Login/IsLogin",
+            data: JSON.stringify(obj),
+            type: "post",
+            dataType: "text",
+            contentType:"application/json",
+            success: function (result) {
+                if (result > 0) {
+                    location.href = "/home/index";
+                }
+            }
+        });
+    }
+</script>
