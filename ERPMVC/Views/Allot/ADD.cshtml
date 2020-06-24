@@ -1,215 +1,71 @@
-﻿
-@{
-    Layout = null;
-}
-<script src="~/layuiadmin/layui/layui.js"></script>
-<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<!DOCTYPE html>
+﻿@model Model.AllotModel
 
-<div style="width:300px;float:right">
-    <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="AddAndClose()">保存关新增</button>
-    <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">打印</button>
-    <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo" onclick="Add()">保存</button>
-</div>
-<div class="layui-form">
-    <div class="layui-inline">
-        <label class="layui-form-label">付款客户:</label>
-    </div>
-    <div class="layui-inline">
-        <select name="city" lay-filter="dk" lay-verify="required" id="kehu">
-        </select>
-    </div>
-    <div class="layui-inline">
-        <label class="layui-form-label">单据编号:</label>
-    </div>
-    <div class="layui-inline">
-        <label class="layui-form-label" id="skdj"></label>
-    </div>
-</div>
-<div class="layui-form">
-    <table class="layui-table" id="tb" lay-filter='mon'>
-        <colgroup>
-            <col width="150">
-            <col width="200">
-            <col>
-        </colgroup>
-        <tr>
-            <th></th>
-            <th>结算账户</th>
-            <th>收款金额</th>
-            <th>结算方式</th>
-            <th>备注</th>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-</div>
-<div class="layui-form">
-    <table class="layui-table" id="tt">
-        <colgroup>
-            <col width="150">
-            <col width="200">
-            <col>
-        </colgroup>
-        <tr>
-            <td></td>
-            <td>合计:</td>
-            <td id="zong"></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-</div>
-<div class="layui-form">
-    <div class="layui-inline">
-        <label class="layui-form-label">源单:</label>
-    </div>
-    <div class="layui-inline">
-        <select name="city" lay-filter="demo" lay-verify="required" id="yuan">
-        </select>
+@{
+    ViewData["Title"] = "ADD";
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ADD">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AllotId" class="control-label"></label>
+                <input asp-for="AllotId" class="form-control" />
+                <span asp-validation-for="AllotId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AllotCode" class="control-label"></label>
+                <input asp-for="AllotCode" class="form-control" />
+                <span asp-validation-for="AllotCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sid" class="control-label"></label>
+                <input asp-for="Sid" class="form-control" />
+                <span asp-validation-for="Sid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Units" class="control-label"></label>
+                <input asp-for="Units" class="form-control" />
+                <span asp-validation-for="Units" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Wid" class="control-label"></label>
+                <input asp-for="Wid" class="form-control" />
+                <span asp-validation-for="Wid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Eid" class="control-label"></label>
+                <input asp-for="Eid" class="form-control" />
+                <span asp-validation-for="Eid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ATime" class="control-label"></label>
+                <input asp-for="ATime" class="form-control" />
+                <span asp-validation-for="ATime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsState" class="control-label"></label>
+                <input asp-for="IsState" class="form-control" />
+                <span asp-validation-for="IsState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="保存" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
 </div>
 <script>
-    layui.use('form', function () {
-        var form = layui.form;
-        form.render(); //渲染页面
-        //下拉框改变
-        form.on('select(demo)', function (data) {
-            selectClear($("#yuan").val());
-        });
-    });
-
-    $(function () {
-        //显示客户
-        $.ajax({
-            url: "https://localhost:44300/api/capital/GetClientData",
-            type: "get",
-            dataType: "json",
-            success: function (result) {
-                var str = "";
-                $.each(result, function (i, n) {
-                    str += "<option value='" + n.cLientId + "'>" + n.clientName + "</option>";
-                })
-                $("#kehu").empty();
-                $("#kehu").append(str);
-                layui.use('form', function () {
-                    var form = layui.form;
-                    form.render(); //渲染页面
-                });
-            }
-        });
-        //显示源单
-        $.ajax({
-            url: "https://localhost:44300/api/capital/GetClearData",
-            type: "get",
-            dataType: "json",
-            success: function (result) {
-                var str = "";
-                $.each(result, function (i, n) {
-                    str += "<option value='" + n.cleaNumber + "'>" + n.cleaNumber + "</option>";
-                })
-                $("#yuan").empty();
-                $("#yuan").append(str);
-                layui.use('form', function () {
-                    var form = layui.form;
-                    form.render(); //渲染页面
-                });
-                var clearNumber = $("#yuan").val();
-                selectClear(clearNumber);
-            }
-        });
-        SetReceiptCode();
-    })
-    //拼接单据号
-    function SetReceiptCode() {
-        var moren = "SKDJ";
-        var now = new Date();
-        var time = now.getFullYear() + ((now.getMonth() + 1) < 10 ? "0" : "") + (now.getMonth() + 1) + (now.getDate() < 10 ? "0" : "") + now.getDate() + now.getHours() + now.getMinutes() + now.getSeconds();
-        $("#skdj").html(moren + time);
-    }
-    function selectClear(clearNumber) {
-        $.ajax({
-            url: "https://localhost:44300/api/capital/GetClearData?clearNumber=" + clearNumber + "",
-            type: "get",
-            dataType: "json",
-            success: function (result) {
-                var str = "";
-                $.each(result, function (i, n) {
-                    str += "<tr><td id='clearid' style='display:none' >" + n.clearId + "</td><td></td><td id='aid'>" + n.aId + "</td><td><input type='text' id='money' onchange='GetMoney()' lay-filter='mon' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' value='" + n.sMoney + "'></td><td><select id='fang' lay-verify='required'><option value='微信'>微信</option><option value='支付宝'>支付宝</option><option value='现金'>现金</option></select></td><td><input type='text'  required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' id='remark'></td></tr>";
-                })
-                $("#tb tr:gt(0)").empty();
-                $("#tb").append(str);
-                $("#zong").html($("#money").val());
-                layui.use('form', function () {
-                    var form = layui.form;
-                    form.render(); //渲染页面
-                });
-            }
-        });
-    }
-    function GetMoney() {
-        $("#zong").html($("#money").val());
-    }
-    function AddAndClose() {
-        var obj = {};
-        obj.ReceiptCode = $("#skdj").html();
-        obj.ClientId = parseInt($.trim($("#kehu").val()));
-        obj.ClearId = parseInt($("#clearid").html());
-        obj.CNumber = parseFloat($("#zong").html());
-        obj.Aid = parseInt($("#aid").html());
-        obj.Remark = $("#remark").val();
-        $.ajax({
-            url: "https://localhost:44300/api/capital/AddReceiptData",
-            data: JSON.stringify(obj),
-            type: "post",
-            dataType: "text",
-            contentType: "application/json",
-            success: function (result) {
-                if (result > 0) {
-                    location.href = "/Capital/Receipt";
-                }
-            }
-        })
-    }
-    function Add() {
-        var obj = {};
-        obj.ReceiptCode = $("#skdj").html();
-        obj.ClientId = parseInt($.trim($("#kehu").val()));
-        obj.ClearId = parseInt($("#clearid").html());
-        obj.CNumber = parseFloat($("#zong").html());
-        obj.Aid = parseInt($("#aid").html());
-        obj.Remark = $("#remark").val();
-        $.ajax({
-            url: "https://localhost:44300/api/capital/AddReceiptData",
-            data: JSON.stringify(obj),
-            type: "post",
-            dataType: "text",
-            contentType: "application/json",
-            success: function (result) {
-                if (result > 0) {
-                    location.href = "/Capital/Add";
-                }
-            }
-        })
-    }
+   
 </script>
+
+

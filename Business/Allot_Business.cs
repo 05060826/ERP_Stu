@@ -52,7 +52,7 @@ namespace Business
             var sql = "select *from Checks join Warehouse on Checks.Cid=Warehouse.WId join Commodity on Checks.Sid=Commodity.Sid  where 1 = 1 ";
             if (!string.IsNullOrEmpty(WName))
             {
-                sql += $"and Warehouse.WName like '%{WName}%'";
+                sql += $"and Warehouse.WName like '%{WName}%''";
             }
             if (!string.IsNullOrEmpty(Sname))
             {
