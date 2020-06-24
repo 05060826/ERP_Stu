@@ -47,7 +47,7 @@ namespace ERPAPI.Controllers
         public int DelReceiptData(int receiptId)
         {
             string sql = "update from  Receipt set isstate=0 where ReceiptId="+ receiptId + "";
-            return _business.Update(sql);
+            return _business.Delete(sql);
         }
         [HttpGet]
         public List<ClientModel> GetClientData()
@@ -101,7 +101,7 @@ namespace ERPAPI.Controllers
         public int DelPayMentData(int paymentId)
         {
             string sql = "update from  PayMent set isstate=0 where PaymentId=" + paymentId + "";
-            return _business.Update(sql);
+            return _business.Delete(sql);
         }
         [HttpGet]
         public List<ClientModel> GetClientPData()
@@ -110,7 +110,7 @@ namespace ERPAPI.Controllers
             return _business.Select<ClientModel>(sql);
         }
         [HttpGet]
-        public List<PurchaseModel> GetClearPData(string receIptsCode = "")
+        public List<PurchaseModel> GetPurchaseData(string receIptsCode = "")
         {
             string sql = "select * from Purchase where 1=1 ";
             if (!string.IsNullOrEmpty(receIptsCode))
@@ -124,8 +124,8 @@ namespace ERPAPI.Controllers
         {
             model.RTime = DateTime.Now;
             model.IsState = 1;
-            //string sql = $"insert into Receipt (ReceiptCode,ClientId,ClearId,CNumber,Aid,RTime,Remark,IsState) values('{model.ReceiptCode}','{model.ClientId}','{model.ClearId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
-            return DapperHelper<PaymentModel>.CRD("");
+            string sql = $"insert into PayMent (PaymentCode,ClientId,ReceIptsId,CNumber,Aid,RTime,Remark,IsState) values('{model.PaymentCode}','{model.ClientId}','{model.ReceIptsId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
+            return DapperHelper<PaymentModel>.CRD(sql);
         }
     }
 }

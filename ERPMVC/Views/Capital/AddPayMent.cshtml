@@ -102,7 +102,7 @@
     $(function () {
         //显示客户
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetClientData",
+            url: "https://localhost:44300/api/capital/GetClientPData",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -120,13 +120,13 @@
         });
         //显示源单
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetClearData",
+            url: "https://localhost:44300/api/capital/GetPurchaseData",
             type: "get",
             dataType: "json",
             success: function (result) {
                 var str = "";
                 $.each(result, function (i, n) {
-                    str += "<option value='" + n.cleaNumber + "'>" + n.cleaNumber + "</option>";
+                    str += "<option value='" + n.receIptsCode + "'>" + n.receIptsCode + "</option>";
                 })
                 $("#yuan").empty();
                 $("#yuan").append(str);
@@ -149,13 +149,13 @@
     }
     function selectClear(clearNumber) {
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetClearData?clearNumber=" + clearNumber + "",
+            url: "https://localhost:44300/api/capital/GetPurchaseData?receIptsCode=" + clearNumber + "",
             type: "get",
             dataType: "json",
             success: function (result) {
                 var str = "";
                 $.each(result, function (i, n) {
-                    str += "<tr><td id='clearid' style='display:none' >" + n.clearId + "</td><td></td><td id='aid'>" + n.aId + "</td><td><input type='text' id='money' onchange='GetMoney()' lay-filter='mon' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' value='" + n.sMoney + "'></td><td><select id='fang' lay-verify='required'><option value='微信'>微信</option><option value='支付宝'>支付宝</option><option value='现金'>现金</option></select></td><td><input type='text'  required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' id='remark'></td></tr>";
+                    str += "<tr><td id='clearid' style='display:none' >" + n.receIptsId + "</td><td></td><td id='aid'>" + n.aId + "</td><td><input type='text' id='money' onchange='GetMoney()' lay-filter='mon' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' value='" + n.cMoney + "'></td><td><select id='fang' lay-verify='required'><option value='微信'>微信</option><option value='支付宝'>支付宝</option><option value='现金'>现金</option></select></td><td><input type='text'  required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' id='remark'></td></tr>";
                 })
                 $("#tb tr:gt(0)").empty();
                 $("#tb").append(str);
@@ -172,42 +172,42 @@
     }
     function AddAndClose() {
         var obj = {};
-        obj.ReceiptCode = $("#skdj").html();
+        obj.PaymentCode = $("#skdj").html();
         obj.ClientId = parseInt($.trim($("#kehu").val()));
-        obj.ClearId = parseInt($("#clearid").html());
+        obj.ReceIptsId = parseInt($("#clearid").html());
         obj.CNumber = parseFloat($("#zong").html());
         obj.Aid = parseInt($("#aid").html());
         obj.Remark = $("#remark").val();
         $.ajax({
-            url: "https://localhost:44300/api/capital/AddReceiptData",
+            url: "https://localhost:44300/api/capital/AddPayMentData",
             data: JSON.stringify(obj),
             type: "post",
             dataType: "text",
             contentType: "application/json",
             success: function (result) {
                 if (result > 0) {
-                    location.href = "/Capital/Receipt";
+                    location.href = "/Capital/PayMent";
                 }
             }
         })
     } 
     function Add() {
         var obj = {};
-        obj.ReceiptCode = $("#skdj").html();
+        obj.PaymentCode = $("#skdj").html();
         obj.ClientId = parseInt($.trim($("#kehu").val()));
-        obj.ClearId = parseInt($("#clearid").html());
+        obj.ReceIptsId = parseInt($("#clearid").html());
         obj.CNumber = parseFloat($("#zong").html());
         obj.Aid = parseInt($("#aid").html());
         obj.Remark = $("#remark").val();
         $.ajax({
-            url: "https://localhost:44300/api/capital/AddReceiptData",
+            url: "https://localhost:44300/api/capital/AddPayMentData",
             data: JSON.stringify(obj),
             type: "post",
             dataType: "text",
             contentType: "application/json",
             success: function (result) {
                 if (result > 0) {
-                    location.href = "/Capital/Add";
+                    location.href = "/Capital/AddPayMent";
                 }
             }
         })
