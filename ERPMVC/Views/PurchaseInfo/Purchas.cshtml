@@ -21,6 +21,7 @@
                     <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注" />
 
                     <select id="stateid">
+                        <option value="2">请选择</option>
                         <option value="1">已付款</option>
                         <option value="0">未付款</option>
 
@@ -197,8 +198,27 @@
 
     }
     //删除
-    function deleteInfo()
+    function deleteInfo(rid)
     {
+        $.ajax({
+
+            url: "https://localhost:44300/api/Purchase/AddPurCg",
+            type: "post",
+            data: JSON.stringify(obj),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+
+                if (data > 0) {
+                    alert("添加成功");
+                    location.href = "/PurchaseInfo/Purchas";
+                }
+                else {
+                    alert("添加失败");
+                }
+            }
+        })
+
 
 
     }
