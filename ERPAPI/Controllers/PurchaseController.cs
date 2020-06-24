@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataAccess;
 using Model;
-using Business.Puchase;
+using Model.PuchasesInfoModel;
 using ERPAPI.DatasModel;
 namespace ERPAPI.Controllers
 {
@@ -15,13 +15,13 @@ namespace ERPAPI.Controllers
     public class PurchaseController : ControllerBase
     {
 
-        private IPurchaseInfo _bll;
+        private IERP_Pcurhasedal _dal;
 
-        public PurchaseController(IPurchaseInfo purchaseInfo)
+        public PurchaseController(IERP_Pcurhasedal purchaseInfo)
         {
 
 
-            _bll = purchaseInfo;
+            _dal = purchaseInfo;
 
         }
         [HttpPost]
@@ -30,9 +30,9 @@ namespace ERPAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public int add(PurchaseModel model)
+        public int  AddPurCg(PurchModel model)
         {
-            return _bll.add(model);
+            return _dal.add(model);
         }
 
         [HttpGet]
@@ -41,9 +41,9 @@ namespace ERPAPI.Controllers
         /// </summary>
         /// <param name="gid"></param>
         /// <returns></returns>
-        public List<CommodityModel> showCommodity(int gid)
+        public List<ComityModel> showCommodity(int gid)
         {
-            return _bll.showCommodity(gid);
+            return _dal.showCommodity(gid);
         }
         [HttpGet]
         /// <summary>
@@ -52,7 +52,7 @@ namespace ERPAPI.Controllers
         /// <returns></returns>
         public List<SupplierModel> showSupplier()
         {
-            return _bll.showSupplier();
+            return _dal.showSupplier();
         }
 
         /// <summary>
@@ -63,30 +63,41 @@ namespace ERPAPI.Controllers
         public List<AccountModel> AccountModels()
         {
 
-            return _bll.AccountModels();
+            return _dal.AccountModels();
+        }
+        [HttpGet]
+
+        /// <summary>
+        /// 根据商品id查询商品信息
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public ComityModel ShowCommdityInfo(int sid)
+        {
+            return _dal.ShowCommdityInfo(sid);
         }
 
 
         [HttpGet]
         //显示采购列表
-        public PageShow ShowAllInfo(string  gname=null,DateTime? time=null,int state=1,int pageIndex=1,int pageSize=3)
+        public PageShow ShowAllInfo(string  gname=null,DateTime? time= null,int state= 0, int pageIndex=1,int pageSize=3)
         {
 
-                 var list= _bll.ShowPurchaseInfo();
+                 var showlist = _dal.ShowPurchaseInfo();
            
 
-            List<PurchaseInfos> showlist = (from p in list
-                                            select new
-                                              PurchaseInfos
-                                            {
-                                                ReceIptsId = p.ReceIptsId,
-                                                ReceIptsCode = p.ReceIptsCode,
-                                                Gname=p.Gname,
-                                                Discount=p.Discount,
-                                                CMoney=p.CMoney,
-                                                Datetime=p.Datetime,
-                                                PayMent=p.PayMent,
-                                            }).ToList();
+            //List<PurchaseInfos> showlist = (from p in list
+            //                                select new
+            //                                  PurchaseInfos
+            //                                {
+            //                                    ReceIptsId = p.ReceIptsId,
+            //                                    ReceIptsCode = p.ReceIptsCode,
+            //                                    Gname=p.Gname,
+            //                                    Discount=p.Discount,
+            //                                    CMoney=p.CMoney,
+            //                                    Datetime=p.Datetime,
+            //                                    PayMent=p.PayMent,
+            //                                }).ToList();
 
 
             //供货商名称查询
@@ -128,6 +139,14 @@ namespace ERPAPI.Controllers
             return pageShowlist;
         
         
+        }
+
+
+        [HttpGet]
+        public List<PurchModel> ShowInfo()
+        {
+
+            return _dal.ShowPurchaseInfo();
         }
 
     }

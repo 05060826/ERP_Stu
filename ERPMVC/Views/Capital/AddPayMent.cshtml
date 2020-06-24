@@ -7,4 +7,209 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <!DOCTYPE html>
 
+<div style="width:300px;float:right">
+    <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="AddAndClose()">保存关新增</button>
+    <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">打印</button>
+    <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo" onclick="Add()">保存</button>
+</div>
+<div class="layui-form">
+    <div class="layui-inline">
+        <label class="layui-form-label">付款客户:</label>
+    </div>
+    <div class="layui-inline">
+        <select name="city" lay-filter="dk" lay-verify="required" id="kehu">
+        </select>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">单据编号:</label>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label" id="skdj"></label>
+    </div>
+</div>
+<div class="layui-form">
+    <table class="layui-table" id="tb" lay-filter='mon'>
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <tr>
+            <th></th>
+            <th>结算账户</th>
+            <th>收款金额</th>
+            <th>结算方式</th>
+            <th>备注</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+<div class="layui-form">
+    <table class="layui-table" id="tt">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <tr>
+            <td></td>
+            <td>合计:</td>
+            <td id="zong"></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+<div class="layui-form">
+    <div class="layui-inline">
+        <label class="layui-form-label">源单:</label>
+    </div>
+    <div class="layui-inline">
+        <select name="city" lay-filter="demo" lay-verify="required" id="yuan">
+        </select>
+    </div>
+</div>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+        form.render(); //渲染页面
+        //下拉框改变
+        form.on('select(demo)', function (data) {
+            selectClear($("#yuan").val());
+        });
+    });
 
+    $(function () {
+        //显示客户
+        $.ajax({
+            url: "https://localhost:44300/api/capital/GetClientPData",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                var str = "";
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.cLientId + "'>" + n.clientName + "</option>";
+                })
+                $("#kehu").empty();
+                $("#kehu").append(str);
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render(); //渲染页面
+                });
+            }
+        });
+        //显示源单
+        $.ajax({
+            url: "https://localhost:44300/api/capital/GetPurchaseData",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                var str = "";
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.receIptsCode + "'>" + n.receIptsCode + "</option>";
+                })
+                $("#yuan").empty();
+                $("#yuan").append(str);
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render(); //渲染页面
+                });
+                var clearNumber = $("#yuan").val();
+                selectClear(clearNumber);
+            }
+        });
+        SetReceiptCode();
+    })
+    //拼接单据号
+    function SetReceiptCode() {
+        var moren = "FKDJ";
+        var now = new Date();
+        var time = now.getFullYear() + ((now.getMonth() + 1) < 10 ? "0" : "") + (now.getMonth() + 1) + (now.getDate() < 10 ? "0" : "") + now.getDate() + now.getHours() + now.getMinutes() + now.getSeconds();
+        $("#skdj").html(moren + time);
+    }
+    function selectClear(clearNumber) {
+        $.ajax({
+            url: "https://localhost:44300/api/capital/GetPurchaseData?receIptsCode=" + clearNumber + "",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                var str = "";
+                $.each(result, function (i, n) {
+                    str += "<tr><td id='clearid' style='display:none' >" + n.receIptsId + "</td><td></td><td id='aid'>" + n.aId + "</td><td><input type='text' id='money' onchange='GetMoney()' lay-filter='mon' required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' value='" + n.cMoney + "'></td><td><select id='fang' lay-verify='required'><option value='微信'>微信</option><option value='支付宝'>支付宝</option><option value='现金'>现金</option></select></td><td><input type='text'  required lay-verify='required' autocomplete='off' class='layui-input' style='border-bottom: 1px solid #000;border-top: 0px;border-left: 0px;border-right: 0px;outline: none;' id='remark'></td></tr>";
+                })
+                $("#tb tr:gt(0)").empty();
+                $("#tb").append(str);
+                $("#zong").html($("#money").val());
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render(); //渲染页面
+                });
+            }
+        });
+    }
+    function GetMoney() {
+        $("#zong").html($("#money").val());
+    }
+    function AddAndClose() {
+        var obj = {};
+        obj.PaymentCode = $("#skdj").html();
+        obj.ClientId = parseInt($.trim($("#kehu").val()));
+        obj.ReceIptsId = parseInt($("#clearid").html());
+        obj.CNumber = parseFloat($("#zong").html());
+        obj.Aid = parseInt($("#aid").html());
+        obj.Remark = $("#remark").val();
+        $.ajax({
+            url: "https://localhost:44300/api/capital/AddPayMentData",
+            data: JSON.stringify(obj),
+            type: "post",
+            dataType: "text",
+            contentType: "application/json",
+            success: function (result) {
+                if (result > 0) {
+                    location.href = "/Capital/PayMent";
+                }
+            }
+        })
+    } 
+    function Add() {
+        var obj = {};
+        obj.PaymentCode = $("#skdj").html();
+        obj.ClientId = parseInt($.trim($("#kehu").val()));
+        obj.ReceIptsId = parseInt($("#clearid").html());
+        obj.CNumber = parseFloat($("#zong").html());
+        obj.Aid = parseInt($("#aid").html());
+        obj.Remark = $("#remark").val();
+        $.ajax({
+            url: "https://localhost:44300/api/capital/AddPayMentData",
+            data: JSON.stringify(obj),
+            type: "post",
+            dataType: "text",
+            contentType: "application/json",
+            success: function (result) {
+                if (result > 0) {
+                    location.href = "/Capital/AddPayMent";
+                }
+            }
+        })
+    }
+</script>

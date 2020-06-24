@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
+using Model.PuchasesInfoModel;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
@@ -29,12 +30,12 @@ namespace DataAccess
         /// <param name="gid"></param>
         /// <returns></returns>
 
-        public List<CommodityModel> showCommodity(int gid)
+        public List<ComityModel> showCommodity(int gid)
         {
             using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
 
-                return conn.Query<CommodityModel>($"select * from Commodity co join Supplier su on co.GId={gid}").ToList();
+                return conn.Query<ComityModel>($"select * from Commodity where GId={gid}").ToList();
             }
         }
 
@@ -44,23 +45,23 @@ namespace DataAccess
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public int  add(PurchaseModel model)
+        public int  add(PurchModel model)
         {
             using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
 
-                return conn.Execute($"insert into Purchase values ('{model.ReceIptsCode}',{model.SId},{model.GId},{model.Number},{model.Rate},{model.Discount},{model.CMoney},{model.AId},{model.Datetime},'{model.Remark}')");
+                return conn.Execute($"insert into Purchase values ('{model.ReceIptsCode}',{model.SId},{model.GId},{model.Number},{model.Rate},{model.Discount},{model.CMoney},{model.AId},'{model.Datetime}',{model.PayMent},'{model.Remark}',{model.IsState})");
             }
         }
         /// <summary>
         /// 显示所有采购数据
         /// </summary>
         /// <returns></returns>
-        public List<PurchaseModel> ShowPurchaseInfo()
+        public List<PurchModel> ShowPurchaseInfo()
         {
             using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
-                return conn.Query<PurchaseModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId").ToList();
+                return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId").ToList();
             }
         }
         /// <summary>
@@ -73,6 +74,20 @@ namespace DataAccess
             {
 
                 return conn.Query<AccountModel>($"select * from Account").ToList();
+            }
+        }
+
+        /// <summary>
+        /// 查询商品信息根据商品信息表Id
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public ComityModel ShowCommdityInfo(int sid)
+        {
+
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            {
+                return conn.Query<ComityModel>($"select * from Commodity  co join Warehouse ws on co.WId=ws.WId where Sid={sid}").FirstOrDefault();
             }
         }
     }
