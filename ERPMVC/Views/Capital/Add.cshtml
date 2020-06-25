@@ -100,10 +100,6 @@
     });
 
     $(function () {
-        var ReceiptCode = this.location.search.split('?')[1].split('=')[1];
-        if (ReceiptCode != null) {
-
-        }
         //显示客户
         $.ajax({
             url: "https://localhost:44300/api/capital/GetClientData",
