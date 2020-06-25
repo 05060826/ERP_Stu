@@ -61,7 +61,7 @@ namespace DataAccess
         {
             using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
-                return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId").ToList();
+                return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId where p.IsState=1").ToList();
             }
         }
         /// <summary>
@@ -88,6 +88,19 @@ namespace DataAccess
             using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
                 return conn.Query<ComityModel>($"select * from Commodity  co join Warehouse ws on co.WId=ws.WId where Sid={sid}").FirstOrDefault();
+            }
+        }
+        /// <summary>
+        /// 修改数据在页面是否显示页面删除
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        public int UpdateIstate(int rid)
+        {
+
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            {
+                return conn.Execute($"update Purchase set IsState=0 where ReceIptsId={rid}");
             }
         }
     }
