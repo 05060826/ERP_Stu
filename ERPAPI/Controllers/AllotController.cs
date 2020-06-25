@@ -34,7 +34,7 @@ namespace ERPAPI.Controllers
         public int Add<AllotModel>(Model.AllotModel Allot)
         {
             var str = _Business.Add<AllotModel>(Allot);
-            return 1;
+            return str;
         }
         [HttpPost]
         public int Update(int Id)
