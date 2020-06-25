@@ -9,19 +9,32 @@ namespace ERPMVC.Controllers
 {
     public class OutStockController : Controller
     {
-        
+        //出货显示功能
         public IActionResult Index()
         {
             return View();
         }
+        //新增出货功能
         public IActionResult Create()
         {
             return View();
         }
-        public IActionResult update(int id=-1)
+        //修改出货功能
+        public IActionResult Update(int id=-1)
         {
 
             ViewBag.Id = id;
+            return View();
+        }
+
+        //新增退货功能
+        public IActionResult Tui()
+        {
+            return View();
+        }
+        //显示所有退货功能
+        public IActionResult AllTui()
+        {
             return View();
         }
     }
