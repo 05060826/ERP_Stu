@@ -12,7 +12,7 @@ namespace Model.OutModel
         public string WName { get; set; }
         public int Number { get; set; }
         public double SellMoney { get; set; }
-        public double Discount { get; set; }
+        public double Rate { get; set; }
         public double SMoney { get; set; }
 
 

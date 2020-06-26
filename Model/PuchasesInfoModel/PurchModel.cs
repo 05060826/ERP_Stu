@@ -17,6 +17,41 @@ namespace Model.PuchasesInfoModel
 		/// 商品Id
 		/// </summary>
 		public int SId { get; set; }
+
+
+
+		/// <summary>
+		/// 商品单位
+		/// </summary>
+		public string Units { get; set; }
+		/// <summary>
+		/// 仓库Id
+		/// </summary>
+		public int WId { get; set; }
+		public string WName { get; set; }
+		/// <summary>
+		/// 商品单价
+		/// </summary>
+		public double Price { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		/// <summary>
 		/// 供应商Id
 		/// </summary>

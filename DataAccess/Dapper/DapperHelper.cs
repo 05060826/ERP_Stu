@@ -49,8 +49,5 @@ namespace DataAccess.Dapper
                 return Convert.ToInt32(conn.ExecuteScalar(sql));
             }
         }
-
-
-
     }
 }
