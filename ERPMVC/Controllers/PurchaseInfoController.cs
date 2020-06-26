@@ -18,8 +18,10 @@ namespace ERPMVC.Controllers
             return View();
         }
 
-        public IActionResult UpdatePurchas()
+        public IActionResult UpdatePurchas(int rid)
         {
+
+            ViewBag.rid = rid;
             return View();
         }
 
