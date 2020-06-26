@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Business;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +9,8 @@ using Model;
 using Model.AarehouseModel;
 using Model.Model;
 using Model.OutModel;
+using Business;
+
 
 
 namespace ERPAPI.Controllers
@@ -27,10 +28,10 @@ namespace ERPAPI.Controllers
         //[HttpGet]
         //public List<AllotShowModel> ShowPageAllot(string AllotCode=null, string WName=null, string Ename=null)
         //{
-        //    var list = _Business.ShowPageAllot(AllotCode, WName, Ename);
+        //    var list = _Business.ShowPageAllot(AllotCode,WName,Ename);
         //    return list;
         //}
-
+       
         [HttpPost]
         public void ADD()
         {

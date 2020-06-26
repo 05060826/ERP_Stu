@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Model;
+using Model.PuchasesInfoModel;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
@@ -16,7 +17,7 @@ namespace DataAccess
         /// <returns></returns>
         public List<SupplierModel> showSupplier()
         {
-            using (SqlConnection conn=new SqlConnection("Data Source=192.168.1.102;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn=new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
 
                 return conn.Query<SupplierModel>("select * from Supplier").ToList();
@@ -29,12 +30,12 @@ namespace DataAccess
         /// <param name="gid"></param>
         /// <returns></returns>
 
-        public List<CommodityModel> showCommodity(int gid)
+        public List<ComityModel> showCommodity(int gid)
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.102;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
 
-                return conn.Query<CommodityModel>($"select * from Commodity where GId={gid}").ToList();
+                return conn.Query<ComityModel>($"select * from Commodity where GId={gid}").ToList();
             }
         }
 
@@ -44,23 +45,23 @@ namespace DataAccess
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public int  add(PurchaseModel model)
+        public int  add(PurchModel model)
         {
             using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
 
-                return conn.Execute($"insert into Purchase values ('{model.ReceIptsCode}',{model.SId},{model.GId},{model.Number},{model.Rate},{model.Discount},{model.CMoney},{model.AId},{model.Datetime},'{model.Remark}')");
+                return conn.Execute($"insert into Purchase values ('{model.ReceIptsCode}',{model.SId},{model.GId},{model.Number},{model.Rate},{model.Discount},{model.CMoney},{model.AId},'{model.Datetime}',{model.PayMent},'{model.Remark}',{model.IsState})");
             }
         }
         /// <summary>
         /// 显示所有采购数据
         /// </summary>
         /// <returns></returns>
-        public List<PurchaseModel> ShowPurchaseInfo()
+        public List<PurchModel> ShowPurchaseInfo()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.102;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
-                return conn.Query<PurchaseModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId").ToList();
+                return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId where p.IsState=1").ToList();
             }
         }
         /// <summary>
@@ -69,7 +70,7 @@ namespace DataAccess
         /// <returns></returns>
         public List<AccountModel> AccountModels()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.102;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
 
                 return conn.Query<AccountModel>($"select * from Account").ToList();
@@ -81,12 +82,25 @@ namespace DataAccess
         /// </summary>
         /// <param name="sid"></param>
         /// <returns></returns>
-        public CommodityModel ShowCommdityInfo(int sid)
+        public ComityModel ShowCommdityInfo(int sid)
         {
 
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.102;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
-                return conn.Query<CommodityModel>($"select * from Commodity  co join Warehouse ws on co.WId=ws.WId where Sid={sid}").FirstOrDefault();
+                return conn.Query<ComityModel>($"select * from Commodity  co join Warehouse ws on co.WId=ws.WId where Sid={sid}").FirstOrDefault();
+            }
+        }
+        /// <summary>
+        /// 修改数据在页面是否显示页面删除
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        public int UpdateIstate(int rid)
+        {
+
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.0.157;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            {
+                return conn.Execute($"update Purchase set IsState=0 where ReceIptsId={rid}");
             }
         }
     }
