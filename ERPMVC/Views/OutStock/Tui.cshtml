@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewData["Title"] = "Tui";
+}
+
+<h1>退货列表</h1>
+
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+@*<script src="~b/jquery/dist/jquery.js"></script>*@
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+<div class="layui-form-item">
+    <label class="layui-form-label">单据编号</label>
+    <div class="layui-input-inline">
+        <select id="Bian">
+        </select>
+        <button type="button" class="layui-btn layui-btn-radius" id="BackAll">返回退货列表</button>
+
+    </div>
+</div>
+
+<table id="tb" class="layui-table" lay-skin="line">
+    <thead>
+        <tr>
+            <td>单据日期</td>
+            <td>单据编号</td>
+            <td>客户</td>
+            <td>销售金额</td>
+            <td>优惠后金额</td>
+            <td>已付款</td>
+            <td>收款状态</td>
+            <td>操作</td>
+
+        </tr>
+
+    </thead>
+
+</table>
+
+
+<script>
+    $(function () {
+        Bang();
+
+    })
+
+
+
+    function Bang() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/showSelect",
+            type: "get",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                $("#Bian").empty();
+                var str = "";
+                var id = 0;
+                $.each(result, function (i, n) {
+                    if (i == 0) {
+                        id = n.clearId;
+                    }
+                    str += "<option value='" + n.clearId + "' >" + n.cleaNumber + "</option>"
+                })
+                $("#Bian").append(str);
+
+                Show(id)
+            }
+        })
+
+    }
+    $("#Bian").change(function () {
+
+        var id = parseInt($("#Bian").val())
+        Show(id);
+    })
+
+
+    function Show(id) {
+
+        $.ajax({
+            url: "https://localhost:44300/api/showTui?id=" + id,
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+               
+                ShowList(result[0])
+            }
+        })
+
+    }
+    function ShowList(result) {
+        var str = "";
+        var state = "";
+
+
+        $("#tb tr:gt(0)").empty();
+
+        if (result.cState == 0) {
+            state = "未付款"
+
+        }
+        else if (result.cState == 1) {
+            state = "已付款"
+        }     
+
+        str += "<tbody><tr><td>" + result.cTime + "</td>";
+        str += "<td>" + result.cleaNumber + "</td>";
+        str += "<td>" + result.clientName + "</td>";
+        str += "<td>" + (result.number * result.sellMoney) + "</td>";
+        str += "<td>" + result.sMoney + "</td>";
+        str += "<td>" + result.sMoney + "</td>";
+        str += "<td>" + state + "</td>";
+        str += "<td><a href='javascript: Tui(" + result.clearId + ")'>退货</a></tr></tbody> ";
+
+
+        $("#tb").append(str);
+
+    }
+
+
+
+    function Tui(id) {
+
+        $.ajax({
+            url: "https://localhost:44300/api/xiuTui?id=" + id,
+            type: "get",
+            dataType: "text",
+            success: function (result) {
+                if (result > 0) {
+                    alert("退货成功")
+
+                }
+            }
+        })
+
+    }
+
+    $("#BackAll").click(function () {
+        location.href = "/OutStock/AllTui";
+    })
+
+</script>
+
+

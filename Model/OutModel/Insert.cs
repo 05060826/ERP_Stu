@@ -55,10 +55,11 @@ namespace Model.OutModel
 		/// 结算账户
 		/// </summary>
 		public int AId { get; set; }
-		//仓库Id
-		public int WId { get; set; }
-		//供应商Id
-		public int GId { get; set; }
+		/// <summary>
+		/// 结算账户
+		/// </summary>
+		public int Sid { get; set; }
+
 
 	}
 }

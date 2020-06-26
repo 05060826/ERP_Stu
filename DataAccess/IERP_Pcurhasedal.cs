@@ -45,5 +45,32 @@ namespace DataAccess
         /// <param name="sid"></param>
         /// <returns></returns>
         ComityModel ShowCommdityInfo(int sid);
+
+
+        /// <summary>
+        /// 修改数据在页面是否显示页面删除
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        int UpdateIstate(int rid);
+
+        /// <summary>
+        /// 根据采购单据Id进行反填
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        PurchModel FanTian(int rid);
+
+
+        /// <summary>
+        /// 修改支付状态
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        int UpdatePaMent(int rid);
+
+
+        
+            
     }
 }

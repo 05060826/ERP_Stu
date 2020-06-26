@@ -65,8 +65,8 @@
             <div class="form-group">
                 <p>
                     商品名称：
-                    <input asp-for="SName" id="SName" class="form-control" />
-                    <span asp-validation-for="SName" class="text-danger"></span>
+                    <select id="Sid" class="form-control">
+                    </select>
                 </p>
             </div>
 
@@ -98,7 +98,7 @@
             <div class="form-group">
                 <p>
                     折扣额：
-                    <input asp-for="Discount" id="Discount" class="form-control" />
+                    <input asp-for="Discount" id="Discount" class="form-control" disabled/>
                     <span asp-validation-for="Discount" class="text-danger"></span>
                 </p>
 
@@ -106,7 +106,7 @@
             <div class="form-group">
                 <p>
                     优惠后金额：
-                    <input asp-for="SMoney" id="SMoney" class="form-control" />
+                    <input asp-for="SMoney" id="SMoney" class="form-control" disabled />
                     <span asp-validation-for="SMoney" class="text-danger"></span>
                 </p>
 
@@ -135,23 +135,7 @@
                 </p>
 
             </div>
-            <div class="form-group">
 
-                <p>
-                    仓库：
-                    <select id="WId" class="form-control">
-                    </select>
-                </p>
-
-            </div>
-
-            <div class="form-group">
-                <p>
-                    供应商：
-                    <select id="GId" class="form-control">
-                    </select>
-                </p>
-            </div>
             <div class="form-group">
                 <input type="button" value="添加出货" id="insert" class="btn btn-primary" />
             </div>
@@ -164,13 +148,13 @@
 </div>
 
 
-
-
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 
 <script>
     $(function () {
+
+
         var myDate = new Date();
 
         var year = myDate.getFullYear();        //获取当前年
@@ -178,18 +162,18 @@
         var date = myDate.getDate();            //获取当前日
 
 
-        var h = myDate.getHours();              //获取当前小时数(0-23)
-        var m = myDate.getMinutes();          //获取当前分钟数(0-59)
-        var s = myDate.getSeconds();
-
-        var now = year + getNow(month) + getNow(date) + getNow(h) + getNow(m) + getNow(s);
+        //var h = myDate.getHours();              //获取当前小时数(0-23)
+        //var m = myDate.getMinutes();          //获取当前分钟数(0-59)
+        //var s = myDate.getSeconds();
+        //+ getNow(h) + getNow(m) + getNow(s)
+        var now = year + getNow(month) + getNow(date) ;
         $("#bian").html("CH" + now)
 
 
         Xiao();
         Pay();
-        Cang();
-        Gong();
+        Commind();
+       
     })
 
     function Xiao() {
@@ -231,40 +215,22 @@
         })
 
     }
-    function Cang() {
+   
+
+    function Commind() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showCang",
+            url: "https://localhost:44300/api/showCommind",
             type: "get",
             dataType: "json",
             success: function (result) {
-                $("#WId").empty();
+                $("#Sid").empty();
                 var str = "";
-                str += "<option value='-1'>请选择仓库</option>"
+                str += "<option value='-1'>请选择商品</option>"
                 $.each(result, function (i, n) {
-                    str += "<option value='" + n.wId + "' >" + n.wName + "</option>"
+                    str += "<option value='" + n.sid + "' >" + n.sName + "</option>"
                 })
-                $("#WId").append(str);
-
-            }
-        })
-
-    }
-
-    function Gong() {
-
-        $.ajax({
-            url: "https://localhost:44300/api/showGong",
-            type: "get",
-            dataType: "json",
-            success: function (result) {
-                $("#GId").empty();
-                var str = "";
-                str += "<option value='-1'>请选择供应商</option>"
-                $.each(result, function (i, n) {
-                    str += "<option value='" + n.gId + "' >" + n.gname + "</option>"
-                })
-                $("#GId").append(str);
+                $("#Sid").append(str);
 
             }
         })
@@ -300,8 +266,8 @@
             str += "<td>" + n.wName + "</td>";
             str += "<td>" + n.number + "</td>";
             str += "<td>" + n.sellMoney + "</td>";
-            str += "<td>" + n.discount + "</td>";
-            str += "<td>" + (n.number * n.sellMoney * n.discount) + "</td>";
+            str += "<td>" + n.rate + "</td>";
+            str += "<td>" + (n.number * n.sellMoney * n.rate) + "</td>";
             str += "<td>" + n.sMoney + "</td>";
 
             str += "<td><a href='javascript: Shan(" + n.clearId + ")'>删除|</a><a href='javascript: Xiu(" + n.clearId + ")'>修改|</a>  </td ></tr> ";
@@ -314,58 +280,13 @@
         Show();
     })
 
-  //  public string CleaNumber { get; set; }--
-		///// <summary>
-		///// 客户Id
-		///// </summary>
-		//public int CliName { get; set; }--
-		///// <summary>
-		///// 销售人员Id
-		///// </summary>
-		//public int MName { get; set; }--
-		///// <summary>
-		///// 商品Id
-		///// </summary>
-		//public int SName { get; set; }--
-		///// <summary>
-		///// 数量
-		///// </summary>
-		//public int Number { get; set; }--
-		///// <summary>
-		///// 销售单价
-		///// </summary>
-		//public double SellMoney { get; set; }--
-		///// <summary>
-		///// 折扣率
-		///// </summary>
-		//public double Rate { get; set; }--
-		///// <summary>
-		///// 折扣金额
-		///// </summary>
-		//public double Discount { get; set; }--
-		///// <summary>
-		///// 销售金额
-		///// </summary>
-		//public double SMoney { get; set; }
-		///// <summary>
-		///// 收货地址
-		///// </summary>
-		//public string Addresses { get; set; }--
-		///// <summary>
-		///// 出货单据日期
-		///// </summary>
-		//public DateTime CTime { get; set; }--
-		///// <summary>
-		///// 结算账户
-		///// </summary>
-		//public int AId { get; set; }--
-
     $("#insert").click(function () {
         list = {};
         list.CleaNumber = $("#bian").html();
         list.CliName = $("#CliName").val();
         list.MName = $("#MName").val();
         list.SName = $("#SName").val();
+        list.Sid = parseInt($("#Sid").val());
         list.Number = parseInt($("#Number").val());
         list.SellMoney = parseFloat($("#SellMoney").val());
         list.Rate = parseFloat($("#Rate").val());
@@ -373,11 +294,8 @@
         list.SMoney = parseFloat($("#SMoney").val());
         list.Addresses = $("#Addresses").val();
         list.CTime = $("#CTime").val();
-        list.AId = parseInt( $("#AId").val());
-        list.WId = parseInt($("#WId").val());
-        list.GId = parseInt($("#GId").val());
-
-
+        list.AId = parseInt( $("#AId").val());        
+       
         $.ajax({
             url: "https://localhost:44300/api/insert",
             data: JSON.stringify(list),
@@ -392,11 +310,6 @@
             }
         })
         
-
-
-
-
-
     })
     $("#Rate").change(function () {
         change();

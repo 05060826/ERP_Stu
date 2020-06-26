@@ -124,7 +124,7 @@
    
     ////显示数据
     //function btnsel()
-    //{
+    //{.
 
 
     //}
@@ -192,34 +192,36 @@
 
     }
     //修改跳转到退货页面反填数据修改状态
-    function updateInfo()
+    function updateInfo(rid)
     {
 
-
+        location.href = "/PurchaseInfo/UpdatePurchas?rid=" + rid;
     }
-    //删除
+    //页面删除
     function deleteInfo(rid)
     {
+        if (confirm("确定删除吗？"))
+        {
+
+        
         $.ajax({
 
-            url: "https://localhost:44300/api/Purchase/AddPurCg",
-            type: "post",
-            data: JSON.stringify(obj),
+            url: "https://localhost:44300/api/Purchase/UpdateIstate?rid=" + rid,
+            type: "put",
             dataType: "json",
-            contentType: "application/json",
             success: function (data) {
 
                 if (data > 0) {
-                    alert("添加成功");
-                    location.href = "/PurchaseInfo/Purchas";
+                    alert("删除成功");
+                    btnCha();
                 }
                 else {
-                    alert("添加失败");
+                    alert("删除失败");
                 }
             }
         })
 
-
+        }
 
     }
 

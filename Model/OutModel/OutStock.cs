@@ -7,7 +7,7 @@ namespace Model.OutModel
     public class OutStock
     {
         //OutStock（出货表显示）
-        public int ClearId { get; set; }
+        public int ClearId { get; set; } 
         public string CleaNumber { get; set; }
         public int CliId { get; set; }
         public int MId { get; set; }

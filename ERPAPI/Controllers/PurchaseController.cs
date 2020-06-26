@@ -149,5 +149,44 @@ namespace ERPAPI.Controllers
             return _dal.ShowPurchaseInfo();
         }
 
+        [HttpPut]
+        /// <summary>
+        /// 修改数据在页面是否显示页面删除
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        public int UpdateIstate(int rid)
+        {
+
+            return _dal.UpdateIstate(rid);
+        }
+
+        [HttpGet]
+        /// <summary>
+        /// 根据采购单据Id进行反填
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        public PurchModel FanTian(int rid)
+        {
+            return _dal.FanTian(rid);
+        }
+
+        [HttpPut]
+
+        /// <summary>
+        /// 修改支付状态
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        public int UpdatePaMent(int rid)
+        {
+
+            return _dal.UpdatePaMent(rid);
+
+
+        }
+
+
     }
 }
