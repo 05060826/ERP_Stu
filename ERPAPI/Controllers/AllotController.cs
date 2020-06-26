@@ -30,23 +30,49 @@ namespace ERPAPI.Controllers
             var list = _Business.ShowPageAllot(AllotCode,WName,Ename);
             return list;
         }
+        //添加
         [HttpPost]
         public int Add<AllotModel>(Model.AllotModel Allot)
         {
             var str = _Business.Add<AllotModel>(Allot);
             return str;
         }
+        //修改/删除
         [HttpPost]
         public int Update(int Id)
         {
             return _Business.Update(Id);
         }
+
         [HttpGet]
         //盘点表数据
         public List<CheckShowModel> CheckShowModel(string WName,string Ename)
         {
             var list = _Business.CheckShowModel(WName,Ename);
             return list;
+        }
+        [HttpGet]
+        //下拉商品
+        public List<CommodityModel> ShowComm()
+        {
+            var clist = _Business.ShowComm();
+            return clist;
+            
+        }
+        [HttpGet]
+        //下拉入库
+        public List<WarehouseModel> ShowWare()
+        {
+            var wlist = _Business.ShowWare();
+            return wlist;
+        }
+        [HttpGet]
+        //下拉出库
+        public List<ExportStoreroomModel> ShowExportSto()
+        {
+            var elist = _Business.ShowExportSto();
+            return elist;
+           
         }
     }
 }

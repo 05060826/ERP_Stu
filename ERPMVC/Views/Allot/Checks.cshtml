@@ -5,6 +5,7 @@
 <script src="~/layuiadmin/layui/layui.js"></script>
 <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 <script src="~/lib/jquery/dist/jquery.js"></script>
+
 <p>
     
     <input type="text" placeholder="仓库名称" id="Cname" />
@@ -39,22 +40,22 @@
         var WName = $("#Cname").val();
         var Ename = $("#Sname").val();
         $.ajax({
-            url: "https://localhost:44300/api/Allot/CheckShowModel?WName=" + WName + "&Ename=" + Ename,
+            url: "https://localhost:44300/api/Allot/CheckShowModel?WName=" + WName + "&&Ename=" + Ename,
             type: "get",
             dataType: "json",
+            async: false,
             success: function (data) {
-                console.log(data);
                 $("#tab1").empty();
                 $(data).each(function () {
                     var str = '<tr>' +
-                        '<td>' + this.wname + '</td>' +
+                        '<td>' + this.wName + '</td>' +
                         '<td>' + this.sid + '</td>' +
                         '<td>' + this.sName + '</td>' +
                         '<td>' + this.specification + '</td>' +
                         '<td>' + this.units + '</td>' +
                         '<td>' + this.systemNumber + '</td>' +
-                        '<td>' + this.checknumber + '</td>' +
-                        '<td><a href="javascript:updateInfo(' + this.allotId + ')">编辑</a> <a href="javascript:deleteInfo(' + this.allotId + ')">删除</a> </td>'
+                        '<td>' + this.checkNumber + '</td>' +
+                        '<td> <a href="javascript:deleteInfo(' + this.cid + ')">删除</a> </td>'
                         + '</tr>';
                     $("#tab1").append(str);
                 })
@@ -77,10 +78,6 @@
              
             }
         })
-
-    }
-    function Upd(id) {
-
 
     }
 </script>

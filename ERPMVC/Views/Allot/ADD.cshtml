@@ -9,47 +9,48 @@
         <form asp-action="ADD">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="AllotId" class="control-label"></label>
-                <input asp-for="AllotId" class="form-control" />
-                <span asp-validation-for="AllotId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AllotCode" class="control-label"></label>
-                <input asp-for="AllotCode" class="form-control" />
-                <span asp-validation-for="AllotCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Sid" class="control-label"></label>
-                <input asp-for="Sid" class="form-control" />
-                <span asp-validation-for="Sid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Number" class="control-label"></label>
-                <input asp-for="Number" class="form-control" />
-                <span asp-validation-for="Number" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Units" class="control-label"></label>
-                <input asp-for="Units" class="form-control" />
-                <span asp-validation-for="Units" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Wid" class="control-label"></label>
-                <input asp-for="Wid" class="form-control" />
-                <span asp-validation-for="Wid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Eid" class="control-label"></label>
-                <input asp-for="Eid" class="form-control" />
-                <span asp-validation-for="Eid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ATime" class="control-label"></label>
+                单据日期
                 <input asp-for="ATime" class="form-control" />
                 <span asp-validation-for="ATime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Remark" class="control-label"></label>
+                单据编号:
+                <input asp-for="AllotCode" class="form-control" />
+                <span asp-validation-for="AllotCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <p>
+                    商品名称：
+                    <select id="Sid" class="form-control">
+                    </select>
+                </p>
+            </div>
+            <div class="form-group">
+                单位:
+                <input asp-for="Units" class="form-control" />
+                <span asp-validation-for="Units" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                数量:
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <p>
+                    调入仓库：
+                    <select id="Wid" class="form-control">
+                    </select>
+                </p>
+            </div>
+            <div class="form-group">
+                <p>
+                    调出仓库：
+                    <select id="Eid" class="form-control">
+                    </select>
+                </p>
+            </div>
+            <div class="form-group">
+               备注:
                 <input asp-for="Remark" class="form-control" />
                 <span asp-validation-for="Remark" class="text-danger"></span>
             </div>
@@ -59,13 +60,126 @@
                 <span asp-validation-for="IsState" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="保存" class="btn btn-primary" />
+                <input type="submit" id="insert" value="保存" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 <script>
-   
+    $(function () {
+        var myDate = new Date();
+
+        var year = myDate.getFullYear();        //获取当前年
+        var month = myDate.getMonth() + 1;   //获取当前月
+        var date = myDate.getDate();            //获取当前日
+
+
+        var h = myDate.getHours();              //获取当前小时数(0-23)
+        var m = myDate.getMinutes();          //获取当前分钟数(0-59)
+        var s = myDate.getSeconds();
+
+        var now = year + getNow(month) + getNow(date) + getNow(h) + getNow(m) + getNow(s);
+        $("#AllotCode").html("DB" + now)
+
+
+        ShowComm();
+        ShowWare();
+        ShowExportSto();
+       
+    })
+    //商品下拉
+    function ShowComm() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/ShowComm",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                $("#Sid").empty();
+                var str = "";
+                str += "<option value='-1'>请选择商品</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.sid + "' >" + n.sName + "</option>"
+                })
+                $("#xiao").append(str);
+
+                Show();
+            }
+        })
+
+    }
+    //入库下拉
+    function ShowWare() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/ShowWare",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                $("#Wid").empty();
+                var str = "";
+                str += "<option value='-1'>请选择仓库</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.wId + "' >" + n.wName + "</option>"
+                })
+                $("#WId").append(str);
+
+            }
+        })
+
+    }
+    //出库下拉
+    function ShowWare() {
+
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/ShowWare",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                $("#Eid").empty();
+                var str = "";
+                str += "<option value='-1'>请选择仓库</option>"
+                $.each(result, function (i, n) {
+                    str += "<option value='" + n.eId + "' >" + n.ename + "</option>"
+                })
+                $("#WId").append(str);
+
+            }
+        })
+
+    }
+    //添加按钮
+    $("#insert").click(function () {
+        list = {};
+        list.CleaNumber = $("#bian").html();
+        list.CliName = $("#CliName").val();
+        list.MName = $("#MName").val();
+        list.SName = $("#SName").val();
+        list.Number = parseInt($("#Number").val());
+        list.SellMoney = parseFloat($("#SellMoney").val());
+        list.Rate = parseFloat($("#Rate").val());
+        list.Discount = parseFloat($("#Discount").val())
+        list.SMoney = parseFloat($("#SMoney").val());
+        list.Addresses = $("#Addresses").val();
+        list.CTime = $("#CTime").val();
+        list.AId = parseInt($("#AId").val());
+        list.WId = parseInt($("#WId").val());
+        list.GId = parseInt($("#GId").val());
+
+
+        $.ajax({
+            url: "https://localhost:44300/api/insert",
+            data: JSON.stringify(list),
+            type: "post",
+            dataType: "text",
+            contentType: "application/json",
+            success: function (result) {
+                if (result > 0) {
+                    alert("添加成功")
+
+                }
+            }
+        })
 </script>
 
 
