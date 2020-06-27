@@ -83,7 +83,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public List<ClearModel> ShowSelect()
         {
-            List<ClearModel> list = DapperHelper<ClearModel>.GetAll("select * from Clear where IsState=1 and CState=0 or CState = 1 ");         
+            List<ClearModel> list = DapperHelper<ClearModel>.GetAll("select * from Clear where IsState=1 and (CState=0 or CState = 1) ");         
             return list;
         }
 
@@ -92,7 +92,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public List<OutStock> ShowTui(int id)
         {
-            string sql = "select* from Clear a join Client b on a.cliId = b.CLientId join Sell c on a.MId = c.SeId where 1=1 and a.IsState=1 and a.CState=0 or a.CState = 1 ";
+            string sql = "select* from Clear a join Client b on a.cliId = b.CLientId join Sell c on a.MId = c.SeId where 1=1 and a.IsState=1 and (a.CState=0 or a.CState = 1) ";
             List<OutStock> list = DapperHelper<OutStock>.GetAll(sql);
 
 
@@ -106,7 +106,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public OutStockList Show(int pageSize,int pageNumber, string where=null,string date=null,int xiao=-1,int shou=-1 )
         {
-            string sql = "select* from Clear a join Client b on a.cliId = b.CLientId join Sell c on a.MId = c.SeId where 1=1 and a.IsState=1 and a.CState=0 or a.CState = 1 ";
+            string sql = "select* from Clear a join Client b on a.cliId = b.CLientId join Sell c on a.MId = c.SeId where 1=1 and a.IsState=1 and (a.CState=0 or a.CState = 1) ";
 
             //select * from Clear a join Client b on a.cliId=b.CLientId join Sell c on a.MId=c.SeId where a.CleaNumber='CH20200616' and a.CTime='2020-06-16 00:00:00.000' and c.SeId=1 and a.CState=1
             if (!string.IsNullOrWhiteSpace(where))
@@ -142,7 +142,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public List<Goods> ShowIns(string client=null,int xiao=1,string date=null)
         {
-            string sql = "select a.ClearId, b.SName,b.Units,c.WName,a.Number,a.SellMoney,a.Rate,a.SMoney from Clear a join Commodity b on a.SId=b.Sid join Warehouse c on b.WId= c.WId join Client d on a.CliId=d.CLientId where 1=1 and a.IsState=1 and  a.CState=0 or a.CState = 1";
+            string sql = "select a.ClearId, b.SName,b.Units,c.WName,a.Number,a.SellMoney,a.Rate,a.SMoney from Clear a join Commodity b on a.SId=b.Sid join Warehouse c on b.WId= c.WId join Client d on a.CliId=d.CLientId where 1=1 and a.IsState=1 and  (a.CState=0 or a.CState = 1)";
 
             if (!string.IsNullOrWhiteSpace(client))
             {
@@ -170,7 +170,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public OutStockList ShowAllTui(int pageSize, int pageNumber, string where = null, string date = null, int xiao = -1, int shou = -1)
         {
-            string sql = "select* from Clear a join Client b on a.cliId = b.CLientId join Sell c on a.MId = c.SeId where 1=1 and a.IsState=1 and a.CState=2 or a.CState = 3 ";
+            string sql = "select* from Clear a join Client b on a.cliId = b.CLientId join Sell c on a.MId = c.SeId where 1=1 and a.IsState=1 and (a.CState=2 or a.CState = 3) ";
 
             //select * from Clear a join Client b on a.cliId=b.CLientId join Sell c on a.MId=c.SeId where a.CleaNumber='CH20200616' and a.CTime='2020-06-16 00:00:00.000' and c.SeId=1 and a.CState=1
             if (!string.IsNullOrWhiteSpace(where))
@@ -248,7 +248,7 @@ namespace ERPAPI.Controllers
         public int XiuTui(int id)
         {
             int count = 0;
-            count = DapperHelper<Insert>.CRD($"update Clear set CState=3 where and ClearId="+id );
+            count = DapperHelper<Insert>.CRD($"update Clear set CState=3 where ClearId="+id );
             return count;
         }
 

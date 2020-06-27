@@ -11,16 +11,39 @@
 <script src="~/layuiadmin/layui/layui.js"></script>
 <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 
-<p>
-    客户：<input type="text" placeholder="符号家" id="client" />
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">客户：</label>
+    </div>
+    <div class="layui-inline">
+        <input type="text" placeholder="请查询客户名称" id="client" style="width:150px" class="layui-input" />
+    </div>
+    <div class="layui-inline" style="margin-left:20px">
+        <select id="xiao" class="layui-select">
+        </select>
+    </div>
 
-    <select id="xiao">
-    </select>
-    单据日期：<input type="date" id="date" />
-    单据编号：<span id="bian"></span>
-    <button type="button" class="layui-btn layui-btn-radius" id="Cha">查询结果</button>
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">单据日期：</label>
+    </div>
+    <div class="layui-inline">
+        <input type="date" id="date" class="layui-input" />
+    </div>
 
-</p>
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">单据编号：</label>
+    </div>
+    <div class="layui-inline">
+        <span id="bian"></span>
+    </div>
+
+
+    <div class="layui-inline">
+        <button type="button" class="layui-btn layui-btn-radius" id="Cha">查询结果</button>
+    </div>
+
+</div>
+
 
 <table id="tb" class="table table-bordered">
     <tr>
@@ -41,106 +64,96 @@
 <input type="hidden" id="realMoney" />
 <h4>Insert</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Inserts">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <p>
-                    客户：
-                    <input asp-for="CliName" id="CliName" class="form-control" />
-                    <span asp-validation-for="CliName" class="text-danger"></span>
-                </p>
-
-            </div>
-            <div class="form-group">
-                <p>
-                    销售人员：
-                    <input asp-for="MName" id="MName" class="form-control" />
-                    <span asp-validation-for="MName" class="text-danger"></span>
-                </p>
-
-            </div>
-            <div class="form-group">
-                <p>
-                    商品名称：
-                    <select id="Sid" class="form-control">
-                    </select>
-                </p>
-            </div>
-
-            <div class="form-group">
-                <p>
-                    数量：
-                    <input asp-for="Number" id="Number" class="form-control" />
-                    <span asp-validation-for="Number" class="text-danger"></span>
-                </p>
-
-            </div>
-            <div class="form-group">
-                <p>
-                    价格：
-                    <input asp-for="SellMoney" id="SellMoney" class="form-control" />
-                    <span asp-validation-for="SellMoney" class="text-danger"></span>
-                </p>
-
-            </div>
-            <div class="form-group">
-                <p>
-                    折扣率：
-                    <input asp-for="Rate" id="Rate" class="form-control" />
-                    <span asp-validation-for="Rate" class="text-danger"></span>
-                </p>
-
-
-            </div>
-            <div class="form-group">
-                <p>
-                    折扣额：
-                    <input asp-for="Discount" id="Discount" class="form-control" disabled/>
-                    <span asp-validation-for="Discount" class="text-danger"></span>
-                </p>
-
-            </div>
-            <div class="form-group">
-                <p>
-                    优惠后金额：
-                    <input asp-for="SMoney" id="SMoney" class="form-control" disabled />
-                    <span asp-validation-for="SMoney" class="text-danger"></span>
-                </p>
-
-            </div>
-            <div class="form-group">
-                <p>
-                    地址：
-                    <input asp-for="Addresses" id="Addresses" class="form-control" />
-                    <span asp-validation-for="Addresses" class="text-danger"></span>
-                </p>
-
-            </div>
-            <div class="form-group">
-                <p>
-                    添加时间：
-                    <input asp-for="CTime" id="CTime" class="form-control" />
-                    <span asp-validation-for="CTime" class="text-danger"></span>
-                </p>
-            </div>
-            <div class="form-group">
-
-                <p>
-                    结算账户：
-                    <select id="AId" class="form-control">
-                    </select>
-                </p>
-
-            </div>
-
-            <div class="form-group">
-                <input type="button" value="添加出货" id="insert" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">客户：</label>
     </div>
+    <div class="layui-inline">
+        <input id="CliName" class="layui-input" type="text" style="width:100px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">销售人员：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="MName" class="layui-input"  type="text" style="width:100px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">商品名称：</label>
+    </div>
+    <div class="layui-inline">
+        <select id="Sid" class="layui-select">
+        </select>
+    </div>
+</div>
+
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">数量：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="Number" class="layui-input"  type="text" style="width:100px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:75px">
+        <label class="layui-label">价格：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="SellMoney" class="layui-input"  type="text" style="width:100px"/>
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:60px">
+        <label class="layui-label">折扣率：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="Rate" class="layui-input"  type="text" style="width:100px" />
+    </div>
+</div>
+
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">折扣额：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="Discount" class="layui-input"  type="text" disabled />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:100px">
+        <label class="layui-label">优惠后金额：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="SMoney" class="layui-input"  type="text" disabled />
+    </div>
+</div>
+
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">地址：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="Addresses" class="layui-input"  type="text" style="width:200px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">添加时间：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="CTime" class="layui-input"  type="date" style="width:200px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">结算账户：</label>
+    </div>
+    <div class="layui-inline">
+        <select id="AId" class="layui-select">
+        </select>
+    </div>
+</div>
+
+<div class="layui-colla-content layui-show">
+    <input type="button" value="添加出货" id="insert" class="btn btn-primary" />
 </div>
 
 <div>
@@ -166,9 +179,13 @@
         //var m = myDate.getMinutes();          //获取当前分钟数(0-59)
         //var s = myDate.getSeconds();
         //+ getNow(h) + getNow(m) + getNow(s)
-        var now = year + getNow(month) + getNow(date) ;
-        $("#bian").html("CH" + now)
+        var dd = Math.floor(Math.random() * 10000)
+        //out = Math.floor(Math.random() * 10000);
 
+
+        var now = year + getNow(month) + getNow(date)+dd;
+        $("#bian").html("CH" + now)
+        
 
         Xiao();
         Pay();
