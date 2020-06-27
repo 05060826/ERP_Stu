@@ -39,5 +39,7 @@ namespace Model
 		/// 盘点库存数量（采购数量-出货数量+退货数量）
 		/// </summary>
 		 public int  CheckNumber { get; set; }
+
+
 	 }
 }

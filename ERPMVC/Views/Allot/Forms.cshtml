@@ -1,1 +1,49 @@
-﻿<h2> 报表</h2>
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>第一个 ECharts 实例</title>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                source: [
+                    ['product', '购买', '入库', '出库','销售','结余'],
+                    ['蔬菜库', 43.3, 85.8, 93.7, 85.8, 93.7],
+                    ['食品库', 83.1, 73.4, 55.1, 73.4, 55.1],
+                    ['五金库', 86.4, 65.2, 82.5, 65.2, 82.5],
+                    ['磨具库', 72.4, 53.9, 39.1, 53.9, 39.1]
+                   
+                ]
+            },
+            xAxis: { type: 'category' },
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: [
+                { type: 'bar' },
+                { type: 'bar' },
+                { type: 'bar' },
+                { type: 'bar' },
+                { type: 'bar' }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
+
