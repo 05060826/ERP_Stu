@@ -1,0 +1,217 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+  
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+    <table style="text-align:center">
+        <tr>
+            <td>仓库</td>
+            <td>入库量</td>
+            <td>出库量</td>
+            <td>总盈亏</td>
+        </tr>
+
+    </table>
+    <div id="service" style="height:300px;width:500px"></div>
+
+</body>
+</html>
+    <script>
+        $(function () {
+            Show();
+        });
+        function Show() {
+            $.ajax({
+                url: "https://localhost:44300/api/Allot/ShowFrom",
+                type: "Get",
+                dataType: "json",
+                success: function (result) {
+                    ShowList(result);
+
+                    var xx = [];
+                    var y1 = [];
+                    var y2 = [];
+                    var y3 = [];
+                    $(result).each(function () {
+                        xx.push(this.wName);
+                        y1.push(this.systemNumber);
+                        y2.push(this.checkNumber);
+                        y3.push(this.sum);
+                    })
+                    Bandle(xx, y1, y2, y3);
+                }
+            });
+        }
+
+        function ShowList(result) {
+            $("table").empty();
+            $.each(result, function (i, n) {
+                var sum = (n.systemNumber - n.checkNumber);
+                var list = '<tr style="text-align:center">'
+                    + '<td>' + n.wName + '</td>'
+                    + '<td>' + n.systemNumber + '</td>'
+                    + '<td>' + n.checkNumber + '</td>'
+                    + '<td>' + sum + '</td>'
+                    + '</tr>';
+                $("table").append(list);
+
+            });
+
+        }
+
+    function Bandle(xx, y1,y2,y3) {
+        var dom = document.getElementById("service");
+        var myChart = echarts.init(dom);
+        
+        var posList = [
+            'left', 'right', 'top', 'bottom',
+            'inside',
+            'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+            'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+        ];
+
+        app.configParameters = {
+            rotate: {
+                min: -90,
+                max: 90
+            },
+            align: {
+                options: {
+                    left: 'left',
+                    center: 'center',
+                    right: 'right'
+                }
+            },
+            verticalAlign: {
+                options: {
+                    top: 'top',
+                    middle: 'middle',
+                    bottom: 'bottom'
+                }
+            },
+            position: {
+                options: echarts.util.reduce(posList, function (map, pos) {
+                    map[pos] = pos;
+                    return map;
+                }, {})
+            },
+            distance: {
+                min: 0,
+                max: 100
+            }
+        };
+
+        app.config = {
+            rotate: 90,
+            align: 'left',
+            verticalAlign: 'middle',
+            position: 'insideBottom',
+            distance: 15,
+            onChange: function () {
+                var labelOption = {
+                    normal: {
+                        rotate: app.config.rotate,
+                        align: app.config.align,
+                        verticalAlign: app.config.verticalAlign,
+                        position: app.config.position,
+                        distance: app.config.distance
+                    }
+                };
+                myChart.setOption({
+                    series: [{
+                        label: labelOption
+                    }, {
+                        label: labelOption
+                    }, {
+                        label: labelOption
+                    }]
+                });
+            }
+        };
+
+
+        var labelOption = {
+            show: true,
+            position: app.config.position,
+            distance: app.config.distance,
+            align: app.config.align,
+            verticalAlign: app.config.verticalAlign,
+            rotate: app.config.rotate,
+            formatter: '{c}  {name|{a}}',
+            fontSize: 16,
+            rich: {
+                name: {
+                    textBorderColor: '#fff'
+                }
+            }
+        };
+
+        option = {
+            color: ['#003366', '#006699', '#4cabce'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                data: xx
+            },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: { show: false },
+                    data: y1
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: 'Forest',
+                    type: 'bar',
+                    barGap: 0,
+                    label: labelOption,
+                    data: y2
+                },
+                {
+                    name: 'Steppe',
+                    type: 'bar',
+                    label: labelOption,
+                    data: y3
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+
+
+    </script>

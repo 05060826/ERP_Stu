@@ -17,7 +17,7 @@ namespace DataAccess
         /// <returns></returns>
         public List<SupplierModel> showSupplier()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.114;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.102;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
 
                 return conn.Query<SupplierModel>("select * from Supplier").ToList();

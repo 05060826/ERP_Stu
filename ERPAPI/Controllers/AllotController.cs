@@ -10,7 +10,7 @@ using Model;
 using Model.AarehouseModel;
 using Model.Model;
 using Model.OutModel;
-
+using Newtonsoft.Json;
 
 namespace ERPAPI.Controllers
 {
@@ -23,33 +23,52 @@ namespace ERPAPI.Controllers
         {
             _Business = new Allot_Business();
         }
-        //查询
+        //查询盘点
         [HttpGet]
-        public List<AllotShowModel> ShowPageAllot(string AllotCode=null, string WName=null, string Ename=null)
+        public string ShowPageAllot(string AllotCode=null, string WName=null, string Ename=null)
         {
             var list = _Business.ShowPageAllot(AllotCode,WName,Ename);
+            Dictionary<string, object> obj = new Dictionary<string, object>();
+            obj.Add("code", 0);
+            obj.Add("msg", "");
+            obj.Add("count", list.Count);
+            obj.Add("data", list);
+            return JsonConvert.SerializeObject(obj);
+        }
+        //报表查询
+        [HttpGet]
+        public List<ShowAll> ShowFrom()
+        {
+            var list = _Business.ShowFrom();
+
             return list;
         }
-        //添加
+        //添加盘点
         [HttpPost]
-        public int Add(Model.AllotModel Allot)
+        public int CeeateAllot(Model.AllotModel Allot)
         {
-            var str = _Business.Add(Allot);
+            var str = _Business.CeeateAllot(Allot);
             return str;
         }
         //修改/删除
         [HttpPost]
         public int Update(int Id)
         {
-            return _Business.Update(Id);
+            return _Business.UpdateAll(Id);
         }
 
         [HttpGet]
         //盘点表数据
-        public List<ShowModel> CheckShowModel(string WName,string Ename)
+        public string CheckShowModel(string WName,string Ename)
         {
             var list = _Business.CheckShowModel(WName,Ename);
-            return list;
+            Dictionary<string, object> obj = new Dictionary<string, object>();
+            obj.Add("code", 0);
+            obj.Add("msg", "");
+            obj.Add("count", list.Count);
+            obj.Add("data", list);
+            return JsonConvert.SerializeObject(obj);
+            
         }
         [HttpGet]
         //下拉商品

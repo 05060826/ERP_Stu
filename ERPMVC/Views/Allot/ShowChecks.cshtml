@@ -1,0 +1,79 @@
+﻿
+
+@{
+    Layout = null;
+}
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<!DOCTYPE html>
+
+<div class="layui-collapse">
+    <div class="layui-colla-item">
+        <h2 class="layui-colla-title">筛选查询</h2>
+        <div class="layui-colla-content layui-show">
+            <div class="layui-input-inline">
+                <input type="text" id="Cname" required lay-verify="required" placeholder="请输入仓库名称" autocomplete="off" class="layui-input" />
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" id="Snaem" required lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" />
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnselect">查询结果</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-form">
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+<script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        form.render(); //渲染页面
+    });
+
+    $(function () {  
+        var WName = $("#Cname").val()
+        var Sname = $("#Snaem").val()
+        GetReceiptData(WName, Sname);
+        $("#btnselect").click(function () {
+            var WName = $("#Cname").val()
+            var Sname = $("#Snaem").val()
+            GetReceiptData(WName, Sname);
+        });
+    })
+    //显示数据
+    function GetReceiptData(WName, Sname) {
+        layui.use('table', function () {
+            var table = layui.table;
+
+            table.render({
+                elem: '#test'
+                , url: "https://localhost:44300/api/Allot/CheckShowModel?WName=" + WName + "&&Ename=" + Sname + ''
+                , title: '盘点页面'
+                , totalRow: true
+                , cols: [[
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'WName', title: '仓库', width: 150, edit: 'text' }
+                    , { field: 'Sid', title: '商品编号', width: 150, edit: 'text' }
+                    , { field: 'SName', title: '商品名称', width: 150, sort: true, totalRow: true }
+                    , { field: 'Units', title: '单位', width: 150, edit: 'text', sort: true }
+                    , { field: 'SystemNumber', title: '系统库存', width: 150, sort: true, totalRow: true }
+                    , { field: 'CheckNumber', title: '盘点库存', width: 150 }
+                    , { field: 'Money', title: '盘盈盘亏', width: 150, templet: function (d) { return d.SystemNumber - d.CheckNumber } }
+                    
+                ]]
+                , page: true
+            });
+        });
+    }
+</script>
+
+
+

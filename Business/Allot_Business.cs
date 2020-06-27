@@ -20,7 +20,7 @@ namespace Business
 
 
         //添加
-        public int Add(Model.AllotModel Allot)
+        public int CeeateAllot(Model.AllotModel Allot)
         {
             SqlParameter[] para = new SqlParameter[]
             {
@@ -38,7 +38,7 @@ namespace Business
             para[9].Direction = ParameterDirection.Output;
             DBHelper.ExecuteNonQueryProc("P_add", para);
             return Convert.ToInt32(para[9].Value);
-        }
+        }        
         //显示 查询 调拨表
         public List<AllotShowModel> ShowPageAllot(string AllotCode = null, string WName = null, string Ename = null)
         {
@@ -57,26 +57,31 @@ namespace Business
             }
             return DapperHelper<AllotShowModel>.GetAll(sql);
         }
+        //报表
+        public List<ShowAll> ShowFrom()
+        {
+            var sql = "select * from Checks  join Warehouse  on Checks.Cid=Warehouse.WId  join Commodity  on Checks.Sid = Commodity.Sid";
+           
+            return DapperHelper<ShowAll>.GetAll(sql);
+        }
+
         //修改
-        public int Update(int Id)
+        public int UpdateAll(int Id)
         {
             var str = $"update Allot  set IsState=0 where AllotId={Id}";
             return DapperHelper<AllotModel>.CRD(str);
         }
-
-
         //盘点表数据
         public List<ShowModel> CheckShowModel(string WName, string Sname)
         {
-
             var sql = "select c.Cid,c.Sid,c.SName,c.Specification,c.SystemNumber,c.CheckNumber,c.Units,cd.SName,w.Wname from Checks c join Warehouse w on c.Cid=w.WId join Commodity cd on c.Sid=cd.Sid  where 1 = 1 ";
             if (!string.IsNullOrWhiteSpace(WName))
             {
-                sql += $"and w.WName like '%{WName}%''";
+                sql += $"and w.WName like '%{WName}%'";
             }
             if (!string.IsNullOrWhiteSpace(Sname))
             {
-                sql += $"and  cd.SName like '%{Sname}%''";
+                sql += $"and  cd.SName like '%{Sname}%'";
             }
 
             return DapperHelper<ShowModel>.GetAll(sql);
@@ -101,3 +106,10 @@ namespace Business
         }
     }
 }
+
+
+
+
+
+
+ 
