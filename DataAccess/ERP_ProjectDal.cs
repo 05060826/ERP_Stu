@@ -113,11 +113,25 @@ namespace DataAccess
         {
             using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.114;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
             {
-                return conn.Query<PurchModel>($"select * from Purchase  p join  Supplier su on su.Gid=p.GId where ReceIptsId={rid}").FirstOrDefault();
+                return conn.Query<PurchModel>($"select * from Purchase  p join  Supplier su on su.Gid=p.GId join  Commodity co on p.SId=co.Sid join  Warehouse wa on co.WId=wa.WId where ReceIptsId={rid}").FirstOrDefault();
             }
 
         }
+        /// <summary>
+        /// 根据单据编号反填
+        /// </summary>
+        /// <param name="nameCode"></param>
+        /// <returns></returns>
+       public PurchModel DropFanTian(string nameCode)
+        {
 
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.114;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            {
+                return conn.Query<PurchModel>($"select * from Purchase  p join  Supplier su on su.Gid=p.GId join  Commodity co on p.SId=co.Sid join  Warehouse wa on co.WId=wa.WId where ReceIptsCode='{nameCode}'").FirstOrDefault();
+            }
+
+
+        }
 
 
         /// <summary>
@@ -133,6 +147,20 @@ namespace DataAccess
                 return conn.Execute($"update Purchase set PayMent=3 where ReceIptsId={rid}");
             }
 
+
+        }
+        /// <summary>
+        /// 修改支付状态未支付
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        public int UpdatePaMents(int rid)
+        {
+
+            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.114;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            {
+                return conn.Execute($"update Purchase set PayMent=4 where ReceIptsId={rid}");
+            }
 
         }
 
