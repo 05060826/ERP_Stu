@@ -15,83 +15,195 @@
 
 <h4>修改出货列表</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="update">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                单据编号：
-                <input asp-for="CleaNumber" id="CleaNumber" class="form-control" />
-                <span asp-validation-for="CleaNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                客户：
-                <select asp-for="CliId" id="CliId">
-                </select>
-            </div>
-            <div class="form-group">
-                销售人员：
-                <select asp-for="MId" id="MId">
-                </select>
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">单据编号：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="CleaNumber" class="layui-input" type="text" style="width:100px" />
+    </div>
 
-            </div>
-            <div class="form-group">
-                商品：
-                <select asp-for="SId" id="SId">
-                </select>
-            </div>
-            <div class="form-group">
-                商品数量
-                <input asp-for="Number" class="form-control" id="Number" />
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">客户：</label>
+    </div>
+    <div class="layui-inline">
+        <select class="layui-select" id="CliId">
+        </select>
+    </div>
 
-            </div>
-            <div class="form-group">
-                单价：
-                <input asp-for="SellMoney" id="SellMoney" class="form-control" />
-                <span asp-validation-for="SellMoney" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                折扣率：
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">销售人员：</label>
+    </div>
+    <div class="layui-inline">
+        <select id="MId" class="layui-select">
+        </select>
 
-                <input asp-for="Rate" id="Rate" class="form-control" />
-                <span asp-validation-for="Rate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                优惠金额：
-
-                <input asp-for="Discount" id="Discount" class="form-control" disabled />
-                <span asp-validation-for="Discount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                优惠后金额：
-                <input asp-for="SMoney" id="SMoney" class="form-control" disabled />
-                <span asp-validation-for="SMoney" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                地址：
-
-                <input asp-for="Addresses" id="Addresses" class="form-control" />
-                <span asp-validation-for="Addresses" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                单据日期：
-                <input asp-for="CTime" id="CTime" class="form-control" />
-                <span asp-validation-for="CTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                收货人账单：
-                <select asp-for="AId" id="AId">
-                </select>
-            </div>
-
-            <div class="form-group">
-                <input type="button" value="修改" id="Edit" class="btn btn-primary" />
-                <input type="button" value="返回列表" id="Back" class="btn btn-primary" />
-            </div>
-        </form>
     </div>
 </div>
+
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">商品名称：</label>
+    </div>
+    <div class="layui-inline">
+        <select class="layui-select" id="SId">
+        </select>
+    </div>
+
+</div>
+
+
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">数量：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="Number" class="layui-input" type="text" style="width:100px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:75px">
+        <label class="layui-label">价格：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="SellMoney" class="layui-input" type="text" style="width:100px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:60px">
+        <label class="layui-label">折扣率：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="Rate" class="layui-input" type="text" style="width:100px" />
+    </div>
+</div>
+
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">折扣额：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="Discount" class="layui-input" type="text" disabled />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:100px">
+        <label class="layui-label">优惠后金额：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="SMoney" class="layui-input" type="text" disabled />
+    </div>
+</div>
+
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">地址：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="Addresses" class="layui-input" type="text" style="width:200px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">添加时间：</label>
+    </div>
+    <div class="layui-inline">
+        <input id="CTime" class="layui-input" type="text" style="width:200px" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:50px">
+        <label class="layui-label">结算账户：</label>
+    </div>
+    <div class="layui-inline">
+        <select id="AId" class="layui-select">
+        </select>
+    </div>
+</div>
+
+<div class="layui-colla-content layui-show">
+    <input type="button" value="修改" id="Edit" class="btn btn-primary" />
+    <input type="button" value="返回列表" id="Back" class="btn btn-primary" />
+</div>
+
+
+
+
+
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-action="update">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    单据编号：
+                    <input asp-for="CleaNumber" id="CleaNumber" class="form-control" />
+                    <span asp-validation-for="CleaNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    客户：
+                    <select asp-for="CliId" id="CliId">
+                    </select>
+                </div>
+                <div class="form-group">
+                    销售人员：
+                    <select asp-for="MId" id="MId">
+                    </select>
+
+                </div>
+                <div class="form-group">
+                    商品：
+                    <select asp-for="SId" id="SId">
+                    </select>
+                </div>
+                <div class="form-group">
+                    商品数量
+                    <input asp-for="Number" class="form-control" id="Number" />
+
+                </div>
+                <div class="form-group">
+                    单价：
+                    <input asp-for="SellMoney" id="SellMoney" class="form-control" />
+                    <span asp-validation-for="SellMoney" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    折扣率：
+
+                    <input asp-for="Rate" id="Rate" class="form-control" />
+                    <span asp-validation-for="Rate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    优惠金额：
+
+                    <input asp-for="Discount" id="Discount" class="form-control" disabled />
+                    <span asp-validation-for="Discount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    优惠后金额：
+                    <input asp-for="SMoney" id="SMoney" class="form-control" disabled />
+                    <span asp-validation-for="SMoney" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    地址：
+
+                    <input asp-for="Addresses" id="Addresses" class="form-control" />
+                    <span asp-validation-for="Addresses" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    单据日期：
+                    <input asp-for="CTime" id="CTime" class="form-control" />
+                    <span asp-validation-for="CTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    收货人账单：
+                    <select asp-for="AId" id="AId">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="button" value="修改" id="Edit" class="btn btn-primary" />
+                    <input type="button" value="返回列表" id="Back" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@
 <input type="hidden" id="allMoney" />
 <input type="hidden" id="realMoney" />
 

@@ -76,6 +76,7 @@ namespace ERPAPI.Controllers
         {
             List<ClearModel> list = DapperHelper<ClearModel>.GetAll("select * from Clear where IsState=1 ");
             list = list.Where(s => s.ClearId.Equals(id)).ToList();
+            list[0].CTime.ToString("yyyy/MM/dd");
             return list;
         }
         //显示所有出货（用于下拉框）
