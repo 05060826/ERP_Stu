@@ -9,8 +9,266 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>UpdatePurchas</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <h4>退货采购</h4>
+    <h4>新增退货采购</h4>
+    <input id="HiddenRId" type="hidden" value="@ViewBag.rid" />
+    <div>
+        <table>
+            <tr>
+                <td>
+                    单据编号
+                </td>
+                <td>
+                    <select id="selDropCode">
+                       
+
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <td>供应商：</td>
+                <td>
+                    <input id="TextGong" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>单据日期：</td>
+                <td><input id="TextTime" type="text" /></td>
+            </tr>
+            <tr>
+                <td>商品：</td>
+                <td>
+                    <input id="TextGoods" type="text" /> 
+                </td>
+            </tr>
+            <tr>
+                <td>单位</td>
+                <td><label id="da"></label></td>
+            </tr>
+            <tr>
+                <td>仓库</td>
+                <td><label id="cu"></label></td>
+            </tr>
+            <tr>
+                <td>商品单价</td>
+                <td><label id="pr"></label></td>
+            </tr>
+            <tr>
+                <td>折扣率</td>
+                <td><input id="TextZL" type="text" /></td>
+            </tr>
+            <tr>
+                <td>折扣额</td>
+                <td><label id="mony"></label></td>
+            </tr>
+            <tr>
+                <td>采购数量</td>
+                <td><input id="TextNum" type="text" /></td>
+            </tr>
+            <tr>
+                <td>采购金额</td>
+                <td><label id="cmony"></label></td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td><input id="TextTask" type="text" /></td>
+            </tr>
+            <tr>
+                <td>退货结算账户</td>
+                <td>
+                    <select id="account">
+                        <option></option>
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input id="Button1" type="button" value="新增退货" onclick="btntui()" /></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
+<script>
+    $(function ()
+    {
+
+        dropaccount();
+        dropCode();
+        var rid = parseInt($("#HiddenRId").val());
+
+        //判断退货Id是否为空
+        if (rid != 0)
+        {
+            $.ajax({
+                url: "https://localhost:44300/api/Purchase/FanTian?rid=" + rid,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    $(data).each(function () {
+                        $("#selDropCode").val(data.receIptsId);
+                        $("#TextGong").val(data.gname);
+                        $("#TextTime").val(data.datetime);
+                        $("#TextGoods").val(data.sName);
+                        $("#da").text(data.units);
+                        $("#cu").text(data.wName);
+                        $("#pr").text(data.price);
+                        $("#TextZL").val(data.rate);
+                        $("#mony").text(data.discount);
+                        $("#TextNum").val(data.number);
+                        $("#cmony").text(data.cMoney);
+                        $("#TextTask").text(data.remark);
+
+                    });
+
+                }
+            });
+
+        }
+        //下拉框内容改变事件
+
+        $("#selDropCode").change(function () {
+            var rid = parseInt($("#selDropCode").val());
+
+            $.ajax({
+                url: "https://localhost:44300/api/Purchase/FanTian?rid=" + rid,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    $(data).each(function () {
+                        $("#selDropCode").val(data.receIptsId);
+                        $("#TextGong").val(data.gname);
+                        $("#TextTime").val(data.datetime);
+                        $("#TextGoods").val(data.sName);
+                        $("#da").text(data.units);
+                        $("#cu").text(data.wName);
+                        $("#pr").text(data.price);
+                        $("#TextZL").val(data.rate);
+                        $("#mony").text(data.discount);
+                        $("#TextNum").val(data.number);
+                        $("#cmony").text(data.cMoney);
+                        $("#TextTask").text(data.remark);
+                    });
+
+                }
+
+            });
+
+        });
+
+
+    //退货结算账户
+    function dropaccount() {
+        $.ajax({
+
+            url: "https://localhost:44300/api/Purchase/AccountModels",
+            type: "get",
+            success: function (data) {
+                $("#account").empty();
+                $("#account").append('<option value=0>请选择</option>')
+                $(data).each(function () {
+
+                    $("#account").append('<option value="' + this.aId + '">' + this.accountName + '</option>')
+
+                });
+
+            }
+        });
+
+
+
+    }
+    //单据编号下拉框
+    function dropCode()
+    {
+
+        $.ajax({
+
+            url: "https://localhost:44300/api/Purchase/ShowInfo",
+            type: "get",
+            success: function (data) {
+                $("#selDropCode").empty();
+                $("#selDropCode").append('<option value=0>请选择</option>')
+                $(data).each(function () {
+
+                    $("#selDropCode").append('<option value="' + this.receIptsId + '">' + this.receIptsCode + '</option>')
+
+                });
+
+            }
+        });
+
+        }
+
+
+        //退货保存事件
+    function btntui()
+    {
+
+        var rid = parseInt($("#HiddenRId").val());
+       
+
+        //结算账户
+        var jiesaun = $("#account").val();
+
+        if (jiesaun != null) {
+            if (rid = 0) {
+                rid = parseInt($("#selDropCode").val());
+
+                $.ajax({
+                    url: "https://localhost:44300/api/Purchase/UpdatePaMent?rid=" + rid,
+                    type: "put",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data > 0) {
+                            alert("退货成功");
+                            location.href = "/PurchaseInfo/ShowUpdatePurchas/";
+                        }
+                        else {
+                            alert("退货失败");
+                        }
+                    }
+
+                });
+            }
+            else {
+                var rid = parseInt($("#HiddenRId").val());
+                $.ajax({
+                    url: "https://localhost:44300/api/Purchase/UpdatePaMent?rid=" + rid,
+                    type: "put",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data > 0) {
+                            alert("退货成功");
+                            location.href = "/PurchaseInfo/ShowUpdatePurchas/";
+                        }
+                        else {
+                            alert("退货失败");
+                        }
+                    }
+
+                });
+
+
+            };
+        }
+        else
+        {
+
+
+
+        }
+
+
+    }
+
+
+
+
+</script>

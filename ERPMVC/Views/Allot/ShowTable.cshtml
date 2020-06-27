@@ -46,13 +46,15 @@
     $(function () {
         ShowList();
     });
-
-       
+    $("#ShowWhere").click(function () {
+        ShowList();
+    })
     function ShowList() {
         var code = $("#Num").val();
         var WName = $("#Cname").val()
         var Ename = $("#Rname").val()
         $.ajax({
+            
             url: "https://localhost:44300/api/Allot/ShowPageAllot?AllotCode=" + code + "&&WName=" + WName + "&&Ename=" + Ename,
             type: "get",
             dataType: "json",
@@ -67,7 +69,7 @@
                         '<td>' + this.units + '</td>' +
                         '<td>' + this.wName + '</td>' +
                         '<td>' + this.ename + '</td>' +
-                        '<td><a href="javascript:updateInfo(' + this.allotId + ')">编辑</a> <a href="javascript:deleteInfo(' + this.allotId + ')">删除</a> </td>'
+                        '<td><a href="javascript:deleteInfo(' + this.allotId + ')">删除</a> </td>'
                         + '</tr>';
                     $("#tab1").append(str);
 
@@ -78,15 +80,40 @@
         })
 
     }
-
+    //删除
     function Del(id) {
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/Update?Id=" + id,
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data > 0) {
+                    alert("删除成功");
+                }
+                else {
+                    alert("删除失败");
+                }
 
-
+            }
+        })
 
     }
     function Upd(id) {
 
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/Update?Id=" + id,
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data > 0) {
+                    alert("删除成功");
+                }
+                else {
+                    alert("删除失败");
+                }
 
+            }
+        })
     }
 
     $("#Btn_Add").click(function () {

@@ -37,7 +37,7 @@ namespace Model
 		/// <summary>
 		/// 调入仓库
 		/// </summary>
-		public int Wids { get; set; }
+		public int Eid { get; set; }
 		/// <summary>
 		/// 录单时间
 		/// </summary>
