@@ -32,9 +32,9 @@ namespace ERPAPI.Controllers
         }
         //添加
         [HttpPost]
-        public int Add<AllotModel>(Model.AllotModel Allot)
+        public int Add(Model.AllotModel Allot)
         {
-            var str = _Business.Add<AllotModel>(Allot);
+            var str = _Business.Add(Allot);
             return str;
         }
         //修改/删除
@@ -46,7 +46,7 @@ namespace ERPAPI.Controllers
 
         [HttpGet]
         //盘点表数据
-        public List<CheckShowModel> CheckShowModel(string WName,string Ename)
+        public List<ShowModel> CheckShowModel(string WName,string Ename)
         {
             var list = _Business.CheckShowModel(WName,Ename);
             return list;

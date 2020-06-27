@@ -10,18 +10,34 @@ using System.Data.SqlClient;
 using DataAccess.Dapper;
 using Model.AarehouseModel;
 using System.Linq;
-
+using Newtonsoft.Json;
+using System.Data.SqlClient;
 namespace Business
 {
     //仓库调拨表
-    public class Allot_Business 
+    public class Allot_Business
     {
-        
+
+
         //添加
-        public int Add<AllotModel>(Model.AllotModel Allot)
+        public int Add(Model.AllotModel Allot)
         {
-           var  sql =$"insert into Allot values '{Allot.AllotCode}','{Allot.Sid}','{Allot.Number}','{Allot.Units}','{Allot.Units}','{Allot.Wid}','{Allot.Eid}','{Allot.ATime}','{Allot.Remark}','{Allot.IsState}'";
-            return DapperHelper<AllotModel>.CRD(sql);
+            SqlParameter[] para = new SqlParameter[]
+            {
+             new SqlParameter("@AllotCode",Allot.AllotCode),
+              new SqlParameter("@Sid",Allot.Sid),
+               new SqlParameter("@Number",Allot.Number),
+                new SqlParameter("@Units",Allot.Units),
+                 new SqlParameter("@Wid",Allot.Wid),
+                  new SqlParameter("@Eid",Allot.Eid),
+                   new SqlParameter("@ATime",Allot.ATime),
+                    new SqlParameter("@Remark",Allot.Remark),
+                  new SqlParameter("@IsState",1),
+                   new SqlParameter("@msg",SqlDbType.Int),
+            };
+            para[9].Direction = ParameterDirection.Output;
+            DBHelper.ExecuteNonQueryProc("P_add", para);
+            return Convert.ToInt32(para[9].Value);
         }
         //显示 查询 调拨表
         public List<AllotShowModel> ShowPageAllot(string AllotCode = null, string WName = null, string Ename = null)
@@ -42,42 +58,37 @@ namespace Business
             return DapperHelper<AllotShowModel>.GetAll(sql);
         }
         //修改
-        public int Update(int  Id)
+        public int Update(int Id)
         {
             var str = $"update Allot  set IsState=0 where AllotId={Id}";
             return DapperHelper<AllotModel>.CRD(str);
         }
 
-        
+
         //盘点表数据
-        public List<CheckShowModel> CheckShowModel(string WName, string Sname)
+        public List<ShowModel> CheckShowModel(string WName, string Sname)
         {
-            string strconn = "Data Source=192.168.1.114;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456";
-            using (SqlConnection conn=new SqlConnection(strconn))
+
+            var sql = "select c.Cid,c.Sid,c.SName,c.Specification,c.SystemNumber,c.CheckNumber,c.Units,cd.SName,w.Wname from Checks c join Warehouse w on c.Cid=w.WId join Commodity cd on c.Sid=cd.Sid  where 1 = 1 ";
+            if (!string.IsNullOrWhiteSpace(WName))
             {
-                var sql = "select *from Checks join Warehouse on Checks.Cid=Warehouse.WId join Commodity on Checks.Sid=Commodity.Sid  where 1 = 1 ";
-                if (!string.IsNullOrWhiteSpace(WName))
-                {
-                    sql += $"and Warehouse.WName like '%{WName}%''";
-                }
-                if (!string.IsNullOrWhiteSpace(Sname))
-                {
-                    sql += $"and  Commodity.SName like '%{Sname}%''";
-                }
-                return conn.Query<CheckShowModel>(sql).ToList();
+                sql += $"and w.WName like '%{WName}%''";
             }
-            
-           
-           
+            if (!string.IsNullOrWhiteSpace(Sname))
+            {
+                sql += $"and  cd.SName like '%{Sname}%''";
+            }
+
+            return DapperHelper<ShowModel>.GetAll(sql);
         }
         //下拉商品
-       public List<CommodityModel>ShowComm()
+        public List<CommodityModel> ShowComm()
         {
             List<CommodityModel> list = DapperHelper<CommodityModel>.GetAll("select * from Commodity");
             return list;
         }
         //下拉入库
-        public List<WarehouseModel>ShowWare()
+        public List<WarehouseModel> ShowWare()
         {
             List<WarehouseModel> list = DapperHelper<WarehouseModel>.GetAll("select * from Warehouse");
             return list;

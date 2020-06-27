@@ -43,7 +43,6 @@
             url: "https://localhost:44300/api/Allot/CheckShowModel?WName=" + WName + "&&Ename=" + Ename,
             type: "get",
             dataType: "json",
-            async: false,
             success: function (data) {
                 $("#tab1").empty();
                 $(data).each(function () {

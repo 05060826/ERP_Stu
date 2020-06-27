@@ -6,18 +6,21 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <table>
+            <tr>
+                <td>   单据日期:<input type="date" id="ATime" /></td>
+            </tr>
+            <tr>
+                <td>   单据编号：<input id="bian" type="text" /></td>
+            </tr>
+        </table>
+     
+        
+    </div>
+    
+    <div class="col-md-4">
         <form asp-action="ADD">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                单据日期
-                <input asp-for="ATime" class="form-control" />
-                <span asp-validation-for="ATime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                单据编号:
-                <input asp-for="AllotCode" class="form-control" />
-                <span asp-validation-for="AllotCode" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <p>
                     商品名称：
@@ -50,7 +53,7 @@
                 </p>
             </div>
             <div class="form-group">
-               备注:
+                备注:
                 <input asp-for="Remark" class="form-control" />
                 <span asp-validation-for="Remark" class="text-danger"></span>
             </div>
@@ -79,13 +82,13 @@
         var s = myDate.getSeconds();
 
         var now = year + getNow(month) + getNow(date) + getNow(h) + getNow(m) + getNow(s);
-        $("#AllotCode").html("DB" + now)
+        $("#ATime").html("DB" + now)
 
 
         ShowComm();
         ShowWare();
         ShowExportSto();
-       
+
     })
     //商品下拉
     function ShowComm() {
@@ -97,11 +100,11 @@
             success: function (result) {
                 $("#Sid").empty();
                 var str = "";
-                str += "<option value='-1'>请选择商品</option>"
+                str += "<option value='0'>请选择商品</option>"
                 $.each(result, function (i, n) {
                     str += "<option value='" + n.sid + "' >" + n.sName + "</option>"
                 })
-                $("#xiao").append(str);
+                $("#Sid").append(str);
 
                 Show();
             }
@@ -118,7 +121,7 @@
             success: function (result) {
                 $("#Wid").empty();
                 var str = "";
-                str += "<option value='-1'>请选择仓库</option>"
+                str += "<option value='0'>请选择仓库</option>"
                 $.each(result, function (i, n) {
                     str += "<option value='" + n.wId + "' >" + n.wName + "</option>"
                 })
@@ -138,37 +141,33 @@
             success: function (result) {
                 $("#Eid").empty();
                 var str = "";
-                str += "<option value='-1'>请选择仓库</option>"
+                str += "<option value='0'>请选择仓库</option>"
                 $.each(result, function (i, n) {
                     str += "<option value='" + n.eId + "' >" + n.ename + "</option>"
                 })
-                $("#WId").append(str);
+                $("#EId").append(str);
 
             }
         })
 
     }
+
     //添加按钮
     $("#insert").click(function () {
         list = {};
-        list.CleaNumber = $("#bian").html();
-        list.CliName = $("#CliName").val();
-        list.MName = $("#MName").val();
-        list.SName = $("#SName").val();
+        list.AllotCode = $("#bian").html();
+        list.Sid = parseInt( $("#Sid").val());
         list.Number = parseInt($("#Number").val());
-        list.SellMoney = parseFloat($("#SellMoney").val());
-        list.Rate = parseFloat($("#Rate").val());
-        list.Discount = parseFloat($("#Discount").val())
-        list.SMoney = parseFloat($("#SMoney").val());
-        list.Addresses = $("#Addresses").val();
-        list.CTime = $("#CTime").val();
-        list.AId = parseInt($("#AId").val());
-        list.WId = parseInt($("#WId").val());
-        list.GId = parseInt($("#GId").val());
+        list.Units = $("#Units").val();
+        list.Wid = parseInt($("#Wid").val());
+        list.Eid = parseInt($("#Eid").val());
+        list.ATime = $("#ATime").val();
+        list.Remark = $("#Remark").val();
+        list.IsState = 1;
 
 
         $.ajax({
-            url: "https://localhost:44300/api/insert",
+            url: "https://localhost:44300/api/Allot/Add",
             data: JSON.stringify(list),
             type: "post",
             dataType: "text",
@@ -176,7 +175,7 @@
             success: function (result) {
                 if (result > 0) {
                     alert("添加成功")
-
+                    location.href = "Allot/ShowTable";
                 }
             }
         })
