@@ -11,14 +11,15 @@
     <title>Purchas</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 
 </head>
 <body>
-    <div>
-        <table class="tab table-bordered">
+    <div class="layui-form">
+        <table class="layui-table">
             <tr>
                 <td>
-                    <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注" />
+                    <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注"/>
 
                     <select id="stateid">
                         <option value="2">请选择</option>
@@ -27,14 +28,14 @@
 
                     </select>
                     日期：<input id="texTime" type="date" />
-                    <input id="ButtonSel" type="button" value="查询结果" onclick="btnCha()" />
-                    <input id="ButtonAdd" type="button" value="新增采购" onclick="btnAdd()" />
+                    <input id="ButtonSel" type="button" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-primary layui-btn-sm" value="查询结果" onclick="btnCha()" />
+                    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm"  value="新增采购" onclick="btnAdd()" />
                 </td>
             </tr>
         </table>
     </div>
-    <div>
-        <table class=" tab table-bordered" >
+    <div class="layui-form">
+        <table class="layui-table" >
             <tr>
                 <td>单据Id</td>
                 <td>单据日期</td>
@@ -49,15 +50,17 @@
 
             </tbody>
         </table>
-        <div>
-            <input id="Button1" type="button" value="首页" onclick="showpage('first')" />
-            <input id="Button1" type="button" value="上一页" onclick="showpage('prv')"  />
+        <div style="text-align:center">
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('first')">首页</button>
+
+            @*// <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">迷你按钮</button>*@
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('prv')"><i class="layui-icon"></i></button>
             当前第<label id="pageindex">1</label>页/总共<label id="totalPage"></label>页
-            /每页<label id="pagesize">2</label>条/总共<label id="totalCount"></label>条
+            /每页<label id="pagesize">4</label>条/总共<label id="totalCount"></label>条
 
 
-            <input id="Button1" type="button" value="下一页" onclick="showpage('next')"  />
-            <input id="Button1" type="button" value="尾页"  onclick="showpage('last')" />
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('next')"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('last')">尾页</button>
 
 
         </div>
@@ -71,7 +74,7 @@
         btnCha();
         showpage();
     });
-    
+    //显示数据
     function btnCha()
     {
         //供货商名称
@@ -107,8 +110,8 @@
                         '<td>' + this.gname + '</td>' +
                       '<td>' + this.cMoney + '</td>' +
                       '<td>' + (this.cMoney - this.discount)+ '</td>' +
-                        '<td>' + (this.payMent==1?"已付款":"未付款")+ '</td>' +
-                        '<td><a href="javascript:updateInfo(' + this.receIptsId + ')">编辑</a> <a href="javascript:deleteInfo(' + this.receIptsId + ')">删除</a> </td>'
+                      '<td>' + (this.payMent == 1 ? "已付款" : "未付款") + '</td>' +       //<button type="button" onclick="updateInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>退货</button>
+                      '<td><button type="button" onclick="updateInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm">退货</button>     <button type="button" onclick="deleteInfo(' + this.receIptsId +')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i></button> </td>'
 
 
                         + '</tr>';
@@ -121,14 +124,7 @@
         })
 
     }
-   
-    ////显示数据
-    //function btnsel()
-    //{.
-
-
-    //}
-
+  
     //分页
     function showpage(name)
     {
@@ -196,6 +192,9 @@
     {
 
         location.href = "/PurchaseInfo/UpdatePurchas?rid=" + rid;
+
+
+
     }
     //页面删除
     function deleteInfo(rid)

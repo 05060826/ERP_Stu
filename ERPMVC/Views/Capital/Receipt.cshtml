@@ -30,7 +30,7 @@
 <div class="layui-inline" style="width:115px;float:right" >
     <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnAdd">新增收款单</button>
 </div>
-<div class="layui-form">
+<div style="margin-top:40px">
     <table class="layui-hide" id="test" lay-filter="test"></table>
 </div>
 
@@ -62,20 +62,18 @@
     });
 
     $(function () {
-        var where = $("#ReceiptCode").val();
-        var dateTime = $("#test1").val();
-        GetReceiptData(where, dateTime);
+         GetReceiptData();
         $("#btnselect").click(function () {
-            var where = $("#ReceiptCode").val();
-            var dateTime = $("#test1").val();
-            GetReceiptData(where, dateTime);
+            GetReceiptData();
         });
         $("#btnAdd").click(function () {
             window.location.href = "/Capital/Add";
         })
     })
     //显示数据
-    function GetReceiptData(where, dateTime) {
+    function GetReceiptData() {
+        var where = $("#ReceiptCode").val();
+        var dateTime = $("#test1").val();
         layui.use('table', function () {
             var table = layui.table;
 
@@ -86,9 +84,9 @@
                 , totalRow: true
                 , cols: [[
                     { type: 'checkbox', fixed: 'left' }
-                    , { field: 'ReceiptId', title: 'ID', width: 150, edit: 'text' }
-                    , { field: 'RTime', title: '单据日期', width: 150, edit: 'text' }
-                    , { field: 'ReceiptCode', title: '单据编号', width: 150, sort: true, totalRow: true }
+                    , { field: 'ReceiptId', title: 'ID', width: 150 }
+                    , { field: 'RTime', title: '单据日期', width: 150 }
+                    , { field: 'ReceiptCode', title: '单据编号', width: 150, totalRow: true }
                     , { field: 'ClientName', title: '客户', width: 150, edit: 'text', sort: true }
                     , { field: 'CNumber', title: '收款金额', width: 150, sort: true, totalRow: true }
                     , { field: 'Remark', title: '备注', width: 150 }
@@ -99,6 +97,11 @@
                 }
                 , page: true
             });
+            table.on('sort(test)', function (obj) {
+                table.reload('test', {
+                    initSort: obj
+                });
+             });
         });        
     }
     layui.use('table', function () {
@@ -114,11 +117,11 @@
                         success: function (result) {
                             if (result > 0) {
                                 alert("删除成功");
-                                GetReceiptData(where, dateTime);
+                                GetReceiptData();
                             }
                             else {
                                 alert("删除失败");
-                                GetReceiptData(where, dateTime);
+                                GetReceiptData();
                             }
                         }
                     });

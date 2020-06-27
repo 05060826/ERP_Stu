@@ -19,7 +19,7 @@ namespace Model.PuchasesInfoModel
 		public int SId { get; set; }
 
 
-
+		public string SName { get; set; }
 		/// <summary>
 		/// 商品单位
 		/// </summary>

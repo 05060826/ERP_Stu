@@ -20,9 +20,9 @@ namespace Model.OutModel
 		/// </summary>
 		public string MName { get; set; }
 		/// <summary>
-		/// 商品名称
+		/// 商品Id
 		/// </summary>
-		public string SName { get; set; }
+		public int Sid { get; set; }
 		/// <summary>
 		/// 数量
 		/// </summary>
@@ -58,7 +58,7 @@ namespace Model.OutModel
 		/// <summary>
 		/// 结算账户
 		/// </summary>
-		public int Sid { get; set; }
+		
 
 
 	}

@@ -9,8 +9,226 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>ShowUpdatePurchas</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
     <h3>退货采购信息的列表</h3>
+
+    <div>
+        <table class="tab table-bordered">
+            <tr>
+                <td>
+                    <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注" />
+
+                    <select id="stateid">
+                        <option value="0">请选择</option>
+                        <option value="3">已退款</option>
+                        <option value="4">未退款</option>
+
+                    </select>
+                    日期：<input id="texTime" type="date" />
+                    <input id="ButtonSel" type="button" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-primary layui-btn-sm" value="查询结果" onclick="btnCha()" />
+                    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="新增退货单" onclick="btnAdd()" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="layui-form">
+        <table class="layui-table">
+            <tr>
+                <td>单据Id</td>
+                <td>单据日期</td>
+                <td>单据编号</td>
+                <td>供应商</td>
+                <td>购货金额</td>
+                <td>已退款</td>
+                <td>付款状态</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="tab1">
+            </tbody>
+        </table>
+        <div>
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('first')">首页</button>
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('prv')"><i class="layui-icon"></i></button>
+            当前第<label id="pageindex">1</label>页/总共<label id="totalPage"></label>页
+            /每页<label id="pagesize">4</label>条/总共<label id="totalCount"></label>条
+
+
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('next')"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('last')">尾页</button>
+
+
+        </div>
+    </div>
+
 </body>
 </html>
+<script>
+    //首次加载
+    $(function () {
+        btnCha();
+        showpage();
+    });
+
+    //显示数据
+    function btnCha()
+    {
+        //供货商名称
+        var gname = $("#texNmae").val();
+        //时间
+        var times = $("#texTime").val();
+        //状态
+        var tates = $("#stateid").val();
+        //当前第几页
+        var indes = $("#pageindex").text();
+        //每页多少条
+        var sizes = $("#pagesize").text();
+
+
+
+
+        $.ajax({
+            url: "https://localhost:44300/api/Purchase/ShowPurchasTh?gname=" + gname + "&&time=" + times + "&&state=" + tates + "&&pageIndex=" + indes + "&&pageSize=" + sizes,
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+              
+                $("#totalCount").text(data.toTalCount);
+                $("#totalPage").text(data.pageTotal);
+                $("#tab1").empty();
+                $(data.showList).each(function () {
+
+                    var comys;
+
+                    if (this.payMent == 3) {
+                        comys = 0.0;
+                    }
+                    else if (this.payMent == 4) {
+                        comys = (this.cMoney - this.discount);
+
+                    }
+                    else
+                    {
+
+                        comys = 0;
+                    }
+
+                    var str = '<tr>' +
+                        '<td>' + this.receIptsId + '</td>' +
+                        '<td>' + this.datetime + '</td>' +
+                        '<td>' + this.receIptsCode + '</td>' +
+                        '<td>' + this.gname + '</td>' +
+                        '<td>' + this.cMoney + '</td>' +
+                        '<td>' + comys + '</td>' +
+                        '<td>' + (this.payMent == 3 ? "已退款" : (this.payMent==4?"未退款":"退款中")) + '</td>' +
+                        '<td><a href="javascript:updateInfo(' + this.receIptsId + ')">编辑</a> <a href="javascript:deleteInfo(' + this.receIptsId + ')">删除</a> </td>'
+
+
+                        + '</tr>';
+                    $("#tab1").append(str);
+
+                })
+            }
+
+
+        })
+
+    }
+
+    //分页
+    function showpage(name) {
+
+
+
+        //当前第几页
+        var index = Number($("#pageindex").text());
+        //每页多少条
+        //var size = Number($("#pagesize").text());
+        ////总条数
+        //var tatal = Number($("#totalCount").text());
+        //总页数
+        var pagetatal = Number($("#totalPage").text());
+
+        switch (name) {
+
+            case 'first':
+                index = 1
+                break;
+            case 'prv':
+                if (index > 1) {
+                    index--;
+                }
+                else {
+                    $("#pageindex").text(1);
+
+                }
+
+                break;
+            case 'next':
+
+                if (index < pagetatal) {
+                    index++;
+                }
+                else {
+
+                    $("#pageindex").text(pagetatal);
+
+                }
+
+                break;
+            case 'last':
+
+                index = pagetatal;
+                break;
+            default:
+                break;
+
+
+        }
+        $("#pageindex").text(index);
+
+        btnCha();
+
+    };
+    //新增采购退货
+    function btnAdd() {
+        location.href = "/PurchaseInfo/UpdatePurchas";
+
+    }
+    //修改跳转到退货页面反填数据修改状态
+    function updateInfo(rid) {
+
+        location.href = "/PurchaseInfo/UpdatePurchas?rid=" + rid;
+
+
+
+    }
+    //页面删除
+    function deleteInfo(rid) {
+        if (confirm("确定删除吗？")) {
+
+
+            $.ajax({
+
+                url: "https://localhost:44300/api/Purchase/UpdateIstate?rid=" + rid,
+                type: "put",
+                dataType: "json",
+                success: function (data) {
+
+                    if (data > 0) {
+                        alert("删除成功");
+                        btnCha();
+                    }
+                    else {
+                        alert("删除失败");
+                    }
+                }
+            })
+
+        }
+
+    }
+</script>

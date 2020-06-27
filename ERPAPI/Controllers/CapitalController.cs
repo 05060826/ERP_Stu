@@ -10,7 +10,7 @@ using Model;
 using Model.CapitalModel;
 using Model.PuchasesInfoModel;
 using Newtonsoft.Json;
-using Model.PuchasesInfoModel;
+
 
 namespace ERPAPI.Controllers
 {
