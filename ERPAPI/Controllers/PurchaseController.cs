@@ -193,14 +193,81 @@ namespace ERPAPI.Controllers
         /// </summary>
         /// <param name="rid"></param>
         /// <returns></returns>
-        public int UpdatePaMent(int rid)
+        public int UpdatePaMent(int rid, string cgthCode=null)
         {
 
-            return _dal.UpdatePaMent(rid);
+            return _dal.UpdatePaMent(rid, cgthCode);
 
 
         }
+        [HttpPut]
 
+        /// <summary>
+        /// 修改支付状态未支付
+        /// </summary>
+        /// <param name="rid"></param>
+        /// <returns></returns>
+        public int UpdatePaMents(int rid, string cgthCode=null)
+        {
+
+            return _dal.UpdatePaMents(rid, cgthCode);
+        }
+
+        [HttpGet]
+        /// <summary>
+        /// 显示退货商品
+        /// </summary>
+        /// <returns></returns>
+        public PageShow ShowPurchasTh(string gname = null, DateTime? time = null, int state = 0, int pageIndex = 1, int pageSize = 3)
+        {
+            var showTHlIST= _dal.ShowPurchasTh();
+
+
+
+
+            //供货商名称查询
+            if (gname != null)
+            {
+                showTHlIST = showTHlIST.Where(m => m.Gname.Contains(gname)).ToList();
+            }
+            //时间查询
+            if (time != null)
+            {
+                showTHlIST = showTHlIST.Where(m => m.Datetime == time).ToList();
+            }
+            //状态查询
+            if (state == 3)
+            {
+                showTHlIST = showTHlIST.Where(m => m.PayMent.Equals(state)).ToList();
+            }
+            if (state == 4)
+            {
+                showTHlIST = showTHlIST.Where(m => m.PayMent.Equals(state)).ToList();
+            }
+            //总条数
+            var totalCount = showTHlIST.Count();
+            //总页数
+            var totalPage = totalCount / pageSize + (totalCount % pageSize > 0 ? 1 : 0);
+
+            showTHlIST = showTHlIST.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            PageShow pageShowlist = new PageShow();
+
+
+            pageShowlist.ShowList = showTHlIST;
+            pageShowlist.ToTalCount = totalCount;
+            pageShowlist.PageTotal = totalPage;
+
+
+
+
+            return pageShowlist;
+
+
+
+
+
+        }
 
     }
 }

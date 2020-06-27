@@ -18,13 +18,17 @@
     <div>
         <table>
             <tr>
+                <td>采购退货单编号：</td>
+                <td>
+                   <label id="cgtubian"></label>
+                </td>
+            </tr>
+            <tr>
                 <td>
                     单据编号
                 </td>
                 <td>
                     <select id="selDropCode">
-                       
-
                     </select>
 
                 </td>
@@ -42,7 +46,7 @@
             <tr>
                 <td>商品：</td>
                 <td>
-                    <input id="TextGoods" type="text" /> 
+                    <input id="TextGoods" type="text" />
                 </td>
             </tr>
             <tr>
@@ -91,19 +95,26 @@
             </tr>
         </table>
     </div>
+
+   
 </body>
 </html>
 <script>
-    $(function ()
-    {
+    $(function () {
 
+        dajubian();
+        FanTians();
         dropaccount();
         dropCode();
-        var rid = parseInt($("#HiddenRId").val());
+       
+    });
 
+    //反填数据
+    function FanTians()
+    {
+        var rid = parseInt($("#HiddenRId").val());
         //判断退货Id是否为空
-        if (rid != 0)
-        {
+        if (rid != 0) {
             $.ajax({
                 url: "https://localhost:44300/api/Purchase/FanTian?rid=" + rid,
                 type: "get",
@@ -132,36 +143,41 @@
         }
         //下拉框内容改变事件
 
-        $("#selDropCode").change(function () {
-            var rid = parseInt($("#selDropCode").val());
+        else {
+            $("#selDropCode").change(function () {
+                var droprid = parseInt($("#selDropCode").val());
 
-            $.ajax({
-                url: "https://localhost:44300/api/Purchase/FanTian?rid=" + rid,
-                type: "get",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    $(data).each(function () {
-                        $("#selDropCode").val(data.receIptsId);
-                        $("#TextGong").val(data.gname);
-                        $("#TextTime").val(data.datetime);
-                        $("#TextGoods").val(data.sName);
-                        $("#da").text(data.units);
-                        $("#cu").text(data.wName);
-                        $("#pr").text(data.price);
-                        $("#TextZL").val(data.rate);
-                        $("#mony").text(data.discount);
-                        $("#TextNum").val(data.number);
-                        $("#cmony").text(data.cMoney);
-                        $("#TextTask").text(data.remark);
-                    });
 
-                }
+                $.ajax({
+                    url: "https://localhost:44300/api/Purchase/FanTian?rid=" + droprid,
+                    type: "get",
+                    dataType: "json",
+                    success: function (data) {
+
+                        $(data).each(function () {
+                            $("#selDropCode").val(data.receIptsId);
+                            $("#TextGong").val(data.gname);
+                            $("#TextTime").val(data.datetime);
+                            $("#TextGoods").val(data.sName);
+                            $("#da").text(data.units);
+                            $("#cu").text(data.wName);
+                            $("#pr").text(data.price);
+                            $("#TextZL").val(data.rate);
+                            $("#mony").text(data.discount);
+                            $("#TextNum").val(data.number);
+                            $("#cmony").text(data.cMoney);
+                            $("#TextTask").text(data.remark);
+                        });
+
+                    }
+
+                });
+
 
             });
+        }
 
-        });
-
+    }
 
     //退货结算账户
     function dropaccount() {
@@ -207,68 +223,119 @@
         }
 
 
-        //退货保存事件
+      //退货保存事件
     function btntui()
     {
 
+        //显示页面直接获取Id
         var rid = parseInt($("#HiddenRId").val());
+        //下拉框获取Id
+        var rids = $("#selDropCode").val();
        
 
-        //结算账户
-        var jiesaun = $("#account").val();
+        //退款结算账户
+        var jiesaun = parseInt($("#account").val());
 
-        if (jiesaun != null) {
-            if (rid = 0) {
-                rid = parseInt($("#selDropCode").val());
-
-                $.ajax({
-                    url: "https://localhost:44300/api/Purchase/UpdatePaMent?rid=" + rid,
-                    type: "put",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data > 0) {
-                            alert("退货成功");
-                            location.href = "/PurchaseInfo/ShowUpdatePurchas/";
-                        }
-                        else {
-                            alert("退货失败");
-                        }
-                    }
-
-                });
+        //判断是否是直接进入退货页面
+        if (rid == 0)
+        {
+            if (jiesaun != 0)
+            {
+                UpdateYi(rids);
             }
-            else {
-                var rid = parseInt($("#HiddenRId").val());
-                $.ajax({
-                    url: "https://localhost:44300/api/Purchase/UpdatePaMent?rid=" + rid,
-                    type: "put",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data > 0) {
-                            alert("退货成功");
-                            location.href = "/PurchaseInfo/ShowUpdatePurchas/";
-                        }
-                        else {
-                            alert("退货失败");
-                        }
-                    }
+            else
+            {
+                UpdateWEI(rids);
 
-                });
-
-
-            };
+            }
         }
         else
         {
+            if (jiesaun != 0)
+            {
+                UpdateYi(rid);
+            }
+            else
+            {
+                UpdateWEI(rid);
 
-
-
+            }
         }
+    }
 
+    //修改状态为已退款
+    function UpdateYi(rid)
+    {
+        //单据编号
+        dajubian();
+
+        var cgthcode = $("#cgtubian").text();
+
+        $.ajax({
+            url: "https://localhost:44300/api/Purchase/UpdatePaMent?rid=" + rid + "&cgthCode=" + cgthcode,
+            type: "put",
+            dataType: "json",
+            success: function (data) {
+                if (data > 0) {
+                    alert("退货成功");
+                    location.href = "/PurchaseInfo/ShowUpdatePurchas/";
+                }
+                else {
+                    alert("退货失败");
+                }
+            }
+
+        });
+    }
+
+    //修改状态为未退款
+    function UpdateWEI(rid)
+    {
+        dajubian();
+
+        var cgthcode = $("#cgtubian").text();
+        $.ajax({
+            url: "https://localhost:44300/api/Purchase/UpdatePaMents?rid=" + rid + "&cgthCode=" + cgthcode,
+            type: "put",
+            dataType: "json",
+            success: function (data) {
+                if (data > 0) {
+                    alert("退货成功");
+                    location.href = "/PurchaseInfo/ShowUpdatePurchas/";
+                }
+                else {
+                    alert("退货失败");
+                }
+            }
+
+        });
 
     }
 
+    //单据编号随机生成
+    function dajubian() {
 
+        var myDate = new Date();
 
+        var year = myDate.getFullYear();//获取当前年
+        var month = myDate.getMonth()+1; //获取当前月
+        var date = myDate.getDate();    //获取当前日
+
+        var hour = myDate.getHours();       //获取当前小时数（0-23）
+        var mintue = myDate.getMinutes();  //获取当前分钟数
+      //  var secound = myDate.getSeconds();
+
+        var now = year + getNow(month) + getNow(date) + getNow(hour) + getNow(mintue);
+
+        var nums = Math.random();
+        //生成四位随机数
+        out = Math.floor(Math.random() * 10000);
+
+        $("#cgtubian").text("CGTH" + now + out);
+    }
+    //判断是否在前面加0
+    function getNow(s) {
+        return s < 10 ? '0' + s : s;
+    }
 
 </script>
