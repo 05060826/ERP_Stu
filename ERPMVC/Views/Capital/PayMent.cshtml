@@ -84,9 +84,9 @@
                 , totalRow: true
                 , cols: [[
                     { type: 'checkbox', fixed: 'left' }
-                    , { field: 'PaymentId', title: 'ID', width: 150, edit: 'text' }
+                    , { field: 'PaymentId', title: 'ID', width: 150 }
                     , { field: 'RTime', title: '单据日期', width: 150, edit: 'text' }
-                    , { field: 'PaymentCode', title: '单据编号', width: 150, sort: true, totalRow: true }
+                    , { field: 'PaymentCode', title: '单据编号', width: 150, totalRow: true }
                     , { field: 'ClientName', title: '客户', width: 150, edit: 'text', sort: true }
                     , { field: 'CNumber', title: '付款金额', width: 150, sort: true, totalRow: true }
                     , { field: 'Remark', title: '备注', width: 150 }
@@ -97,6 +97,11 @@
                 }
                 , page: true
             });
+            table.on('sort(test)', function (obj) {
+                table.reload('test', {
+                    initSort: obj
+                });
+             });
         });
     }
     layui.use('table', function () {
