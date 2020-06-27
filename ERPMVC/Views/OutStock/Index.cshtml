@@ -14,7 +14,46 @@
 <button type="button" class="layui-btn layui-btn-normal" id="Btn_Add">添加出货</button>
 
 
-<p>
+<div class="layui-colla-content layui-show">
+    <div class="layui-inline" >
+        <label class="layui-label">单据号：</label>
+    </div>
+    <div class="layui-inline">
+        <input type="text" placeholder="请输入单据号或客户或备注" id="where" style="width:250px" class="layui-input" />
+    </div>
+
+    <div class="layui-inline" style="margin-top:10px;margin-left:20px">
+        <label class="layui-label">日期：</label>
+    </div>
+    <div class="layui-inline">
+        <input type="date" id="date" class="layui-input" />
+    </div>
+
+    <div class="layui-inline" style="margin-left:20px">
+        <select id="xiao" class="layui-select">
+        </select>
+    </div>
+
+    <div class="layui-inline" style="margin-left:20px">
+        <select id="shou" class="layui-select">
+            <option value="-1">收款状态</option>
+            <option value="0">未付款</option>
+            <option value="1">已付款</option>
+            <option value="2">已退款</option>
+            <option value="3">未退款</option>
+
+        </select>
+    </div>
+
+    <div class="layui-inline">
+        <button type="button" class="layui-btn layui-btn-radius" id="Cha">查询结果</button>
+        <button type="button" class="layui-btn layui-btn-radius" id="Tui">新增退货</button>
+    </div>
+
+</div>
+
+
+@*<p>
     <input type="text" placeholder="请输入单据号或客户或备注" id="where" />
     日期：<input type="date" id="date" />
     <select id="xiao">
@@ -29,7 +68,7 @@
     </select>
     <button type="button" class="layui-btn layui-btn-radius" id="Cha">查询结果</button>
     <button type="button" class="layui-btn layui-btn-radius" id="Tui">新增退货</button>
-</p>
+</p>*@
 
 
 <table id="tb" class="layui-table" lay-skin="line">

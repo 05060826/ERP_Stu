@@ -11,13 +11,18 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 
-<div class="layui-form-item">
-    <label class="layui-form-label">单据编号</label>
-    <div class="layui-input-inline">
-        <select id="Bian">
+<div class="layui-colla-content layui-show">   
+    <div class="layui-inline" style="margin-top:10px">
+        <label class="layui-label">单据编号:</label>
+    </div>
+    
+    <div class="layui-inline" style="margin-left:10px">        
+        <select id="Bian" class="layui-select">
         </select>
-        <button type="button" class="layui-btn layui-btn-radius" id="BackAll">返回退货列表</button>
+    </div>
 
+    <div class="layui-inline" style="margin-left:650px">
+        <button type="button" class="layui-btn layui-btn-radius" id="BackAll">返回退货列表</button>
     </div>
 </div>
 
@@ -132,7 +137,7 @@
             success: function (result) {
                 if (result > 0) {
                     alert("退货成功")
-
+                    Bang();
                 }
             }
         })
