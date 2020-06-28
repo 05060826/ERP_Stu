@@ -83,7 +83,10 @@ namespace DataAccess
         /// <returns></returns>
         PurchModel DropFanTian(string nameCode);
 
-
+        /// <summary>
+        /// 显示退货商品
+        /// </summary>
+        /// <returns></returns>
         List<PurchModel> ShowPurchasTh();
             
     }
