@@ -76,12 +76,12 @@ namespace DataAccess
         /// <returns></returns>
         int UpdatePaMents(int rid, string cgthCode);
 
-        /// <summary>
-        /// 根据单据编号反填
-        /// </summary>
-        /// <param name="nameCode"></param>
-        /// <returns></returns>
-        PurchModel DropFanTian(string nameCode);
+        ///// <summary>
+        ///// 根据单据编号反填
+        ///// </summary>
+        ///// <param name="nameCode"></param>
+        ///// <returns></returns>
+        //PurchModel DropFanTian(string nameCode);
 
         /// <summary>
         /// 显示退货商品

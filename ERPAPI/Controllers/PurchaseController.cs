@@ -171,20 +171,20 @@ namespace ERPAPI.Controllers
         {
             return _dal.FanTian(rid);
         }
-        [HttpGet]
+        //[HttpGet]
 
-        /// <summary>
-        /// 根据单据编号反填
-        /// </summary>
-        /// <param name="nameCode"></param>
-        /// <returns></returns>
-        public PurchModel DropFanTian(string nameCode)
-        {
+        ///// <summary>
+        ///// 根据单据编号反填
+        ///// </summary>
+        ///// <param name="nameCode"></param>
+        ///// <returns></returns>
+        //public PurchModel DropFanTian(string nameCode)
+        //{
 
-            return _dal.DropFanTian(nameCode);
+        //    return _dal.DropFanTian(nameCode);
 
 
-        }
+        //}
 
         [HttpPut]
 
