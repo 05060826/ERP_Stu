@@ -115,11 +115,6 @@
                         }
                     })
                 }
-                , response: {//后台返回的数据
-                    countName: 'count' //数据总数的字段名称，默认:count
-                    ,
-                    dataName: 'data' //数据列表字段名称，默认：data
-                }
             });
             table.on('sort(test)', function (obj) {
                 table.reload('test', {
