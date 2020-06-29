@@ -27,10 +27,7 @@ namespace ERPMVC.Controllers
         }
 
 
-        public IActionResult Forms()
-        {
-            return View();
-        }
+      
         public IActionResult FormSum()
         {
             return View();

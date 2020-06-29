@@ -66,13 +66,6 @@ namespace ERPAPI.Controllers
 
             return list;
         }
-        //报表查询2
-        [HttpGet]
-        public List<ShowAll> GetVakues()
-        {
-            var str = _Business.GetVakues();
-            return str;
-        }
         //添加盘点
         [HttpPost]
         public int CeeateAllot(Model.AllotModel Allot)
@@ -89,14 +82,15 @@ namespace ERPAPI.Controllers
 
         [HttpGet]
         //盘点表数据
-        public string CheckShowModel(string WName,string Ename)
+        public string CheckShowModel(string WName,string Ename, int pageName = 0, int limitName = 0)
         {
             var list = _Business.CheckShowModel(WName,Ename);
+            List<ShowModel> slist = list.Skip((pageName - 1) * limitName).Take(limitName).ToList();
             Dictionary<string, object> obj = new Dictionary<string, object>();
             obj.Add("code", 0);
             obj.Add("msg", "");
             obj.Add("count", list.Count);
-            obj.Add("data", list);
+            obj.Add("data", slist);
             return JsonConvert.SerializeObject(obj);
             
         }
