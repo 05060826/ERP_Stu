@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Model;
-using Model.AarehouseModel;
-using Model.PuchasesInfoModel;
+using System.Text;
 
-namespace ERPAPI.DatasModel
+namespace Model.AarehouseModel
 {
-    public class PageShow
+    public class PageShowAllot
     {
 
-        public List<PurchModel> ShowList { get; set; }
+        public List<AllotShowModel> ShowList { get; set; }
         /// <summary>
         /// 总条数
         /// </summary>

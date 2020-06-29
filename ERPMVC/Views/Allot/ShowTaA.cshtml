@@ -1,0 +1,215 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Purchas</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="layui-collapse">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">筛选查询</h2>
+            <div class="layui-colla-content layui-show">
+                <div class="layui-input-inline">
+                    <input type="text" id="AllotCode" required lay-verify="required" placeholder="请输入单据号" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" id="Cname" required lay-verify="required" placeholder="请输入调入仓库" autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" id="Rname" required lay-verify="required" placeholder="请输入调出仓库" autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnselect">查询结果</button>
+                    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="新增采购" onclick="btnAdd()" />
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <div class="layui-form">
+        <table class="layui-table">
+            <tr>
+                <td>单据日期</td>
+                <td>单据编号</td>
+                <td>商品名称</td>
+                <td>数量</td>
+                <td>单位</td>
+                <td>调出仓库</td>
+                <td>调入仓库</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="tab1">
+            </tbody>
+        </table>
+        <div style="text-align:center">
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('first')">首页</button>
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('prv')"><i class="layui-icon"></i></button>
+            当前第<label id="pageindex">1</label>页/总共<label id="totalPage"></label>页
+            /每页<label id="pagesize">4</label>条/总共<label id="totalCount"></label>条
+
+
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('next')"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('last')">尾页</button>
+
+
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+    //首次加载
+    $(function () {
+        btnCha();
+        showpage();
+    });
+    //显示数据
+    function btnCha()
+    {
+        
+        var where = $("#AllotCode").val();
+        
+        var WName = $("#Cname").val();
+        
+        var Ename = $("#Rname").val();
+        //当前第几页
+        var indes = $("#pageindex").text();
+        //每页多少条
+        var sizes = $("#pagesize").text();
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/ShowPageAllot?AllotCode=" + where + "&&WName=" + WName + "&&Ename=" + Ename + " &&pageIndex=" + indes + "&&pageSize=" + sizes,
+            type: "get",
+            dataType:"json",
+            success: function (data)
+            {
+                console.log(data);
+                $("#totalCount").text(data.toTalCount);
+                $("#totalPage").text(data.pageTotal);
+                $("#tab1").empty();
+                $(data.showList).each(function ()
+                {
+                  var   str = '<tr>' +
+                      '<td>' + this.aTime + '</td>' +
+                      '<td>' + this.allotCode + '</td>' +
+                      '<td>' + this.sName + '</td>' +
+                      '<td>' + this.number + '</td>' +
+                      '<td>' + this.units + '</td>' +
+                      '<td>' + this.wName+ '</td>' +
+                      '<td>' + this.ename  + '</td>' +       
+                      '<td><button type="button" onclick="deleteInfo(' + this.allotId +')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i></button> </td>'
+
+
+                        + '</tr>';
+                    $("#tab1").append(str);
+
+                })
+            }
+
+
+        })
+
+    }
+
+    //分页
+    function showpage(name)
+    {
+
+
+
+        //当前第几页
+        var index = Number($("#pageindex").text());
+        //每页多少条
+        //var size = Number($("#pagesize").text());
+        ////总条数
+        //var tatal = Number($("#totalCount").text());
+        //总页数
+        var pagetatal = Number($("#totalPage").text());
+
+        switch (name) {
+
+            case 'first':
+                index = 1
+                break;
+            case 'prv':
+                if (index > 1) {
+                    index--;
+                }
+                else {
+                    $("#pageindex").text(1);
+
+                }
+
+                break;
+            case 'next':
+
+                if (index < pagetatal) {
+                    index++;
+                }
+                else {
+
+                    $("#pageindex").text(pagetatal);
+
+                }
+
+                break;
+            case 'last':
+
+                index = pagetatal;
+                break;
+            default:
+                break;
+
+
+        }
+        $("#pageindex").text(index);
+
+        btnCha();
+
+    };
+    //新增采购
+    function btnAdd()
+    {
+        location.href = "/Allot/CreateAllot";
+
+    }
+    //页面删除
+    function deleteInfo(rid)
+    {
+        if (confirm("确定删除吗？"))
+        {
+
+
+        $.ajax({
+
+            url: "https://localhost:44300/api/Allot/Update?Id=" + rid,
+            type: "put",
+            dataType: "json",
+            success: function (data) {
+
+                if (data > 0) {
+                    alert("删除成功");
+                    btnCha();
+                }
+                else {
+                    alert("删除失败");
+                }
+            }
+        })
+
+        }
+
+    }
+
+</script>
+
+

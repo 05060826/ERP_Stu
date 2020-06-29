@@ -40,31 +40,30 @@ namespace Business
             return Convert.ToInt32(para[9].Value);
         }        
         //显示 查询 调拨表
-        public List<AllotShowModel> ShowPageAllot(string AllotCode = null, string WName = null, string Ename = null)
+        public List<AllotShowModel> ShowPageAllot()
         {
             var sql = "select *from Allot join Commodity on Allot.Sid=Commodity.Sid join Warehouse on Allot.Wid=Warehouse.WId join ExportStoreroom on Allot.Eid=ExportStoreroom.EId where 1=1";
-            if (!string.IsNullOrWhiteSpace(AllotCode))
-            {
-                sql += $"and Allot.AllotCode like '%{AllotCode}%'";
-            }
-            if (!string.IsNullOrWhiteSpace(WName))
-            {
-                sql += $"and Warehouse.WName like'%{WName}%'";
-            }
-            if (!string.IsNullOrWhiteSpace(Ename))
-            {
-                sql += $"and ExportStoreroom.Ename like'%{Ename}%'";
-            }
             return DapperHelper<AllotShowModel>.GetAll(sql);
         }
         //报表
         public List<ShowAll> ShowFrom()
         {
             var sql = "select * from Checks  join Warehouse  on Checks.Cid=Warehouse.WId  join Commodity  on Checks.Sid = Commodity.Sid";
-           
+          
             return DapperHelper<ShowAll>.GetAll(sql);
         }
 
+        public List<ShowAll> GetVakues()
+        {
+            var linq = from cs in ShowFrom()
+                       group cs by cs.Cid into s
+                       select new ShowAll
+                       {
+                           SystemNumber = s.Count(),
+                           CheckNumber = s.Key
+                       };
+            return linq.OrderBy(m => m.CheckNumber).ToList();
+        }
         //修改
         public int UpdateAll(int Id)
         {

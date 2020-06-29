@@ -147,6 +147,7 @@
         var time = now.getFullYear() + ((now.getMonth() + 1) < 10 ? "0" : "") + (now.getMonth() + 1) + (now.getDate() < 10 ? "0" : "") + now.getDate() + (now.getHours() < 10 ? "0" : "") + now.getHours() +(now.getMinutes() < 10 ? "0" : "") + now.getMinutes() + now.getSeconds();
         $("#skdj").html(moren + time);
     }
+    //根据源单显示数据
     function selectClear(clearNumber) {
         $.ajax({
             url: "https://localhost:44300/api/capital/GetPurchaseData?receIptsCode=" + clearNumber + "",
@@ -167,9 +168,11 @@
             }
         });
     }
+    //改变事件
     function GetMoney() {
         $("#zong").html($("#money").val());
     }
+    //添加数据并关闭该页面
     function AddAndClose() {
         var obj = {};
         obj.PaymentCode = $("#skdj").html();
@@ -191,6 +194,7 @@
             }
         })
     } 
+    //添加数据
     function Add() {
         var obj = {};
         obj.PaymentCode = $("#skdj").html();

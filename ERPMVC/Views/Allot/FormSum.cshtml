@@ -1,78 +1,56 @@
 ﻿
 @{
-    Layout = null;
+    ViewData["Title"] = "FormSum";
 }
+
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" href="../js/echarts-2.2.7/doc/asset/ico/favicon.png">
+    <script type="text/javascript" src="../js/echarts-2.2.7/doc/asset/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/echarts-2.2.7/doc/example/www2/js/echarts-all.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-  
-    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 </head>
 <body>
-    <table style="text-align:center">
-        <tr>
-            <td>仓库</td>
-            <td>入库量</td>
-            <td>出库量</td>
-            <td>总盈亏</td>
-        </tr>
-
-    </table>
-    <div id="service" style="height:300px;width:500px"></div>
-
+    <div id="service"  style="width: 850px;height:500px;"></div>
 </body>
 </html>
-    <script>
-        $(function () {
-            Show();
+<script>
+    $(function () {
+        Frons();
+
+    });
+    function Frons() {
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/ShowFrom",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                var xx = [];
+                var y1 = [];
+                var y2 = [];
+                var y3 = [];
+                $(data).each(function () {
+                    xx.push(this.wName);
+                    y1.push(this.systemNumber);
+                    y2.push(this.checkNumber);
+                    y3.push(this.systemNumber - this.checkNumber);
+
+                })
+                Bandle(xx, y1, y2, y3);
+            }
         });
-        function Show() {
-            $.ajax({
-                url: "https://localhost:44300/api/Allot/ShowFrom",
-                type: "Get",
-                dataType: "json",
-                success: function (result) {
-                    ShowList(result);
+    }
 
-                    var xx = [];
-                    var y1 = [];
-                    var y2 = [];
-                    var y3 = [];
-                    $(result).each(function () {
-                        xx.push(this.wName);
-                        y1.push(this.systemNumber);
-                        y2.push(this.checkNumber);
-                        y3.push(this.sum);
-                    })
-                    Bandle(xx, y1, y2, y3);
-                }
-            });
-        }
 
-        function ShowList(result) {
-            $("table").empty();
-            $.each(result, function (i, n) {
-                var sum = (n.systemNumber - n.checkNumber);
-                var list = '<tr style="text-align:center">'
-                    + '<td>' + n.wName + '</td>'
-                    + '<td>' + n.systemNumber + '</td>'
-                    + '<td>' + n.checkNumber + '</td>'
-                    + '<td>' + sum + '</td>'
-                    + '</tr>';
-                $("table").append(list);
-
-            });
-
-        }
-
-    function Bandle(xx, y1,y2,y3) {
+    function Bandle(xx, y1, y2, y3) {
         var dom = document.getElementById("service");
         var myChart = echarts.init(dom);
-        
         var posList = [
             'left', 'right', 'top', 'bottom',
             'inside',
@@ -80,7 +58,7 @@
             'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
         ];
 
-        app.configParameters = {
+        myChart.configParameters = {
             rotate: {
                 min: -90,
                 max: 90
@@ -111,7 +89,7 @@
             }
         };
 
-        app.config = {
+        myChart.config = {
             rotate: 90,
             align: 'left',
             verticalAlign: 'middle',
@@ -120,11 +98,11 @@
             onChange: function () {
                 var labelOption = {
                     normal: {
-                        rotate: app.config.rotate,
-                        align: app.config.align,
-                        verticalAlign: app.config.verticalAlign,
-                        position: app.config.position,
-                        distance: app.config.distance
+                        rotate: myChart.config.rotate,
+                        align: myChart.config.align,
+                        verticalAlign: myChart.config.verticalAlign,
+                        position: myChart.config.position,
+                        distance: myChart.config.distance
                     }
                 };
                 myChart.setOption({
@@ -142,12 +120,12 @@
 
         var labelOption = {
             show: true,
-            position: app.config.position,
-            distance: app.config.distance,
-            align: app.config.align,
-            verticalAlign: app.config.verticalAlign,
-            rotate: app.config.rotate,
-            formatter: '{c}  {name|{a}}',
+            position: myChart.config.position,
+            distance: myChart.config.distance,
+            align: myChart.config.align,
+            verticalAlign: myChart.config.verticalAlign,
+            rotate: myChart.config.rotate,
+            formatter: '{c}',
             fontSize: 16,
             rich: {
                 name: {
@@ -155,9 +133,8 @@
                 }
             }
         };
-
         option = {
-            color: ['#003366', '#006699', '#4cabce'],
+            color: ['#e70d55', '#0520e9', '#f2fa0a'],
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -165,7 +142,7 @@
                 }
             },
             legend: {
-                data: xx
+                data: ['入库', '出库', '结余']
             },
             toolbox: {
                 show: true,
@@ -184,7 +161,7 @@
                 {
                     type: 'category',
                     axisTick: { show: false },
-                    data: y1
+                    data: xx
                 }
             ],
             yAxis: [
@@ -194,14 +171,20 @@
             ],
             series: [
                 {
-                    name: 'Forest',
+                    name: '入库',
                     type: 'bar',
                     barGap: 0,
+                    label: labelOption,
+                    data: y1
+                },
+                {
+                    name: '出库',
+                    type: 'bar',
                     label: labelOption,
                     data: y2
                 },
                 {
-                    name: 'Steppe',
+                    name: '结余',
                     type: 'bar',
                     label: labelOption,
                     data: y3
@@ -212,6 +195,4 @@
             myChart.setOption(option, true);
         }
     }
-
-
-    </script>
+</script>

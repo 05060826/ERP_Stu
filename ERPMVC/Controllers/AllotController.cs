@@ -12,22 +12,28 @@ namespace ERPMVC.Controllers
         {
             return View();
         }
+        public IActionResult ShowTaA()
+        {
+            return View();
+        }
         public IActionResult ShowChecks()
         {
             return View();
         }
-        public IActionResult Forms()
-        {
-            return View();
-        }
+       
         public IActionResult CreateAllot()
         {
             return View();
         }
-        public IActionResult Try()
+
+
+        public IActionResult Forms()
         {
             return View();
         }
-
+        public IActionResult FormSum()
+        {
+            return View();
+        }
     }
 }
