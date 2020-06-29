@@ -12,6 +12,7 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layuiadmin/layui/layui.js"></script>
 
 </head>
 <body>
@@ -19,7 +20,7 @@
         <table class="layui-table">
             <tr>
                 <td>
-                    <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注"/>
+                    <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注" />
 
                     <select id="stateid">
                         <option value="2">请选择</option>
@@ -29,7 +30,12 @@
                     </select>
                     日期：<input id="texTime" type="date" />
                     <input id="ButtonSel" type="button" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-primary layui-btn-sm" value="查询结果" onclick="btnCha()" />
-                    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm"  value="新增采购" onclick="btnAdd()" />
+                    @* class="layui-btn jump_refresh_url"  <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm"  value="新增采购" onclick="btnAdd()" />*@
+                    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="新增采购" onclick="btnAdd()" />
+                    @*<a href="/PurchaseInfo/AddPurchas">跳转新增</a>*@
+
+
+
                 </td>
             </tr>
         </table>
@@ -69,6 +75,13 @@
 </body>
 </html>
 <script>
+    //$(".jump_refresh_url").click(function () {
+
+    //    var url = $(this).attr('href');
+
+    //    top.refreshHighlight(url);
+
+    //});
     //首次加载
     $(function () {
         btnCha();
