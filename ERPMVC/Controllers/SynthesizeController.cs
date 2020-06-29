@@ -20,6 +20,13 @@ namespace ERPMVC.Controllers
             return View();
         }
         //资金
+        public IActionResult OutTable()
+        {
+            return View();
+        }
+
+
+        //资金
         public IActionResult Fund()
         {
             return View();
