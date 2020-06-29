@@ -15,7 +15,7 @@
                 <input type="text" id="ReceiptCode" required lay-verify="required" placeholder="请输入单据号或客户或备注" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">日期:</label>
+                <label class="layui-form-label">日期:</label> 
             </div>
             <div class="layui-inline">
                 <!-- 注意：这一层元素并不是必须的 -->
@@ -114,7 +114,7 @@
                         , jump: function (obj, first) {
                             if (!first) {
                                 currentPageNo = obj.curr;
-                                pageSize = obj.limit;  
+                                pageSize = obj.limit; 
                                 GetReceiptData(pageSize,currentPageNo);
                             }
                         }

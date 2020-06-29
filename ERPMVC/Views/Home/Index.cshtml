@@ -76,7 +76,7 @@
                         <dl class="layui-nav-child">
                             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
                             <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                            
+
                             <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
                         </dl>
                     </li>
@@ -103,13 +103,13 @@
                             <a href="javascript:;" lay-tips="主页" lay-direction="2">
                                 <i class="layui-icon layui-icon-home"></i>
                                 <cite>主页</cite>
-                                
+
                             </a>
                             <dl class="layui-nav-child">
                                 <dd data-name="home" class="layui-this">
                                     <a lay-href="/home/MaxZhu">登录</a>
                                 </dd>
-                               
+
                             </dl>
                         </li>
                         @*采购页面*@
@@ -123,14 +123,14 @@
                                     <a lay-href="/PurchaseInfo/Purchas">采购列表</a>
                                     <dl class="layui-nav-child">
 
-                                        <dd  data-name="adds"> 
-                                        <a lay-href="/PurchaseInfo/AddPurchas">新增采购</a>
+                                        <dd data-name="adds">
+                                            <a lay-href="/PurchaseInfo/AddPurchas">新增采购</a>
                                         </dd>
-                                       
+
                                     </dl>
 
                                 </dd>
-                          
+
                                 <dd data-name="backs">
                                     <a lay-href="/PurchaseInfo/ShowUpdatePurchas">购货退货单</a>
                                     <dl class="layui-nav-child">
@@ -142,8 +142,8 @@
                                     </dl>
 
                                 </dd>
-                             
-                                
+
+
                             </dl>
                         </li>
                         @*出货页面*@
@@ -156,7 +156,7 @@
                                 <dd>
                                     <a lay-href="/outStock/Index">出货列表</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="/outStock/Create">新增出货</a></dd>                                       
+                                        <dd><a lay-href="/outStock/Create">新增出货</a></dd>
                                     </dl>
                                 </dd>
                                 <dd>
@@ -165,7 +165,7 @@
                                         <dd><a lay-href="/outStock/Tui">新增销售退货单</a></dd>
                                     </dl>
                                 </dd>
-                               
+
                             </dl>
                         </li>
                         @*调拨页面*@
@@ -181,7 +181,7 @@
                                     <dl class="layui-nav-child">
                                         <dd data-name="list"><a lay-href="/Allot/Show">调拨列表</a></dd>
                                         <dd data-name="tags"><a lay-href="/Allot/CreateAllot">新增调拨</a></dd>
-                                       
+
                                     </dl>
                                 </dd>
                                 <dd data-name="echarts">
@@ -191,12 +191,12 @@
                                         <dd data-name="comment"><a lay-href="/Allot/Forms">盘点报表</a></dd>
                                     </dl>
                                 </dd>
-                                
+
 
 
 
                             </dl>
-                        </li> 
+                        </li>
                         @*资金页面*@
                         <li data-name="senior" class="layui-nav-item">
                             <a href="javascript:;" lay-tips="资金管理" lay-direction="2">
@@ -302,18 +302,14 @@
 
 
             <!-- 主体内容 -->
-            <div class="layui-body" id="LAY_app_body"  >
-                <div class="layadmin-tabsbody-item layui-show" style="text-align: center;">
-                   @* <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>*@
+            <div class="layui-body" id="LAY_app_body" >
+                <div class="layadmin-tabsbody-item layui-show" style="background:url(../images/bg1.jpg);background-repeat:no-repeat;background-size:100% 100%;background-attachment: fixed;">
+                    <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
                     <div >
-                       
-                        <h2>欢迎进入ERP进销存管理系统</h2>
-                        @*<input id="Button1" type="button" value="button" onclick="location.href='/PurchaseInfo/Purchas'" />*@
-                        @*<img src="~/images/123.jpg" />*@
-
+                        <h2 style="text-align: center;">欢迎进入ERP进销存管理系统</h2>
                     </div>
                 </div>
-               
+
             </div>
 
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
@@ -329,15 +325,6 @@
             index: 'lib/index' //主入口模块
         }).use('index');
     </script>
-
-
-
-   
-
-
-
-
-
 </body>
 </html>
 
