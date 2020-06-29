@@ -66,6 +66,9 @@ namespace ERPAPI.Controllers
 
             return list;
         }
+      
+         
+
         //添加盘点
         [HttpPost]
         public int CeeateAllot(Model.AllotModel Allot)
