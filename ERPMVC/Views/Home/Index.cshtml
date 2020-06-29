@@ -103,17 +103,13 @@
                             <a href="javascript:;" lay-tips="主页" lay-direction="2">
                                 <i class="layui-icon layui-icon-home"></i>
                                 <cite>主页</cite>
+                                
                             </a>
                             <dl class="layui-nav-child">
-                                <dd data-name="console" class="layui-this">
-                                    <a lay-href="home/console.html">登录</a>
+                                <dd data-name="home" class="layui-this">
+                                    <a lay-href="/home/MaxZhu">登录</a>
                                 </dd>
-                                <dd data-name="console">
-                                    <a lay-href="home/homepage1.html">主页一</a>
-                                </dd>
-                                <dd data-name="console">
-                                    <a lay-href="home/homepage2.html">主页二</a>
-                                </dd>
+                               
                             </dl>
                         </li>
                         @*采购页面*@
@@ -306,10 +302,18 @@
 
 
             <!-- 主体内容 -->
-            <div class="layui-body" id="LAY_app_body">
-                <div class="layadmin-tabsbody-item layui-show">
+            <div class="layui-body" id="LAY_app_body" >
+                <div class="layadmin-tabsbody-item layui-show" style="text-align: center;  background-image: url(/images/123.jpg);">
                     <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
+                    <div >
+                       
+                        <h2>欢迎进入ERP进销存管理系统</h2>
+                        @*<input id="Button1" type="button" value="button" onclick="location.href='/PurchaseInfo/Purchas'" />*@
+                        @*<img src="~/images/123.jpg" />*@
+
+                    </div>
                 </div>
+               
             </div>
 
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
@@ -325,6 +329,15 @@
             index: 'lib/index' //主入口模块
         }).use('index');
     </script>
+
+
+
+   
+
+
+
+
+
 </body>
 </html>
 

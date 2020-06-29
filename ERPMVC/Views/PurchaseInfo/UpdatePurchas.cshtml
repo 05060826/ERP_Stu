@@ -11,26 +11,23 @@
     <title>UpdatePurchas</title>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
-    <h4>新增退货采购</h4>
+    <h3 style="text-align:center">新增退货采购</h3>
     <input id="HiddenRId" type="hidden" value="@ViewBag.rid" />
+
     <div>
-        <table>
+        <h4>单据编号</h4>
+        <select id="selDropCode" style="width:100px;height:20px;background-color:aliceblue">
+        </select>
+    </div>
+    <div class="layui-form">
+        <table class="layui-table">
             <tr>
                 <td>采购退货单编号：</td>
                 <td>
-                   <label id="cgtubian"></label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    单据编号
-                </td>
-                <td>
-                    <select id="selDropCode">
-                    </select>
-
+                    <label id="cgtubian"></label>
                 </td>
             </tr>
             <tr>
@@ -81,22 +78,16 @@
                 <td>备注</td>
                 <td><input id="TextTask" type="text" /></td>
             </tr>
-            <tr>
-                <td>退货结算账户</td>
-                <td>
-                    <select id="account">
-                        <option></option>
-
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><input id="Button1" type="button" value="新增退货" onclick="btntui()" /></td>
-            </tr>
         </table>
     </div>
+    <div>
+        <h4>退货结算账户：</h4>
+        <select id="account" style="width:100px;height:20px;background-color:aliceblue">
+        </select>
+        <input id="Button1" type="button" class="layui-btn layui-btn-normal" value="新增退货" onclick="btntui()" />
+    </div>
 
-   
+
 </body>
 </html>
 <script>
