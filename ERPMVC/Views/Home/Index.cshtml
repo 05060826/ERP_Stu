@@ -100,7 +100,7 @@
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
                         @*登录页面*@
                         <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                            <a href="javascript:;" target="main_self_frame" lay-tips="主页" lay-direction="2">
                                 <i class="layui-icon layui-icon-home"></i>
                                 <cite>主页</cite>
 
@@ -120,11 +120,11 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd data-name="show">
-                                    <a lay-href="/PurchaseInfo/Purchas">采购列表</a>
+                                    <a href="/PurchaseInfo/Purchas" target="main_self_frame">采购列表</a>
                                     <dl class="layui-nav-child">
 
                                         <dd data-name="adds">
-                                            <a lay-href="/PurchaseInfo/AddPurchas">新增采购</a>
+                                            <a href="/PurchaseInfo/AddPurchas" target="main_self_frame">新增采购</a>
                                         </dd>
 
                                     </dl>
@@ -132,11 +132,11 @@
                                 </dd>
 
                                 <dd data-name="backs">
-                                    <a lay-href="/PurchaseInfo/ShowUpdatePurchas">购货退货单</a>
+                                    <a href="/PurchaseInfo/ShowUpdatePurchas"  target="main_self_frame">购货退货单</a>
                                     <dl class="layui-nav-child">
 
                                         <dd data-name="addback">
-                                            <a lay-href="/PurchaseInfo/UpdatePurchas">新增退货单</a>
+                                            <a href="/PurchaseInfo/UpdatePurchas"  target="main_self_frame">新增退货单</a>
                                         </dd>
 
                                     </dl>
@@ -154,15 +154,15 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a lay-href="/outStock/Index">出货列表</a>
+                                    <a href="/outStock/Index" target="main_self_frame">出货列表</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="/outStock/Create">新增出货</a></dd>
+                                        <dd><a href="/outStock/Create" target="main_self_frame">新增出货</a></dd>
                                     </dl>
                                 </dd>
                                 <dd>
-                                    <a lay-href="/outStock/AllTui">出货退货列表</a>
+                                    <a href="/outStock/AllTui" target="main_self_frame">出货退货列表</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="/outStock/Tui">新增销售退货单</a></dd>
+                                        <dd><a href="/outStock/Tui" target="main_self_frame">新增销售退货单</a></dd>
                                     </dl>
                                 </dd>
 
@@ -179,16 +179,16 @@
                                 <dd data-name="content">
                                     <a href="javascript:;">调拨</a>
                                     <dl class="layui-nav-child">
-                                        <dd data-name="list"><a lay-href="/Allot/Show">调拨列表</a></dd>
-                                        <dd data-name="tags"><a lay-href="/Allot/CreateAllot">新增调拨</a></dd>
+                                        <dd data-name="list"><a href="/Allot/Show" target="main_self_frame">调拨列表</a></dd>
+                                        <dd data-name="tags"><a href="/Allot/CreateAllot" target="main_self_frame">新增调拨</a></dd>
 
                                     </dl>
                                 </dd>
                                 <dd data-name="echarts">
                                     <a href="javascript:;">盘点</a>
                                     <dl class="layui-nav-child">
-                                        <dd data-name="comment"><a lay-href="/Allot/ShowChecks">盘点列表</a></dd>
-                                        <dd data-name="comment"><a lay-href="/Allot/Forms">盘点报表</a></dd>
+                                        <dd data-name="comment"><a href="/Allot/ShowChecks" target="main_self_frame">盘点列表</a></dd>
+                                        <dd data-name="comment"><a href="/Allot/Forms" target="main_self_frame">盘点报表</a></dd>
                                     </dl>
                                 </dd>
 
@@ -304,11 +304,12 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body" >
                 <div class="layadmin-tabsbody-item layui-show" style="background:url(../images/bg1.jpg);background-repeat:no-repeat;background-size:100% 100%;background-attachment: fixed;">
-                    <iframe src="home/console.html" name="main_self_frame" frameborder="0" class="layadmin-iframe" ></iframe>
+                    <iframe src="home/console.html" name="main_self_frame" frameborder="0" class="layadmin-iframe"></iframe>
                     <div >
-                        @*<h2 style="text-align: center;">欢迎进入ERP进销存管理系统</h2>*@
+                        <h2 style="text-align: center;">欢迎进入ERP进销存管理系统</h2>
                     </div>
                 </div>
+
             </div>
 
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
@@ -317,15 +318,24 @@
     </div>
 
     <script src="../layuiadmin/layui/layui.js">
+        ////跳转
         function refreshHighlight(url) {
+
             $ = layui.jquery;
+
             $(".layui-nav[lay-filter='navList'] a").each(function (ind, val) {
+
                 if ($(this).attr('href') === url) {
+
                     $('.layui-nav dd').removeClass('layui-this');
+
                     $(this).parent('dd').addClass('layui-this');
+
                 }
-            });
-        };        
+
+            })
+
+        }
     </script>
     <script>
         layui.config({
@@ -333,9 +343,14 @@
         }).extend({
             index: 'lib/index' //主入口模块
         }).use('index');
+
+        
     </script>
 </body>
 </html>
+<script>
+   
+</script>
 
 
 

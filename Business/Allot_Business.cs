@@ -53,17 +53,7 @@ namespace Business
             return DapperHelper<ShowAll>.GetAll(sql);
         }
 
-        public List<ShowAll> GetVakues()
-        {
-            var linq = from cs in ShowFrom()
-                       group cs by cs.Cid into s
-                       select new ShowAll
-                       {
-                           SystemNumber = s.Count(),
-                           CheckNumber = s.Key
-                       };
-            return linq.OrderBy(m => m.CheckNumber).ToList();
-        }
+    
         //修改
         public int UpdateAll(int Id)
         {
