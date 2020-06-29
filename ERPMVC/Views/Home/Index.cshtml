@@ -205,15 +205,15 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a lay-href="/Capital/Receipt">收款单列表</a>
+                                    <a href="/Capital/Receipt" target="main_self_frame">收款单列表</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="/Capital/Add">新增收款单</a></dd>
+                                        <dd><a href="/Capital/Add" target="main_self_frame">新增收款单</a></dd>
                                     </dl>
                                 </dd>
                                 <dd>
-                                    <a lay-href="/Capital/PayMent">付款单列表</a>
+                                    <a href="/Capital/PayMent" target="main_self_frame">付款单列表</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a lay-href="/Capital/AddPayMent">新增付款单</a></dd>
+                                        <dd><a href="/Capital/AddPayMent" target="main_self_frame">新增付款单</a></dd>
                                     </dl>
                                 </dd>
                             </dl>
@@ -304,12 +304,11 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body" >
                 <div class="layadmin-tabsbody-item layui-show" style="background:url(../images/bg1.jpg);background-repeat:no-repeat;background-size:100% 100%;background-attachment: fixed;">
-                    <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe src="home/console.html" name="main_self_frame" frameborder="0" class="layadmin-iframe" ></iframe>
                     <div >
-                        <h2 style="text-align: center;">欢迎进入ERP进销存管理系统</h2>
+                        @*<h2 style="text-align: center;">欢迎进入ERP进销存管理系统</h2>*@
                     </div>
                 </div>
-
             </div>
 
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
@@ -317,7 +316,17 @@
         </div>
     </div>
 
-    <script src="../layuiadmin/layui/layui.js"></script>
+    <script src="../layuiadmin/layui/layui.js">
+        function refreshHighlight(url) {
+            $ = layui.jquery;
+            $(".layui-nav[lay-filter='navList'] a").each(function (ind, val) {
+                if ($(this).attr('href') === url) {
+                    $('.layui-nav dd').removeClass('layui-this');
+                    $(this).parent('dd').addClass('layui-this');
+                }
+            });
+        };        
+    </script>
     <script>
         layui.config({
             base: '../layuiadmin/' //静态资源所在路径
