@@ -11,7 +11,6 @@ using DataAccess.Dapper;
 using Model.AarehouseModel;
 using System.Linq;
 using Newtonsoft.Json;
-using System.Data.SqlClient;
 namespace Business
 {
     //仓库调拨表

@@ -15,11 +15,7 @@ namespace ERPAPI.Controllers
     [ApiController]
     public class OutStockAPIController : ControllerBase
     {
-        BaseBusiness _Business = null;
-        public OutStockAPIController()
-        {
-            _Business = new BaseBusiness();
-        }
+        
         //删除出货
         [Route("shan")]
         [HttpGet]

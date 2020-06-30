@@ -1,4 +1,4 @@
-﻿using Common;
+﻿
 using DataAccess.Dapper;
 using Model.CapitalModel;
 using System;
@@ -9,12 +9,7 @@ namespace Business
 {
     public class Capital_Business : IBaseBusiness
     {
-        //添加
-        public int Add<T>(T t)
-        {
-            string sql = ReflectionHelper.ModelToInsertSql<T>(t);
-            return DapperHelper<T>.CRD(sql);
-        }
+      
         //删除
         public int Delete(string sql)
         {
