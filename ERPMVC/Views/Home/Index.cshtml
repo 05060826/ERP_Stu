@@ -96,24 +96,16 @@
                     <div class="layui-logo" lay-href="home/console.html">
                         <span>ERP商品管理系统</span>
                     </div>
-
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
                         @*登录页面*@
                         <li data-name="home" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" target="main_self_frame" lay-tips="主页" lay-direction="2">
                                 <i class="layui-icon layui-icon-home"></i>
                                 <cite>主页</cite>
-
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="home" class="layui-this">
-                                    <a lay-href="/home/MaxZhu">登录</a>
-                                </dd>
-
-                            </dl>
+                            </a>                            
                         </li>
                         @*采购页面*@
-                        <li data-name="component" class="layui-nav-item">
+                        <li data-name="component" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="商品采购" lay-direction="2">
                                 <i class="layui-icon layui-icon-component"></i>
                                 <cite>商品采购</cite>
@@ -122,32 +114,23 @@
                                 <dd data-name="show">
                                     <a href="/PurchaseInfo/Purchas" target="main_self_frame">采购列表</a>
                                     <dl class="layui-nav-child">
-
                                         <dd data-name="adds">
                                             <a href="/PurchaseInfo/AddPurchas" target="main_self_frame">新增采购</a>
                                         </dd>
-
                                     </dl>
-
                                 </dd>
-
                                 <dd data-name="backs">
                                     <a href="/PurchaseInfo/ShowUpdatePurchas"  target="main_self_frame">购货退货单</a>
                                     <dl class="layui-nav-child">
-
                                         <dd data-name="addback">
                                             <a href="/PurchaseInfo/UpdatePurchas"  target="main_self_frame">新增退货单</a>
                                         </dd>
-
                                     </dl>
-
                                 </dd>
-
-
                             </dl>
                         </li>
                         @*出货页面*@
-                        <li data-name="template" class="layui-nav-item">
+                        <li data-name="template" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="出货" lay-direction="2">
                                 <i class="layui-icon layui-icon-template"></i>
                                 <cite>出货</cite>
@@ -165,11 +148,10 @@
                                         <dd><a href="/outStock/Tui" target="main_self_frame">新增销售退货单</a></dd>
                                     </dl>
                                 </dd>
-
                             </dl>
                         </li>
                         @*调拨页面*@
-                        <li data-name="app" class="layui-nav-item">
+                        <li data-name="app" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="仓库" lay-direction="2">
                                 <i class="layui-icon layui-icon-app"></i>
                                 <cite>仓库</cite>
@@ -181,7 +163,6 @@
                                     <dl class="layui-nav-child">
                                         <dd data-name="list"><a href="/Allot/ShowTaA" target="main_self_frame">调拨列表</a></dd>
                                         <dd data-name="tags"><a href="/Allot/CreateAllot" target="main_self_frame">新增调拨</a></dd>
-
                                     </dl>
                                 </dd>
                                 <dd data-name="echarts">
@@ -191,14 +172,10 @@
                                         <dd data-name="comment"><a href="/Allot/FormSum" target="main_self_frame">盘点报表</a></dd>
                                     </dl>
                                 </dd>
-
-
-
-
                             </dl>
                         </li>
                         @*资金页面*@
-                        <li data-name="senior" class="layui-nav-item">
+                        <li data-name="senior" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="资金管理" lay-direction="2">
                                 <i class="layui-icon layui-icon-rmb"></i>
                                 <cite>资金管理</cite>
@@ -217,62 +194,7 @@
                                     </dl>
                                 </dd>
                             </dl>
-                        </li>
-                        @*报表页面*@
-                        <li data-name="user" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="综合报表" lay-direction="2">
-                                <i class="layui-icon layui-icon-user"></i>
-                                <cite>综合报表</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                    <a lay-href="/Synthesize/Country">全国报表</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="user/administrators/list.html">采购报表</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="user/administrators/role.html">入库报表</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="user/administrators/role.html">出库报表</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="user/administrators/role.html">销售报表</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="/Synthesize/Fund">资金报表</a>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="set" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="设置" lay-direction="2">
-                                <i class="layui-icon layui-icon-set"></i>
-                                <cite>设置</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd class="layui-nav-itemed">
-                                    <a href="javascript:;">系统设置</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/system/website.html">网站设置</a></dd>
-                                        <dd><a lay-href="set/system/email.html">邮件服务</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd class="layui-nav-itemed">
-                                    <a href="javascript:;">我的设置</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="get" class="layui-nav-item">
-                            <a href="javascript:;" lay-href="http://www.layui.com/admin/#get" lay-tips="授权" lay-direction="2">
-                                <i class="layui-icon layui-icon-auz"></i>
-                                <cite>授权</cite>
-                            </a>
-                        </li>
+                        </li>               
                     </ul>
                 </div>
             </div>
@@ -309,9 +231,7 @@
                         <h2 style="text-align: center;">欢迎进入ERP进销存管理系统</h2>
                     </div>
                 </div>
-
             </div>
-
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
             <div class="layadmin-body-shade" layadmin-event="shade"></div>
         </div>
@@ -320,21 +240,13 @@
     <script src="../layuiadmin/layui/layui.js">
         ////跳转
         function refreshHighlight(url) {
-
             $ = layui.jquery;
-
             $(".layui-nav[lay-filter='navList'] a").each(function (ind, val) {
-
                 if ($(this).attr('href') === url) {
-
                     $('.layui-nav dd').removeClass('layui-this');
-
                     $(this).parent('dd').addClass('layui-this');
-
                 }
-
             })
-
         }
     </script>
     <script>
