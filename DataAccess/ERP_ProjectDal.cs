@@ -63,6 +63,8 @@ namespace DataAccess
             {
                 return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId where p.IsState=1").ToList();
             }
+
+
         }
         /// <summary>
         /// 显示结算账户下拉框
