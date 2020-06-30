@@ -12,54 +12,47 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
-    <script src="~/layuiadmin/layui/layui.js"></script>
 
 </head>
 <body>
+    <div class="layui-collapse">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">筛选查询</h2>
+            <div class="layui-colla-content layui-show">
+                <div class="layui-input-inline">
+                    <input type="text" id="AllotCode" required lay-verify="required" placeholder="请输入单据号" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" id="Cname" required lay-verify="required" placeholder="请输入调入仓库" autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" id="Rname" required lay-verify="required" placeholder="请输入调出仓库" autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnselect">查询结果</button>
+                    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="新增采购" onclick="btnAdd()" />
+                </div>
+               
+            </div>
+        </div>
+    </div>
     <div class="layui-form">
         <table class="layui-table">
             <tr>
-                <td>
-                    <input id="texNmae" type="text" placeholder="请输入单号或供应商或备注" />
-
-                    <select id="stateid">
-                        <option value="2">请选择</option>
-                        <option value="1">已付款</option>
-                        <option value="0">未付款</option>
-
-                    </select>
-                    日期：<input id="texTime" type="date" />
-                    <input id="ButtonSel" type="button" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-primary layui-btn-sm" value="查询结果" onclick="btnCha()" />
-                    @* class="layui-btn jump_refresh_url"  <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm"  value="新增采购" onclick="btnAdd()" />*@
-                    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="新增采购" onclick="btnAdd()" />
-                    @*<a href="/PurchaseInfo/AddPurchas">跳转新增</a>*@
-
-
-
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="layui-form">
-        <table class="layui-table" >
-            <tr>
-                <td>单据Id</td>
                 <td>单据日期</td>
                 <td>单据编号</td>
-                <td>供应商</td>
-                <td>购货金额</td>
-                <td>已付款</td>
-                <td>付款状态</td>
+                <td>商品名称</td>
+                <td>数量</td>
+                <td>单位</td>
+                <td>调出仓库</td>
+                <td>调入仓库</td>
                 <td>操作</td>
             </tr>
             <tbody id="tab1">
-
             </tbody>
         </table>
         <div style="text-align:center">
             <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('first')">首页</button>
-
-            @*// <button type="button" class="layui-btn layui-btn-xs layui-btn-normal">迷你按钮</button>*@
             <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('prv')"><i class="layui-icon"></i></button>
             当前第<label id="pageindex">1</label>页/总共<label id="totalPage"></label>页
             /每页<label id="pagesize">4</label>条/总共<label id="totalCount"></label>条
@@ -75,13 +68,6 @@
 </body>
 </html>
 <script>
-    //$(".jump_refresh_url").click(function () {
-
-    //    var url = $(this).attr('href');
-
-    //    top.refreshHighlight(url);
-
-    //});
     //首次加载
     $(function () {
         btnCha();
@@ -90,22 +76,18 @@
     //显示数据
     function btnCha()
     {
-        //供货商名称
-        var gname = $("#texNmae").val();
-        //时间
-        var times = $("#texTime").val();
-        //状态
-        var tates = $("#stateid").val();
+        
+        var where = $("#AllotCode").val();
+        
+        var WName = $("#Cname").val();
+        
+        var Ename = $("#Rname").val();
         //当前第几页
         var indes = $("#pageindex").text();
         //每页多少条
         var sizes = $("#pagesize").text();
-
-       
-
-
         $.ajax({
-            url: "https://localhost:44300/api/Purchase/ShowAllInfo?gname=" + gname + "&&time=" + times + "&&state=" + tates + "&&pageIndex=" + indes + "&&pageSize=" + sizes,
+            url: "https://localhost:44300/api/Allot/ShowPageAllot?AllotCode=" + where + "&&WName=" + WName + "&&Ename=" + Ename + " &&pageIndex=" + indes + "&&pageSize=" + sizes,
             type: "get",
             dataType:"json",
             success: function (data)
@@ -117,14 +99,14 @@
                 $(data.showList).each(function ()
                 {
                   var   str = '<tr>' +
-                        '<td>' + this.receIptsId + '</td>' +
-                        '<td>' + this.datetime + '</td>' +
-                        '<td>' + this.receIptsCode + '</td>' +
-                        '<td>' + this.gname + '</td>' +
-                      '<td>' + this.cMoney + '</td>' +
-                      '<td>' + (this.cMoney - this.discount)+ '</td>' +
-                      '<td>' + (this.payMent == 1 ? "已付款" : "未付款") + '</td>' +       //<button type="button" onclick="updateInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>退货</button>
-                      '<td><button type="button" onclick="updateInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm">退货</button>     <button type="button" onclick="deleteInfo(' + this.receIptsId +')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i></button> </td>'
+                      '<td>' + this.aTime + '</td>' +
+                      '<td>' + this.allotCode + '</td>' +
+                      '<td>' + this.sName + '</td>' +
+                      '<td>' + this.number + '</td>' +
+                      '<td>' + this.units + '</td>' +
+                      '<td>' + this.wName+ '</td>' +
+                      '<td>' + this.ename  + '</td>' +       
+                      '<td><button type="button" onclick="deleteInfo(' + this.allotId +')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i></button> </td>'
 
 
                         + '</tr>';
@@ -137,13 +119,13 @@
         })
 
     }
-  
+
     //分页
     function showpage(name)
     {
-       
-     
-      
+
+
+
         //当前第几页
         var index = Number($("#pageindex").text());
         //每页多少条
@@ -197,16 +179,7 @@
     //新增采购
     function btnAdd()
     {
-        location.href = "/PurchaseInfo/AddPurchas";
-
-    }
-    //修改跳转到退货页面反填数据修改状态
-    function updateInfo(rid)
-    {
-
-        location.href = "/PurchaseInfo/UpdatePurchas?rid=" + rid;
-
-
+        location.href = "/Allot/CreateAllot";
 
     }
     //页面删除
@@ -215,10 +188,10 @@
         if (confirm("确定删除吗？"))
         {
 
-        
+
         $.ajax({
 
-            url: "https://localhost:44300/api/Purchase/UpdateIstate?rid=" + rid,
+            url: "https://localhost:44300/api/Allot/Update?Id=" + rid,
             type: "put",
             dataType: "json",
             success: function (data) {
@@ -238,3 +211,5 @@
     }
 
 </script>
+
+

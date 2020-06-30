@@ -11,13 +11,19 @@ namespace DataAccess
 {
     public class ERP_ProjectDal : IERP_Pcurhasedal
     {
+
+        //连接字符串
+
+        string strconn = "Data Source=192.168.1.107;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456";
+
+
         /// <summary>
         /// 显示供应商信息
         /// </summary>
         /// <returns></returns>
         public List<SupplierModel> showSupplier()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
 
                 return conn.Query<SupplierModel>("select * from Supplier").ToList();
@@ -32,7 +38,7 @@ namespace DataAccess
 
         public List<ComityModel> showCommodity(int gid)
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
 
                 return conn.Query<ComityModel>($"select * from Commodity where GId={gid}").ToList();
@@ -47,7 +53,7 @@ namespace DataAccess
         /// <returns></returns>
         public int add(PurchModel model)
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
 
                 return conn.Execute($"insert into Purchase values ('{model.ReceIptsCode}',{model.SId},{model.GId},{model.Number},{model.Rate},{model.Discount},{model.CMoney},{model.AId},'{model.Datetime}',{model.PayMent},'{model.Remark}',{model.IsState})");
@@ -59,12 +65,10 @@ namespace DataAccess
         /// <returns></returns>
         public List<PurchModel> ShowPurchaseInfo()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
-                return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId where p.IsState=1").ToList();
+                return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId where p.IsState=1 and  (p.PayMent=0 or  p.PayMent=1 )").ToList();
             }
-
-
         }
         /// <summary>
         /// 显示结算账户下拉框
@@ -72,7 +76,7 @@ namespace DataAccess
         /// <returns></returns>
         public List<AccountModel> AccountModels()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
 
                 return conn.Query<AccountModel>($"select * from Account").ToList();
@@ -87,7 +91,7 @@ namespace DataAccess
         public ComityModel ShowCommdityInfo(int sid)
         {
 
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
                 return conn.Query<ComityModel>($"select * from Commodity  co join Warehouse ws on co.WId=ws.WId where Sid={sid}").FirstOrDefault();
             }
@@ -100,7 +104,7 @@ namespace DataAccess
         public int UpdateIstate(int rid)
         {
 
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
                 return conn.Execute($"update Purchase set IsState=0 where ReceIptsId={rid}");
             }
@@ -113,61 +117,63 @@ namespace DataAccess
         /// <returns></returns>
         public PurchModel FanTian(int rid)
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
                 return conn.Query<PurchModel>($"select * from Purchase  p join  Supplier su on su.Gid=p.GId join  Commodity co on p.SId=co.Sid join  Warehouse wa on co.WId=wa.WId where ReceIptsId={rid}").FirstOrDefault();
             }
 
         }
-        /// <summary>
-        /// 根据单据编号反填
-        /// </summary>
-        /// <param name="nameCode"></param>
-        /// <returns></returns>
-       public PurchModel DropFanTian(string nameCode)
+
+
+
+      /// <summary>
+      /// 修改支付状态为已付款
+      /// </summary>
+      /// <param name="rid"></param>
+      /// <param name="cgthCode"></param>
+      /// <returns></returns>
+        public int UpdatePaMent(int rid, string cgthCode)
         {
 
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
-                return conn.Query<PurchModel>($"select * from Purchase  p join  Supplier su on su.Gid=p.GId join  Commodity co on p.SId=co.Sid join  Warehouse wa on co.WId=wa.WId where ReceIptsCode='{nameCode}'").FirstOrDefault();
+                return conn.Execute($"update Purchase set PayMent=3 ,ReceIptsCode='{cgthCode}'  where ReceIptsId={rid}");
             }
 
 
         }
 
 
-        /// <summary>
-        /// 修改支付状态
-        /// </summary>
-        /// <param name="rid"></param>
-        /// <returns></returns>
-        public int UpdatePaMent(int rid)
+    /// <summary>
+    /// 修改支付状态为未付款
+    /// </summary>
+    /// <param name="rid"></param>
+    /// <param name="cgthCode"></param>
+    /// <returns></returns>
+        public int UpdatePaMents(int rid, string cgthCode)
         {
-
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
+            using (SqlConnection conn = new SqlConnection(strconn))
             {
-                return conn.Execute($"update Purchase set PayMent=3 where ReceIptsId={rid}");
+                return conn.Execute($"update Purchase set PayMent=4 ,ReceIptsCode='{cgthCode}'  where ReceIptsId={rid}");
             }
-
-
-        }
-        /// <summary>
-        /// 修改支付状态未支付
-        /// </summary>
-        /// <param name="rid"></param>
-        /// <returns></returns>
-        public int UpdatePaMents(int rid)
-        {
-
-            using (SqlConnection conn = new SqlConnection("Data Source=192.168.1.118;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456"))
-            {
-                return conn.Execute($"update Purchase set PayMent=4 where ReceIptsId={rid}");
-            }
-
         }
 
+        //public PurchModel DropFanTian(string nameCode)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
 
-
+        /// <summary>
+        /// 显示退货列表
+        /// </summary>
+        /// <returns></returns>
+        public List<PurchModel> ShowPurchasTh()
+        {
+            using (SqlConnection conn = new SqlConnection(strconn))
+            {
+                return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId where p.IsState=1 and  (p.PayMent=3 or  p.PayMent=4 )").ToList();
+            }
+        }
     }
 }

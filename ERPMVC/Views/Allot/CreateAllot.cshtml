@@ -1,0 +1,205 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>仓库调拨</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+
+    <div class="panel panel-default">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加调拨</h3>
+            </div>
+        </div>
+        <table class="table">
+            <tr><td>单据编号:</td><td><span id="num"> </span></td></tr>
+            <tr><td>单据日期:</td><td><input type="date" id="ATime" /></td></tr>
+            <tr>
+                <td>商品名称：</td>
+                <td>
+                    <select id="Sid" class="form-control">
+                        <option></option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>单位:</td><td> <input id="Units" type="text" /></td></tr>
+            <tr><td>  数量:</td><td> <input id="Number" type="text" /></td></tr>
+            <tr>
+                <td> 调入仓库：</td>
+                <td>
+                    <select id="Chung">
+                        <option></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td> 调出仓库：</td>
+                <td>
+                    <select id="Eid">
+                        <option></option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>备注:</td><td> <input id="Remark" type="text" /></td></tr>
+            <tr>
+                <td> </td>
+                <td>
+                    <button type="button" class="layui-btn layui-btn-warm layui-btn-radius" onclick="btnadd()">保存调拨</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        //编号
+        dajubian();
+        //商品
+        ShowCo();
+        //入库
+        ShowWa();
+        //出库
+        ShowEx();
+
+    });
+    //单据编号随机生成
+    function dajubian() {
+        var myDate = new Date();
+
+        var year = myDate.getFullYear();//获取当前年
+        var month = myDate.getMonth(); //获取当前月
+        var date = myDate.getDate();    //获取当前日
+
+        var hour = myDate.getHours();       //获取当前小时数（0-23）
+        var mintue = myDate.getMinutes();  //获取当前分钟数
+        var secound = myDate.getSeconds();
+
+        var now = year + getNow(month) + getNow(date) + getNow(hour) + getNow(mintue) + getNow(secound);
+
+        var nums = Math.random();
+        //生成四位随机数
+        out = Math.floor(Math.random() * 10000);
+
+        $("#num").text("DB" + now + out);
+    }
+    //判断是否在前面加0
+    function getNow(s) {
+        return s < 10 ? '0' + s : s;
+    }
+    //商品下拉
+    function ShowCo() {
+        $.ajax({
+
+            url: "https://localhost:44300/api/Allot/ShowComm",
+            type: "get",
+            success: function (data) {
+                $("#Sid").empty();
+                $("#Sid").append('<option value="">请选择</option>')
+                $(data).each(function () {
+
+                    $("#Sid").append('<option value="' + this.sid + '">' + this.sName + '</option>')
+
+                })
+
+            }
+        })
+
+
+    }
+    //入库下拉
+    function ShowWa() {
+        $.ajax({
+
+            url: "https://localhost:44300/api/Allot/ShowWare",
+            type: "get",
+            success: function (data) {
+                $("#Chung").empty();
+                $("#Chung").append('<option value="">请选择入库</option>')
+                $(data).each(function () {
+
+                    $("#Chung").append('<option value="' + this.wId + '">' + this.wName + '</option>')
+
+                })
+            }
+        })
+    }
+    //出库下拉
+    function ShowEx() {
+        $.ajax({
+
+            url: "https://localhost:44300/api/Allot/ShowExportSto",
+            type: "get",
+            success: function (data) {
+                $("#Eid").empty();
+                $("#Eid").append('<option value="">请选择出库</option>')
+                $(data).each(function () {
+
+                    $("#Eid").append('<option value="' + this.eId + '">' + this.ename + '</option>')
+
+                })
+
+            }
+        })
+    }
+
+    //添加按钮
+    function btnadd() {
+        /// 单据编号
+        var AllotCode = $("#num").text();
+        /// 商品Id
+        var Sid = parseInt($("#Sid").val());
+        /// 调拨数量
+        var Number = parseInt($("#Number").val());
+        /// 数量单位
+        var Units = $("#Units").val();
+        /// 调出仓库
+        var Wid = parseInt($("#Chung").val());
+        /// 调入仓库
+        var Eid = parseInt($("#Eid").val());
+        /// 录单时间
+        var ATime = $("#ATime").val();
+        /// 备注
+        var Remark = $("#Remark").val();
+        var obj = {};
+        obj.AllotCode = AllotCode;
+        obj.Sid = Sid;
+        obj.Number = Number;
+        obj.Units = Units;
+        obj.Units = Units;
+        obj.Wid = Wid;
+        obj.Eid = Eid;
+        obj.ATime = ATime;
+        obj.Remark = Remark;
+        obj.IsState = 1;
+        $.ajax({
+            url: "https://localhost:44300/api/Allot/CeeateAllot",
+            type: "post",
+            data: JSON.stringify(obj),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+                if (data > 0) {
+                    alert("添加成功");
+                    window.href = "/Allot/Show";
+                    location.href = "/Allot/Show";
+                }
+                else {
+                    alert("添加失败");
+                }
+            }
+        })
+    }
+</script>
+
+
+
+

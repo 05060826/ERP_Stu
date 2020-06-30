@@ -24,7 +24,7 @@ namespace ERPAPI.Controllers
             _business = business;
         }
         [HttpGet]
-        public string GetReceiptData(DateTime? dateTime=null,string where="")
+        public string GetReceiptData(DateTime? dateTime=null,string where="",int pageName=0,int limitName=0)
         {
             string sql = "select * from Receipt r join Clear c on r.ClearId=c.ClearId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
             if (!string.IsNullOrEmpty(where))
@@ -36,13 +36,14 @@ namespace ERPAPI.Controllers
                 sql += $" and RTime='{dateTime}'";
             }
             List<DtoReceiptModel> list= _business.Select<DtoReceiptModel>(sql);
+            List<DtoReceiptModel> slist = list.Skip((pageName-1)* limitName).Take(limitName).ToList();
             Dictionary<string, object> obj = new Dictionary<string, object>();
 
             //前台通过key值获得对应的value值
             obj.Add("code", 0);
             obj.Add("msg", "");
             obj.Add("count", list.Count);
-            obj.Add("data", list);
+            obj.Add("data", slist);
             return JsonConvert.SerializeObject(obj);
         }
         [HttpGet]
@@ -78,7 +79,7 @@ namespace ERPAPI.Controllers
 
 
         [HttpGet]
-        public string GetPayMentData(DateTime? dateTime = null, string where = "")
+        public string GetPayMentData(DateTime? dateTime = null, string where = "", int pageName = 0, int limitName = 0)
         {
             string sql = "select * from PayMent r join Purchase c on r.ReceIptsId=c.ReceIptsId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
             if (!string.IsNullOrEmpty(where))
@@ -90,13 +91,14 @@ namespace ERPAPI.Controllers
                 sql += $" and RTime='{dateTime}'";
             }
             List<DtoPayMentModel> list= _business.Select<DtoPayMentModel>(sql);
+            List<DtoPayMentModel>  slist = list.Skip((pageName - 1) * limitName).Take(limitName).ToList();
             Dictionary<string, object> obj = new Dictionary<string, object>();
 
             //前台通过key值获得对应的value值
             obj.Add("code", 0);
             obj.Add("msg", "");
             obj.Add("count", list.Count);
-            obj.Add("data", list);
+            obj.Add("data", slist);
             return JsonConvert.SerializeObject(obj);
         }
         [HttpGet]

@@ -11,38 +11,36 @@
     <title>AddPurchas</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 
 </head>
 <body>
 
-    <h4>添加采购信息</h4>
+    <h2 style="text-align:center">添加采购信息</h2>
 
-    <div>
-        <table>
+    <div id="gong">
+
+        <h4>供应商：</h4>
+        <select id="gonghuo" style="width:100px;height:20px;background-color:aliceblue">
+        </select>
+        <h4> 商品：</h4> <select id="goods" style="width:100px;height:20px;background-color:aliceblue">
+        </select>
+    </div>
+    <div class="layui-form">
+
+
+        <table class="layui-table">
             <tr>
-            <td>单据编号
-            </td>
-            <td><label id="num"></label></td>
-        </tr>
-            <tr>
-                <td>供应商：</td>
                 <td>
-                    <select id="gonghuo">
-                    </select>
+                    单据编号：
+                </td>
+                <td>
+                    <label id="num"></label>
                 </td>
             </tr>
             <tr>
                 <td>单据日期：</td>
                 <td><input id="Text1" type="date" /></td>
-            </tr>
-            <tr>
-                <td>商品：</td>
-                <td>
-                    <select id="goods">
-                        <option></option>
-
-                    </select>
-                </td>
             </tr>
             <tr>
                 <td>单位</td>
@@ -54,7 +52,7 @@
             </tr>
             <tr>
                 <td>商品单价</td>
-                <td><label id="pr"></label></td>
+                <td><label id="pr"></label>元</td>
             </tr>
             <tr>
                 <td>折扣率</td>
@@ -62,40 +60,46 @@
             </tr>
             <tr>
                 <td>折扣额</td>
-                <td><label id="mony"></label></td>
+                <td><label id="mony"></label>元</td>
             </tr>
             <tr>
                 <td>采购数量</td>
-                <td><input id="TextNum" type="text" /></td>
+                <td><input id="TextNum" type="text" /><label id="daw"></label></td>
             </tr>
             <tr>
                 <td>采购金额</td>
-                <td><label id="cmony"></label></td>
+                <td><label id="cmony"></label>元</td>
             </tr>
             <tr>
                 <td>备注</td>
                 <td><input id="TextTask" type="text" /></td>
             </tr>
-            <tr>
-                <td>结算账户</td>
-                <td>
-                    <select id="account">
-                        <option></option>
 
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><input id="Button1" type="button" value="保存新增" onclick="btnadd()" /></td>
-            </tr>
         </table>
     </div>
+    <div>
+        <h4>结算账户：</h4> 
+        <select id="account" style="width:100px;height:20px;background-color:aliceblue">
+
+        </select>
+        <input id="Button1" type="button" class="layui-btn layui-btn-normal" value="保存新增" onclick="btnadd()" />
+    </div>
+
+        
+   
 
 
 
 </body>
 </html>
 <script>
+
+   
+
+
+
+
+
     //首次加载
     $(function ()
     {
@@ -124,6 +128,7 @@
                     $("#da").text(data.units);
                     $("#cu").text(data.wName);
                     $("#pr").text(data.price);
+                    $("#daw").text(data.units);
 
 
                 }
@@ -186,7 +191,6 @@
         }
 
     }
-
 
     //供货商信息
     function dropGong()
@@ -260,7 +264,7 @@
         var myDate = new Date();
 
         var year = myDate.getFullYear();//获取当前年
-        var month = myDate.getMonth(); //获取当前月
+        var month = myDate.getMonth()+1; //获取当前月
         var date = myDate.getDate();    //获取当前日
 
         var hour = myDate.getHours();       //获取当前小时数（0-23）
@@ -340,7 +344,8 @@
 
                 if (data > 0) {
                     alert("添加成功");
-                    location.href = "/PurchaseInfo/Purchas";
+                location.href = "/PurchaseInfo/Purchas";
+                  
                 }
                 else
                 {

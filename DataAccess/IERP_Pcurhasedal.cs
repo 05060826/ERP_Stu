@@ -67,21 +67,27 @@ namespace DataAccess
         /// </summary>
         /// <param name="rid"></param>
         /// <returns></returns>
-        int UpdatePaMent(int rid);
+        int UpdatePaMent(int rid,string cgthCode);
 
         /// <summary>
         /// 修改支付状态未支付
         /// </summary>
         /// <param name="rid"></param>
         /// <returns></returns>
-        int UpdatePaMents(int rid);
+        int UpdatePaMents(int rid, string cgthCode);
+
+        ///// <summary>
+        ///// 根据单据编号反填
+        ///// </summary>
+        ///// <param name="nameCode"></param>
+        ///// <returns></returns>
+        //PurchModel DropFanTian(string nameCode);
 
         /// <summary>
-        /// 根据单据编号反填
+        /// 显示退货商品
         /// </summary>
-        /// <param name="nameCode"></param>
         /// <returns></returns>
-        PurchModel DropFanTian(string nameCode);
+        List<PurchModel> ShowPurchasTh();
             
     }
 }

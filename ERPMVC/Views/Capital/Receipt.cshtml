@@ -2,38 +2,45 @@
 @{
     Layout = null;
 }
-<script src="~/layuiadmin/layui/layui.js"></script>
-<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
-<script src="~/lib/jquery/dist/jquery.js"></script>
+
 <!DOCTYPE html>
 
-<div class="layui-collapse">
-    <div class="layui-colla-item">
-        <h2 class="layui-colla-title">筛选查询</h2>
-        <div class="layui-colla-content layui-show">
-            <div class="layui-input-inline">
-                <input type="text" id="ReceiptCode" required lay-verify="required" placeholder="请输入单据号或客户或备注" autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">日期:</label>
-            </div>
-            <div class="layui-inline">
-                <!-- 注意：这一层元素并不是必须的 -->
-                <input type="text" class="layui-input" id="test1">
-            </div>
-            <div class="layui-inline">
-                <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnselect">查询结果</button>
+<html>
+<head>
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+    <div class="layui-collapse">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">筛选查询</h2>
+            <div class="layui-colla-content layui-show">
+                <div class="layui-input-inline">
+                    <input type="text" id="ReceiptCode" required lay-verify="required" placeholder="请输入单据号或客户或备注" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期:</label>
+                </div>
+                <div class="layui-inline">
+                    <!-- 注意：这一层元素并不是必须的 -->
+                    <input type="text" class="layui-input" id="test1">
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnselect">查询结果</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="layui-inline" style="width:115px;float:right" >
-    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnAdd">新增收款单</button>
-</div>
-<div style="margin-top:40px">
-    <table class="layui-hide" id="test" lay-filter="test"></table>
-</div>
-
+    <div class="layui-inline" style="width:115px;float:right">
+        <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnAdd">新增收款单</button>
+    </div>
+    <div style="margin-top:40px">
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+        <div id="laypage"></div>
+    </div>
+</body>
+</html>
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -62,26 +69,33 @@
     });
 
     $(function () {
-         GetReceiptData();
+        var pageSize = 10; //每页显示的数据条数
+        var currentPageNo = 1; //当前页数
+        //初始化获取值
+        GetReceiptData(pageSize,currentPageNo);
+        //查询
         $("#btnselect").click(function () {
-            GetReceiptData();
+            GetReceiptData(pageSize,currentPageNo);
         });
+        //跳转新增页面
         $("#btnAdd").click(function () {
-            window.location.href = "/Capital/Add";
-        })
+            window.location.href="/Capital/Add";
+        });
     })
     //显示数据
-    function GetReceiptData() {
+    function GetReceiptData(pageSize,currentPageNo) {
         var where = $("#ReceiptCode").val();
         var dateTime = $("#test1").val();
-        layui.use('table', function () {
-            var table = layui.table;
 
+        layui.use(['table','laypage'], function (data) {
+            var table = layui.table;
+            var laypage = layui.laypage;
             table.render({
                 elem: '#test'
-                , url: 'https://localhost:44300/api/capital/GetReceiptData?where=' + where + '&dateTime=' + dateTime + ''
+                , url: 'https://localhost:44300/api/capital/GetReceiptData?where=' + where + '&dateTime=' + dateTime + '&pageName=' + currentPageNo + '&limitName=' + pageSize + ''
                 , title: '收款单列表'
                 , totalRow: true
+                , method: 'get'
                 , cols: [[
                     { type: 'checkbox', fixed: 'left' }
                     , { field: 'ReceiptId', title: 'ID', width: 150 }
@@ -92,10 +106,25 @@
                     , { field: 'Remark', title: '备注', width: 150 }
                     , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
                 ]]
-                , done: function () {
+                , done: function (res, curr, count) {
                     $("[data-field='ReceiptId']").css('display', 'none');
-                }
-                , page: true
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    laypage.render({
+                        elem: 'laypage'
+                        , count: count
+                        , curr: currentPageNo
+                        , limit: pageSize
+                        , layout: ['prev', 'page', 'next', 'skip', 'count', 'limit']
+                        , jump: function (obj, first) {
+                            if (!first) {
+                                currentPageNo = obj.curr;
+                                pageSize = obj.limit; 
+                                GetReceiptData(pageSize,currentPageNo);
+                            }
+                        }
+                    })
+                }               
             });
             table.on('sort(test)', function (obj) {
                 table.reload('test', {
@@ -104,6 +133,7 @@
              });
         });        
     }
+    //删除
     layui.use('table', function () {
         var table = layui.table;
         table.on('tool(test)', function (obj) {
@@ -121,7 +151,7 @@
                             }
                             else {
                                 alert("删除失败");
-                                GetReceiptData();
+                                GetReceiptData(pageSize,currentPageNo);
                             }
                         }
                     });

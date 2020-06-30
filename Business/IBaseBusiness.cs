@@ -8,7 +8,7 @@ namespace Business
    public interface IBaseBusiness
     {
 
-        int Add<T>(T t);
+      
 
         int Update(string sql);
 

@@ -1,48 +1,171 @@
 ﻿
 <!DOCTYPE html>
+
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>第一个 ECharts 实例</title>
-    <!-- 引入 echarts.js -->
-    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>Statistics_satisfy</title>
 </head>
 <body>
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 600px;height:400px;"></div>
-    <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
+    <div id="zhucontainer"></div>
+    <div id="wrapper">
+        <button id="plain">普通</button>
+        <button id="inverted">反转</button>
+        <button id="polar">极地图</button>
+    </div>
 
-        // 指定图表的配置项和数据
-        var option = {
-            legend: {},
-            tooltip: {},
-            dataset: {
-                source: [
-                    ['product', '购买', '入库', '出库','销售','结余'],
-                    ['蔬菜库', 43.3, 85.8, 93.7, 85.8, 93.7],
-                    ['食品库', 83.1, 73.4, 55.1, 73.4, 55.1],
-                    ['五金库', 86.4, 65.2, 82.5, 65.2, 82.5],
-                    ['磨具库', 72.4, 53.9, 39.1, 53.9, 39.1]
+
+    <div id="shancontainer" style="height: 400px"></div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+
+
+
+
+    <script>
+
+        var shanArr = [];
+
+        var zhuArr = [];
+
+        var zhuName = [];
+        $.ajax({
+            url: 'https://localhost:44300/api/Allot/GetVakues',
+            type: "get",
+            success: function (res) {
+                $(res).each(function () {
+                    
+                    if (this.WName == 1) {
+                        shanArr.push({ name: '食品库', y: this.SystemNumber, sliced: true, selected: true });
+                    }
+                    if (this.WName == 2) {
+                        shanArr.push({ name: '蔬菜库', y: this.SystemNumber, sliced: true, selected: true });
+                    }
+                    if (this.WName == 3) {
+                        shanArr.push({ name: '工具库', y: this.SystemNumber, sliced: true, selected: true });
+                    }
+                    if (this.WName == 4) {
+                        shanArr.push({ name: '五金库', y: this.SystemNumber, sliced: true, selected: true });
+                    }
                    
-                ]
-            },
-            xAxis: { type: 'category' },
-            yAxis: {},
-            // Declare several bar series, each will be mapped
-            // to a column of dataset.source by default.
-            series: [
-                { type: 'bar' },
-                { type: 'bar' },
-                { type: 'bar' },
-                { type: 'bar' },
-                { type: 'bar' }
-            ]
-        };
+                    zhuArr.push(this.orr_price);
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+                    if (this.WName == 1) {
+                        zhuName.push('食品库');
+                    }
+                    if (this.WName == 2) {
+                        zhuName.push('蔬菜库');
+                    } if (this.WName == 3) {
+                        zhuName.push('工具库');
+                    } if (this.WName == 4) {
+                        zhuName.push('五金库');
+                    } 
+
+                    var chart = Highcharts.chart('shancontainer', {
+                        chart: {
+                            type: 'pie',
+                            options3d: {
+                                enabled: true,
+                                alpha: 45,
+                                beta: 0
+                            }
+                        },
+                        title: {
+                            text: 'ERP系统储记'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                depth: 35,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: 'ERP系统储记',
+                            data: shanArr
+                        }]
+                    });
+
+
+
+
+
+                    var chart = Highcharts.chart('zhucontainer', {
+                        title: {
+                            text: 'ERP系统储记'
+                        },
+                        subtitle: {
+                            text: 'ERP系统储记ERP系统储记'
+                        },
+                        xAxis: {
+                            categories: zhuName
+                        },
+                        series: [{
+                            type: 'column',
+                            colorByPoint: true,
+                            data: zhuArr,
+                            showInLegend: false
+                        }]
+                    });
+                    // 给 wrapper 添加点击事件
+                    Highcharts.addEvent(document.getElementById('wrapper'), 'click', function (e) {
+                        var target = e.target,
+                            button = null;
+                        if (target.tagName === 'BUTTON') { // 判断点的是否是 button
+                            button = target.id;
+                            switch (button) {
+                                case 'plain':
+                                    chart.update({
+                                        chart: {
+                                            inverted: false,
+                                            polar: false
+                                        },
+                                        subtitle: {
+                                            text: '普通的'
+                                        }
+                                    });
+                                    break;
+                                case 'inverted':
+                                    chart.update({
+                                        chart: {
+                                            inverted: true,
+                                            polar: false
+                                        },
+                                        subtitle: {
+                                            text: '反转'
+                                        }
+                                    });
+                                    break;
+                                case 'polar':
+                                    chart.update({
+                                        chart: {
+                                            inverted: false,
+                                            polar: true
+                                        },
+                                        subtitle: {
+                                            text: '极地图'
+                                        }
+                                    });
+                                    break;
+                            }
+                        }
+                    });
+                });
+            }
+        })
+
+
     </script>
 </body>
 </html>

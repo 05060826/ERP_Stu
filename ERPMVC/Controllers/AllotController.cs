@@ -8,22 +8,25 @@ namespace ERPMVC.Controllers
 {
     public class AllotController : Controller
     {
-        public IActionResult ShowTable()
+       
+        public IActionResult ShowTaA()
         {
             return View();
         }
-        public IActionResult ADD()
-        {
-            return View();
-        }
-        public IActionResult Checks()
-        {
-            return View();
-        }
-        public IActionResult Forms()
+        public IActionResult CreateAllot()
         {
             return View();
         }
 
+
+        public IActionResult ShowChecks()
+        {
+            return View();
+        }
+
+        public IActionResult FormSum()
+        {
+            return View();
+        }
     }
 }
