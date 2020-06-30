@@ -12,7 +12,12 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
-
+    <div class="layui-collapse" lay-accordion>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title"></h2>
+            <div class="layui-colla-content layui-show"></div>
+        </div>
+    </div>
     <div style="width:300px;float:right">
         <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="AddAndClose()">保存关新增</button>
         <button class="layui-btn layui-btn-primary" lay-submit lay-filter="formDemo">打印</button>
@@ -97,7 +102,6 @@
     </div>
 </body>
 </html>
-
 <script>
     layui.use('form', function () {
         var form = layui.form;
