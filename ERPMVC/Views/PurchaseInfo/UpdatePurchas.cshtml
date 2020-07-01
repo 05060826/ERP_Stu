@@ -18,9 +18,9 @@
     <input id="HiddenRId" type="hidden" value="@ViewBag.rid" />
 
     <div>
-        <h4>单据编号</h4>
-        <select id="selDropCode" style="width:100px;height:20px;background-color:aliceblue">
+        <h4>单据编号</h4> <select id="selDropCode" style="width:100px;height:20px;background-color:aliceblue">
         </select>
+
     </div>
     <div class="layui-form">
         <table class="layui-table">
@@ -81,10 +81,11 @@
         </table>
     </div>
     <div>
-        <h4>退货结算账户：</h4>
-        <select id="account" style="width:100px;height:20px;background-color:aliceblue">
+        <h4>退货结算账户：</h4> <select id="account" style="width:100px;height:20px;background-color:aliceblue">
         </select>
-        <input id="Button1" type="button" class="layui-btn layui-btn-normal" value="新增退货" onclick="btntui()" />
+
+        <input id="Button1" style="margin-left:200px;" type="button" class="layui-btn layui-btn-normal" value="新增退货" onclick="btntui()" />
+        <input id="Button1" style="margin-left:100px;" type="button" class="layui-btn layui-btn-normal" value="返回退货列表" onclick="btnselup()" />
     </div>
 
 
@@ -330,4 +331,11 @@
         return s < 10 ? '0' + s : s;
     }
 
+
+    //返回退货列表
+    function btnselup()
+    {
+
+        location.href = "/PurchaseInfo/ShowUpdatePurchas";
+    }
 </script>

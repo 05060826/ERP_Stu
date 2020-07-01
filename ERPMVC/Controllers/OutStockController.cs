@@ -37,5 +37,9 @@ namespace ERPMVC.Controllers
         {
             return View();
         }
+        public IActionResult Biao()
+        {
+            return View();
+        }
     }
 }

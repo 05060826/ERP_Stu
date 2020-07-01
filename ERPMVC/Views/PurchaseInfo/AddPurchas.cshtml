@@ -20,9 +20,9 @@
 
     <div id="gong">
 
-        <h4>供应商：</h4>
-        <select id="gonghuo" style="width:100px;height:20px;background-color:aliceblue">
-        </select>
+        <h4>供应商：</h4> <select id="gonghuo" style="width:100px;height:20px;background-color:aliceblue">  </select>
+      
+
         <h4> 商品：</h4> <select id="goods" style="width:100px;height:20px;background-color:aliceblue">
         </select>
     </div>
@@ -78,11 +78,11 @@
         </table>
     </div>
     <div>
-        <h4>结算账户：</h4> 
-        <select id="account" style="width:100px;height:20px;background-color:aliceblue">
+        <h4>结算账户：</h4>  <select id="account" style="width:100px;height:20px;background-color:aliceblue"> </select>
 
-        </select>
-        <input id="Button1" type="button" class="layui-btn layui-btn-normal" value="保存新增" onclick="btnadd()" />
+
+        <input id="Button1" style="margin-left:200px;" type="button" class="layui-btn layui-btn-normal" value="保存新增" onclick="btnadd()" />
+        <input id="Button1" style="margin-left:100px;" type="button" class="layui-btn layui-btn-normal" value="返回列表" onclick="btnsel()" />
     </div>
 
         
@@ -356,6 +356,13 @@
 
 
 
+
+    }
+
+    //返回列表
+    function btnsel()
+    {
+        location.href = "/PurchaseInfo/Purchas";
 
     }
 

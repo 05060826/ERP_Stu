@@ -1,0 +1,218 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@{
+    ViewData["Title"] = "OutTable";
+}
+
+<h1>报表</h1>
+
+@*<script src="~/layuiadmin/layui/layui.js"></script>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />*@
+@*<script src="~b/jquery/dist/jquery.js"></script>*@
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+<div id="tb" style="height:300px;width:400px;float:left">
+
+</div>
+<div id="tp" style="height:300px;width:400px;float:left;margin-left:100px" >
+
+</div>
+
+<script>
+    $(function () {
+        ShowOut();
+        ShowTui();
+
+    });
+
+
+    function ShowOut() {
+        $.ajax({
+            url: "https://localhost:44300/api/baoOut",
+            type: "Get",
+            dataType: "json",
+            success: function (result) {
+                ShowList(result);
+
+                var xx = [];
+                var yy = [];
+                $(result).each(function () {
+                    xx.push(this.sName);
+                    yy.push(this.number);
+
+                })
+                Bandle(xx, yy);
+
+
+            }
+        });
+    }
+    function ShowTui() {
+        $.ajax({
+            url: "https://localhost:44300/api/baoTui",
+            type: "Get",
+            dataType: "json",
+            success: function (result) {
+                ShowTuiList(result);
+
+                var xx = [];
+                var yy = [];
+                $(result).each(function () {
+                    xx.push(this.sName);
+                    yy.push(this.number);
+
+                })
+                BandleTui(xx, yy);
+            }
+        });
+    }
+
+
+
+    function ShowList(result) {
+        $("#tb").empty();
+        var list = "";
+        $.each(result, function (i, n) {
+
+            list = '<tr style="text-align:center">'
+
+                + '<td>' + n.sName + '</td>'
+                + '<td>' + n.number + '</td>'
+                + '</tr>';
+
+
+        });
+        $("#tb").append(list);
+    }
+    function ShowTuiList(result) {
+        $("#tp").empty();
+        var list = "";
+        $.each(result, function (i, n) {
+
+            list = '<tr style="text-align:center">'
+
+                + '<td>' + n.sName + '</td>'
+                + '<td>' + n.number + '</td>'
+                + '</tr>';
+
+
+        });
+        $("#tp").append(list);
+    }
+
+
+    function Bandle(xx, yy) {
+
+        var dom = document.getElementById("tb");
+        var myChart = echarts.init(dom);
+        option = null;
+        option = {
+            color: "brown",
+
+            title: {
+                left: 'center',
+                text: '出货报表',
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: xx,//['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '直接访问',
+                    type: 'line',      //line是折线图  bar是柱状图
+                    barWidth: '60%',
+                    data: yy,//[10, 52, 200, 334, 390, 330, 220]
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+
+    }
+
+    function BandleTui(xx, yy) {
+
+        var dom = document.getElementById("tp");
+        var myChart = echarts.init(dom);
+        option = null;
+        option = {
+            color: "khaki",
+            title: {
+                left: 'center',
+                text: '退货报表',
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: xx,//['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '直接访问',
+                    type: 'line',      //line是折线图  bar是柱状图
+                    barWidth: '60%',
+                    data: yy,//[10, 52, 200, 334, 390, 330, 220]
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+
+    }
+
+
+</script>
+
+
+
