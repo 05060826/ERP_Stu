@@ -1,8 +1,4 @@
 ﻿
-@{
-    ViewData["Title"] = "FormSum";
-}
-
 
 <!DOCTYPE html>
 <html>
@@ -109,7 +105,7 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd data-name="adds">
-                                    <a href="/Home/MaxZhu" target="main_self_frame">显示主页</a>
+                                    <a href="/Home/Index" target="main_self_frame">显示主页</a>
                                 </dd>
                             </dl>
                         </li>
@@ -234,12 +230,12 @@
 
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
-                <div class="layadmin-tabsbody-item layui-show" >
-                    <iframe name="main_self_frame" frameborder="0" class="layadmin-iframe" src="/Home/MaxZhu" ></iframe>
-
+                <div class="layadmin-tabsbody-item layui-show" style="background:url(../images/bg1.jpg);background-repeat:no-repeat;background-size:100% 100%;background-attachment: fixed;">
+                    <iframe  name="main_self_frame" frameborder="0" class="layadmin-iframe" src="/home/index"></iframe>
+                  
 
                 </div>
-
+              
             </div>
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
             <div class="layadmin-body-shade" layadmin-event="shade"></div>
@@ -248,7 +244,7 @@
 
     <script src="../layuiadmin/layui/layui.js">
 
-
+      
         ////跳转
         function refreshHighlight(url) {
             $ = layui.jquery;
@@ -277,7 +273,7 @@
             index: 'lib/index' //主入口模块
         }).use('index');
 
-
+        
     </script>
 </body>
 </html>

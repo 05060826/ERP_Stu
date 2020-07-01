@@ -71,8 +71,7 @@ namespace ERPAPI.Controllers
         public List<ClearModel> ShowCount(int id)
         {
             List<ClearModel> list = DapperHelper<ClearModel>.GetAll("select * from Clear where IsState=1 ");
-            list = list.Where(s => s.ClearId.Equals(id)).ToList();
-            list[0].CTime.ToString("yyyy/MM/dd");
+            list = list.Where(s => s.ClearId.Equals(id)).ToList();           
             return list;
         }
         //显示所有出货（用于下拉框）
@@ -260,7 +259,25 @@ namespace ERPAPI.Controllers
             return count;
         }
 
+        //显示出货报表
+        [Route("baoOut")]
+        [HttpGet]
+        public List<Goods> ShowBaoOut()
+        {
+            string sql = "select b.SName,sum(a.Number) Number from Clear a join Commodity b on a.SId=b.Sid join Warehouse c on b.WId= c.WId join Client d on a.CliId=d.CLientId where 1=1 and a.IsState=1 and  (a.CState=0 or a.CState = 1) group by  b.SName ";
+            List<Goods> list = DapperHelper<Goods>.GetAll(sql);            
+            return list;
+        }
 
+        //显示退货报表
+        [Route("baoTui")]
+        [HttpGet]
+        public List<Goods> ShowBaoTui()
+        {
+            string sql = "select b.SName,sum(a.Number) Number from Clear a join Commodity b on a.SId=b.Sid join Warehouse c on b.WId= c.WId join Client d on a.CliId=d.CLientId where 1=1 and a.IsState=1 and  (a.CState=2 or a.CState = 3) group by  b.SName ";
+            List<Goods> list = DapperHelper<Goods>.GetAll(sql);
+            return list;
+        }
 
     }
 }

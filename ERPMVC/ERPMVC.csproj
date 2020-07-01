@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ECharts" Version="2.2.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
   </ItemGroup>

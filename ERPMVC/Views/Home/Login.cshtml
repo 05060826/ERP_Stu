@@ -54,8 +54,18 @@
 
 <script>
     function login() {
-        var UserName = $("#UserName").val();
-        var UserPass = $("#UserPass").val();
+        var UserName ='admin'
+        var UserPass = '123456'
+        //用户名非空验证
+        if (UserName == null)
+        {
+            alert("用户名不能为空");
+        }
+        //密码非空验证
+        if (UserPass == null)
+        {
+            alert("密码不能为空");
+        }
         var obj = {};
         obj.UserName = UserName;
         obj.UserPass = UserPass;
@@ -67,7 +77,9 @@
             contentType:"application/json",
             success: function (result) {
                 if (result > 0) {
-                    location.href = "/Home/Index";
+                    //alert("登陆成功")
+                   location.href = "/Home/Index";
+                   // window.top.location.href = "/Home/MaxZhu";
                 }
             }
         });
