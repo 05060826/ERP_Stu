@@ -15,7 +15,7 @@
     <script src="~/layuiadmin/layui/layui.js"></script>
 
 </head>
-<body>
+<body style="text-align:center;">
     <div class="layui-form">
         <table class="layui-table">
             <tr>
@@ -75,13 +75,10 @@
 </body>
 </html>
 <script>
-    //$(".jump_refresh_url").click(function () {
-
-    //    var url = $(this).attr('href');
-
-    //    top.refreshHighlight(url);
-
-    //});
+    $(".jump_refresh_url").click(function () {
+        var url = $(this).attr('href');
+        top.refreshHighlight(url);
+    });
     //首次加载
     $(function () {
         btnCha();
