@@ -147,7 +147,7 @@
                         success: function (result) {
                             if (result > 0) {
                                 alert("删除成功");
-                                GetReceiptData();
+                                GetReceiptData(pageSize,currentPageNo);
                             }
                             else {
                                 alert("删除失败");
