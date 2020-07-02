@@ -131,5 +131,17 @@ namespace ERPAPI.Controllers
             string sql = $"insert into PayMent (PaymentCode,ClientId,ReceIptsId,CNumber,Aid,RTime,Remark,IsState) values('{model.PaymentCode}','{model.ClientId}','{model.ReceIptsId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
             return DapperHelper<PaymentModel>.CRD(sql);
         }
+        [HttpGet]
+        public List<Statement> Statement()
+        {
+            string sql = "select datepart(month,RTime) as Yue,sum(CNumber) as Zong  from Receipt group by datepart(month,RTime)";
+            return _business.Select<Statement>(sql);
+        }
+        [HttpGet]
+        public List<Statement> GetStatement()
+        {
+            string sql = "select datepart(month,RTime) as Yue,sum(CNumber) as Zong  from Payment group by datepart(month,RTime)";
+            return _business.Select<Statement>(sql);
+        }
     }
 }
