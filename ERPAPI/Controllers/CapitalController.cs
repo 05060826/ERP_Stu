@@ -26,7 +26,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public string GetReceiptData(DateTime? dateTime=null,string where="",int pageName=0,int limitName=0)
         {
-            string sql = "select * from Receipt r join Clear c on r.ClearId=c.ClearId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
+            string sql = "select * from Receipt r  join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
             if (!string.IsNullOrEmpty(where))
             {
                 sql += $" and r.ReceiptCode='{where}' ";
@@ -49,7 +49,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public int DelReceiptData(int receiptId)
         {
-            string sql = "update from  Receipt set isstate=0 where ReceiptId="+ receiptId + "";
+            string sql = "update  Receipt set isstate=0 where ReceiptId="+ receiptId + "";
             return _business.Delete(sql);
         }
         [HttpGet]
@@ -81,7 +81,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public string GetPayMentData(DateTime? dateTime = null, string where = "", int pageName = 0, int limitName = 0)
         {
-            string sql = "select * from PayMent r join Purchase c on r.ReceIptsId=c.ReceIptsId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
+            string sql = "select * from PayMent r  join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
             if (!string.IsNullOrEmpty(where))
             {
                 sql += $" and r.PaymentCode='{where}' ";
@@ -104,7 +104,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public int DelPayMentData(int paymentId)
         {
-            string sql = "update from  PayMent set isstate=0 where PaymentId=" + paymentId + "";
+            string sql = "update  PayMent set isstate=0 where PaymentId=" + paymentId + "";
             return _business.Delete(sql);
         }
         [HttpGet]
@@ -130,6 +130,18 @@ namespace ERPAPI.Controllers
             model.IsState = 1;
             string sql = $"insert into PayMent (PaymentCode,ClientId,ReceIptsId,CNumber,Aid,RTime,Remark,IsState) values('{model.PaymentCode}','{model.ClientId}','{model.ReceIptsId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
             return DapperHelper<PaymentModel>.CRD(sql);
+        }
+        [HttpGet]
+        public List<Statement> Statement()
+        {
+            string sql = "select datepart(month,RTime) as Yue,sum(CNumber) as Zong  from Receipt group by datepart(month,RTime)";
+            return _business.Select<Statement>(sql);
+        }
+        [HttpGet]
+        public List<Statement> GetStatement()
+        {
+            string sql = "select datepart(month,RTime) as Yue,sum(CNumber) as Zong  from Payment group by datepart(month,RTime)";
+            return _business.Select<Statement>(sql);
         }
     }
 }

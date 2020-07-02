@@ -155,20 +155,52 @@
     function btnadd() {
         /// 单据编号
         var AllotCode = $("#num").text();
+        if (AllotCode = null) {
+            alert("输入不能为空");
+            return;
+        }
         /// 商品Id
         var Sid = parseInt($("#Sid").val());
+        if (Sid ==0) {
+            alert("输入不能为空");
+            return;
+        }
         /// 调拨数量
         var Number = parseInt($("#Number").val());
+        if (Number=0) {
+            alert("输入不能为空");
+            return;
+        }
         /// 数量单位
         var Units = $("#Units").val();
+        if (Units = null) {
+            alert("输入不能为空");
+            return;
+        }
         /// 调出仓库
         var Wid = parseInt($("#Chung").val());
+        if (Wid = null) {
+            alert("输入不能为空");
+            return;
+        }
         /// 调入仓库
         var Eid = parseInt($("#Eid").val());
+        if (Eid = null) {
+            alert("输入不能为空");
+            return;
+        }
         /// 录单时间
         var ATime = $("#ATime").val();
+        if (ATime = null) {
+            alert("输入不能为空");
+            return;
+        }
         /// 备注
         var Remark = $("#Remark").val();
+        if (Remark = null) {
+            alert("输入不能为空");
+            return;
+        }
         var obj = {};
         obj.AllotCode = AllotCode;
         obj.Sid = Sid;
