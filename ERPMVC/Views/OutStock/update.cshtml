@@ -123,87 +123,6 @@
 </div>
 
 
-
-
-
-
-@*<div class="row">
-        <div class="col-md-4">
-            <form asp-action="update">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group">
-                    单据编号：
-                    <input asp-for="CleaNumber" id="CleaNumber" class="form-control" />
-                    <span asp-validation-for="CleaNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    客户：
-                    <select asp-for="CliId" id="CliId">
-                    </select>
-                </div>
-                <div class="form-group">
-                    销售人员：
-                    <select asp-for="MId" id="MId">
-                    </select>
-
-                </div>
-                <div class="form-group">
-                    商品：
-                    <select asp-for="SId" id="SId">
-                    </select>
-                </div>
-                <div class="form-group">
-                    商品数量
-                    <input asp-for="Number" class="form-control" id="Number" />
-
-                </div>
-                <div class="form-group">
-                    单价：
-                    <input asp-for="SellMoney" id="SellMoney" class="form-control" />
-                    <span asp-validation-for="SellMoney" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    折扣率：
-
-                    <input asp-for="Rate" id="Rate" class="form-control" />
-                    <span asp-validation-for="Rate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    优惠金额：
-
-                    <input asp-for="Discount" id="Discount" class="form-control" disabled />
-                    <span asp-validation-for="Discount" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    优惠后金额：
-                    <input asp-for="SMoney" id="SMoney" class="form-control" disabled />
-                    <span asp-validation-for="SMoney" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    地址：
-
-                    <input asp-for="Addresses" id="Addresses" class="form-control" />
-                    <span asp-validation-for="Addresses" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    单据日期：
-                    <input asp-for="CTime" id="CTime" class="form-control" />
-                    <span asp-validation-for="CTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    收货人账单：
-                    <select asp-for="AId" id="AId">
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <input type="button" value="修改" id="Edit" class="btn btn-primary" />
-                    <input type="button" value="返回列表" id="Back" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>*@
 <input type="hidden" id="allMoney" />
 <input type="hidden" id="realMoney" />
 
@@ -354,16 +273,56 @@
         list = {};
         list.ClearId = @ViewBag.id;
         list.CleaNumber = $("#CleaNumber").val();
+
         list.CliId = parseInt($("#CliId").val());
         list.MId = parseInt($("#MId").val());
-        list.SId = parseInt( $("#SId").val());
-        list.Number = parseInt($("#Number").val());
-        list.SellMoney = parseFloat($("#SellMoney").val());
-        list.Rate = parseFloat($("#Rate").val());
+        list.SId = parseInt($("#SId").val());
+
+
+        if ($("#Number").val() != 0) {
+
+            list.Number = parseInt($("#Number").val());
+        }
+        else {
+            alert("商品数量为空");
+            return;
+        }
+        if ($("#SellMoney").val() != 0) {
+
+            list.SellMoney = parseFloat($("#SellMoney").val());
+        }
+        else {
+            alert("商品单价为空");
+            return;
+        }
+        if ($("#Rate").val() != 0) {
+
+            list.Rate = parseFloat($("#Rate").val());
+        }
+        else {
+            alert("折扣率为空");
+            return;
+        }
+
+        if ($("#Addresses").val() != "") {
+
+            list.Addresses = $("#Addresses").val();
+        }
+        else {
+            alert("地址为空");
+            return;
+        }
+        if ($("#CTime").val() != "") {
+
+            list.CTime = $("#CTime").val();
+        }
+        else {
+            alert("创建时间为空");
+            return;
+        }
+
         list.Discount = parseFloat($("#Discount").val())
         list.SMoney = parseFloat($("#SMoney").val());
-        list.Addresses = $("#Addresses").val();
-        list.CTime = $("#CTime").val();
         list.AId = parseInt($("#AId").val());
 
         $.ajax({
