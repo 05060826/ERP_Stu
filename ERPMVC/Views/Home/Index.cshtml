@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "FormSum";
+    ViewData["Title"] = "ERP商品管理系统";
 }
 
 
@@ -210,6 +210,7 @@
                                         <dd><a href="/Capital/AddPayMent" target="main_self_frame">新增付款单</a></dd>
                                     </dl>
                                 </dd>
+                                <dd><a href="/Capital/CapitalStatement" target="main_self_frame">资金报表</a></dd>
                             </dl>
                         </li>
                     </ul>
@@ -244,19 +245,13 @@
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show" >
                     <iframe name="main_self_frame" frameborder="0" class="layadmin-iframe" src="/Home/MaxZhu" ></iframe>
-
-
                 </div>
-
             </div>
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
             <div class="layadmin-body-shade" layadmin-event="shade"></div>
         </div>
     </div>
-
     <script src="../layuiadmin/layui/layui.js">
-
-
         ////跳转
         function refreshHighlight(url) {
             $ = layui.jquery;
@@ -267,15 +262,6 @@
                 }
             })
         }
-
-
-        function btnShow() {
-
-            alert("4564412");
-            location.href = "/PurchaseInfo/Purchas";
-
-        }
-
     </script>
 
     <script>

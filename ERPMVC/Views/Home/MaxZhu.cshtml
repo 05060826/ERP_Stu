@@ -21,85 +21,57 @@
             border: 1px solid gray;
             text-align: center;
         }
-
-
-
     </style>
 </head>
 <body style="background-color:white">
 
    @*style="background:url(../images/bg1.jpg);background-repeat:no-repeat;background-size:100% 100%;background-attachment: fixed;"*@
 
-    <h2 style="text-align:center;color:aqua;">欢迎进入ERP进销存系统</h2>
-
-    <div class="zong">
-        <a href="/PurchaseInfo/AddPurchas" style="text-decoration: none">
-
-            <img src="~/Images/采购入库.png" style="height:110px;width:200px" />
-           
-            <br />
-
-            采购入库
-        </a>
+    @*<h1 style="text-align:center;">欢迎进入ERP进销存系统</h1>*@
+    <p style="font-size:50px; margin-left:320px">欢迎进入ERP进销存系统</p>
+    <div>
+        <div class="zong" style="margin-left:130px">
+            <a href="/PurchaseInfo/AddPurchas" style="text-decoration: none">
+                <img src="~/Images/采购入库.png" style="height:110px;width:150px" />
+                <br />
+                采购入库
+            </a>
+        </div>
+        <div class="zong">
+            <a href="/outStock/Create" style="text-decoration: none">
+                <img src="~/Images/销售出库.png" style="height:110px;width:150px" />
+                <br />
+                销售出库
+            </a>
+        </div>
+        <div class="zong">
+            <a href="/Allot/CreateAllot" style="text-decoration: none">
+                <img src="~/Images/仓库调拨.png" style="height:110px;width:150px" />
+                <br />
+                仓库调拨
+            </a>
+        </div>
+        <div class="zong">
+            <a href="/Allot/ShowChecks" style="text-decoration: none">
+                <img src="~/Images/库存盘点.png" style="height:110px;width:150px" />
+                <br />
+                库存盘点
+            </a>
+        </div>
+        <div class="zong">
+            <a href="/Capital/Receipt" style="text-decoration: none">
+                <img src="~/Images/付款单表.png" style="height:110px;width:150px" />
+                <br />
+                资金收款
+            </a>
+        </div>
+        <div class="zong">
+            <a href="/Capital/PayMent" style="text-decoration: none">
+                <img src="~/Images/收款单表.png" style="height:110px;width:150px" />
+                <br />
+                资金付款
+            </a>
+        </div>
     </div>
-    <div class="zong">
-        <a href="/outStock/Create" style="text-decoration: none">
-
-            <img src="~/Images/销售出库.png" style="height:110px;width:200px" />
-            <br />
-            销售出库
-        </a>
-    </div>
-
-    <div class="zong">
-        <a href="/Allot/CreateAllot" style="text-decoration: none">
-
-            <img src="~/Images/仓库调拨.png" style="height:110px;width:200px" />
-     
-            <br />
-            仓库调拨
-        </a>
-    </div>
-
-    <div class="zong">
-        <a href="/Allot/ShowChecks" style="text-decoration: none">
-            <img src="~/Images/库存盘点.png" style="height:110px;width:200px" />
-    
-            <br />
-            库存盘点
-        </a>
-    </div>
-    <div class="zong">
-        <a href="/Capital/Receipt" style="text-decoration: none">
-
-            <img src="~/Images/付款单表.png" style="height:110px;width:200px" />
-
-           
-            <br />
-            资金收款
-        </a>
-    </div>
-    <div class="zong">
-        <a href="/Capital/PayMent" style="text-decoration: none">
-            <img src="~/Images/收款单表.png" style="height:110px;width:200px" />
-
-            <br />
-            资金付款
-        </a>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>

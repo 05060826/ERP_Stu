@@ -297,20 +297,119 @@
         Show();
     })
 
+
+  //  /// 出货单据编号
+		///// </summary>
+		//public string CleaNumber { get; set; }
+		///// <summary>
+		///// 客户名称
+		///// </summary>
+		//public string CliName { get; set; }
+		///// <summary>
+		///// 销售人员
+		///// </summary>
+		//public string MName { get; set; }
+		///// <summary>
+		///// 商品Id
+		///// </summary>
+		//public int Sid { get; set; }
+		///// <summary>
+		///// 数量
+		///// </summary>
+		//public int Number { get; set; }
+		///// <summary>
+		///// 销售单价
+		///// </summary>
+		//public double SellMoney { get; set; }
+		///// <summary>
+		///// 折扣率
+		///// </summary>
+		//public double Rate { get; set; }
+		///// <summary>
+		///// 折扣金额
+		///// </summary>
+		//public double Discount { get; set; }
+		///// <summary>
+		///// 销售金额
+		///// </summary>
+		//public double SMoney { get; set; }
+		///// <summary>
+		///// 收货地址
+		///// </summary>
+		//public string Addresses { get; set; }
+		///// <summary>
+		///// 出货单据日期
+		///// </summary>
+		//public DateTime CTime { get; set; }
+		///// <summary>
+		///// 结算账户
+		///// </summary>
+		//public int AId { get; set; }
+
     $("#insert").click(function () {
         list = {};
+        
         list.CleaNumber = $("#bian").html();
-        list.CliName = $("#CliName").val();
-        list.MName = $("#MName").val();
-        list.SName = $("#SName").val();
+        if ($("#CliName").val() != "") {
+
+            list.CliName = $("#CliName").val();
+        }
+        else {
+            alert("客户名称为空");
+            return;
+        }
+        if ($("#MName").val() != "") {
+
+            list.MName = $("#MName").val();
+        }
+        else {
+            alert("销售人员为空");
+            return;
+        }
         list.Sid = parseInt($("#Sid").val());
-        list.Number = parseInt($("#Number").val());
-        list.SellMoney = parseFloat($("#SellMoney").val());
-        list.Rate = parseFloat($("#Rate").val());
-        list.Discount = parseFloat($("#Discount").val())
-        list.SMoney = parseFloat($("#SMoney").val());
-        list.Addresses = $("#Addresses").val();
-        list.CTime = $("#CTime").val();
+       
+        if ($("#Number").val() != 0) {
+
+            list.Number = parseInt($("#Number").val());
+        }
+        else {
+            alert("商品数量为空");
+            return;
+        }
+        if ($("#SellMoney").val()!=0) {
+
+            list.SellMoney = parseFloat($("#SellMoney").val());
+        }
+        else {
+            alert("商品单价为空");
+            return;
+        }
+        if ($("#Rate").val() != 0) {
+
+            list.Rate = parseFloat($("#Rate").val());
+        }
+        else {
+            alert("折扣率为空");
+            return;
+        }
+        
+        if ($("#Addresses").val() != "") {
+
+            list.Addresses = $("#Addresses").val();
+        }
+        else {
+            alert("地址为空");
+            return;
+        }
+        if ($("#CTime").val() != "") {
+
+            list.CTime = $("#CTime").val();
+        }
+        else {
+            alert("创建时间为空");
+            return;
+        }
+        
         list.AId = parseInt( $("#AId").val());        
        
         $.ajax({
@@ -346,16 +445,10 @@
 
     }
 
-
-
     //判断是否在前面加0
     function getNow(s) {
         return s < 10 ? '0' + s : s;
     }
-
-
-
-
 
 </script>
 

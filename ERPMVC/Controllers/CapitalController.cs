@@ -24,5 +24,9 @@ namespace ERPMVC.Controllers
         {
             return View();
         }
+        public IActionResult CapitalStatement()
+        {
+            return View();
+        }
     }
 }

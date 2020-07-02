@@ -141,19 +141,18 @@
                         type: "get",
                         dataType: "text",
                         success: function (result) {
+                            layer.close(layer.index);
                             if (result > 0) {
-                                alert("删除成功");
-                                GetReceiptData(pageSize, currentPageNo);
+                                GetReceiptData(10, 1);
                             }
                             else {
-                                alert("删除失败");
-                                GetReceiptData(pageSize, currentPageNo);
+                                GetReceiptData(10, 1);
                             }
                         }
                     });
                 });
             } else if (obj.event === 'edit') {
-                layer.alert('编辑行：<br>' + JSON.stringify(data))
+                location.href = "/Capital/AddPayMent?PaymentCode="+data.PaymentCode;
             }
         });
     });
