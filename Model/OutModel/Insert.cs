@@ -55,9 +55,7 @@ namespace Model.OutModel
 		/// 结算账户
 		/// </summary>
 		public int AId { get; set; }
-		/// <summary>
-		/// 结算账户
-		/// </summary>
+		
 		
 
 

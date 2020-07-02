@@ -30,7 +30,5 @@ namespace Model.OutModel
         public int SeId { get; set; }
         public string SeName { get; set; }
      
-
-
     }
 }
