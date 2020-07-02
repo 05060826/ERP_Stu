@@ -26,7 +26,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public string GetReceiptData(DateTime? dateTime=null,string where="",int pageName=0,int limitName=0)
         {
-            string sql = "select * from Receipt r join Clear c on r.ClearId=c.ClearId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
+            string sql = "select * from Receipt r  join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
             if (!string.IsNullOrEmpty(where))
             {
                 sql += $" and r.ReceiptCode='{where}' ";
@@ -81,7 +81,7 @@ namespace ERPAPI.Controllers
         [HttpGet]
         public string GetPayMentData(DateTime? dateTime = null, string where = "", int pageName = 0, int limitName = 0)
         {
-            string sql = "select * from PayMent r join Purchase c on r.ReceIptsId=c.ReceIptsId join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
+            string sql = "select * from PayMent r  join Client cl on r.ClientId=cl.CLientId where 1=1 and r.isstate=1 ";
             if (!string.IsNullOrEmpty(where))
             {
                 sql += $" and r.PaymentCode='{where}' ";

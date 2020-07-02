@@ -43,8 +43,8 @@
             dataType: "json",
             success: function (result) {
                 var str = [];
-                $(result).each(function (i,n) {
-                    str.push({value: ''+n.zong+'', name:''+n.yue+'月'});
+                $(result).each(function (i, n) {
+                    str.push({ value: '' + n.zong + '', name: '' + n.yue + '月'});
                 })               
                 Bandels(str);
             }
@@ -65,7 +65,7 @@
             },
             title: {
                 text: '收款单报表',
-                left:'center'
+                left: 'center'
             },
             grid: {
                 left: '3%',
@@ -76,7 +76,7 @@
             xAxis: [
                 {
                     type: 'category',
-                    data:xx,// ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    data: xx,// ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                     axisTick: {
                         alignWithLabel: true
                     }
@@ -92,81 +92,94 @@
                     name: '直接访问',
                     type: 'bar',
                     barWidth: '40%',
-                    data: yy,//[10, 52, 200, 334, 390, 330, 220]
+                    data: yy,//[10, 52, 200, 334, 390, 330, 220]       
+                    itemStyle: {
+                        normal: {
+                            //这里是重点
+                            color: function (params) {
+                                //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                                var colorList = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622'];
+                                return colorList[params.dataIndex]
+                            }
+                        }
+                    }
                 }
             ]
         };
         if (option && typeof option === "object") {
             myChart.setOption(option, true);
         }
-
+        //给大于颜色数量的柱体添加循环颜色的判断
+	    if (params.dataIndex >= colorList.length) {
+	        index = params.dataIndex - colorList.length;
+	    }
     }
     function Bandels(str) {
         
-            var dom = document.getElementById("container");
-            var myChart = echarts.init(dom);
-            var app = {};
-            option = null;
-            option = {
-                backgroundColor: 'white',
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        option = {
+            backgroundColor: '#2c343c',
+            //color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622'],
+            title: {
+                text: '付款单报表',
+                left: 'center',
+                top: 20,
+                textStyle: {
+                    color: '#ccc'
+                }
+            },
 
-                title: {
-                    text: '付款单报表',
-                    left: 'center',
-                    top: 20,
-                    textStyle: {
-                        color: 'black'
-                    }
-                },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
 
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c} ({d}%)'
-                },
-
-                visualMap: {
-                    show: false,
-                    min: 80,
-                    max: 600,
-                    inRange: {
-                        colorLightness: [0, 1]
-                    }
-                },
-                series: [
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '50%'],
-                        data: str.sort(function (a, b) { return a.value - b.value; }),
-                        roseType: 'radius',
-                        label: {
+            visualMap: {
+                show: false,
+                min: 80,
+                max: 600,
+                inRange: {
+                    colorLightness: [0, 1]
+                }
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '50%'],
+                    data: str.sort(function (a, b) { return a.value - b.value; }),
+                    roseType: 'radius',
+                    label: {
+                        color: 'rgba(255, 255, 255, 0.3)'
+                    },
+                    labelLine: {
+                        lineStyle: {
                             color: 'rgba(255, 255, 255, 0.3)'
                         },
-                        labelLine: {
-                            lineStyle: {
-                                color: 'rgba(255, 255, 255, 0.3)'
-                            },
-                            smooth: 0.2,
-                            length: 10,
-                            length2: 20
-                        },
-                        itemStyle: {
-                            color: '#c23531',
-                            shadowBlur: 200,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    },
+                    itemStyle: {
+                        color: '#c23531',
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    },
 
-                        animationType: 'scale',
-                        animationEasing: 'elasticOut',
-                        animationDelay: function (idx) {
-                            return Math.random() * 200;
-                        }
+                    animationType: 'scale',
+                    animationEasing: 'elasticOut',
+                    animationDelay: function (idx) {
+                        return Math.random() * 200;
                     }
-                ]
-            };
-            if (option && typeof option === "object") {
-                 myChart.setOption(option, true);
-            }
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+        }
     }
 </script>
