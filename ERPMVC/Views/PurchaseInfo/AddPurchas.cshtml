@@ -46,10 +46,7 @@
                 <td>单位</td>
                 <td><label id="da"></label></td>
             </tr>
-            <tr>
-                <td>仓库</td>
-                <td><label id="cu"></label></td>
-            </tr>
+
             <tr>
                 <td>商品单价</td>
                 <td><label id="pr"></label>元</td>
@@ -58,16 +55,17 @@
                 <td>折扣率</td>
                 <td><input id="TextZL" type="text" /></td>
             </tr>
-            <tr>
-                <td>折扣额</td>
-                <td><label id="mony"></label>元</td>
-            </tr>
+
             <tr>
                 <td>采购数量</td>
                 <td><input id="TextNum" type="text" /><label id="daw"></label></td>
             </tr>
             <tr>
-                <td>采购金额</td>
+                <td>折扣额</td>
+                <td><label id="mony"></label>元</td>
+            </tr>
+            <tr>
+                <td>打折后采购金额</td>
                 <td><label id="cmony"></label>元</td>
             </tr>
             <tr>
@@ -78,6 +76,8 @@
         </table>
     </div>
     <div>
+        <h4>商品入库</h4> <select id="cu" style="width:100px;height:20px;background-color:aliceblue">  </select>
+
         <h4>结算账户：</h4>  <select id="account" style="width:100px;height:20px;background-color:aliceblue"> </select>
 
 
@@ -103,9 +103,11 @@
     //首次加载
     $(function ()
     {
+        dropcang();
         dajubian();
         dropGong();
         dropaccount();
+       
         //供货商下拉框内容改变事件
        // dropGoods($("#gonghuo").val());
         $("#gonghuo").change(function ()
@@ -181,7 +183,7 @@
         var sumcomy = Number($("#cmony").text());
 
         //折扣额
-        zke = price * zkl;
+        zke = price * snum * zkl;
         $("#mony").text(zke);
         //采购金额
         sumcomy = snum * price - zke;
@@ -254,6 +256,26 @@
 
             }
         });
+    }
+
+
+    //仓库信息
+    function dropcang()
+    {
+        $.ajax({
+            url: "https://localhost:44300/api/Purchase/CangKu",
+            type: "get",
+            success: function (data) {
+                $("#cu").empty();
+                $("#cu").append('<option value=0>请选择</option>')
+                $(data).each(function () {
+
+                    $("#cu").append('<option value="' + this.wId + '">' + this.wName + '</option>')
+
+                });
+
+            }
+        });
 
 
 
@@ -290,22 +312,48 @@
 
         //单据编号
         var danju = $("#num").text();
+        if (danju == null)
+        {
+            alert("编号不能为空");
+        }
         //供应商编号
         var gongId = parseInt($("#gonghuo").val());
+        if (gongId == 0)
+        {
+            alert("供应商编号不能为空");
+        }
         //单据日期
         var time = $("#Text1").val();
+        if (time == null) {
+
+            alert("时间不能为空");
+        }
         //商品Id
         var goodsId = parseInt($("#goods").val());
+        if (goodsId == 0)
+        {
+            alert("商品Id不能为空");
+        }
         //折扣率
         var zkl = parseFloat($("#TextZL").val());
+        if (zkl == 0)
+        {
+            alert("折扣率不能为空,请输入折扣率");
+        }
         //折扣额
         var dismoney = parseFloat($("#mony").text());
         //采购数量
         var cgnum = parseInt($("#TextNum").val());
+        if (cgnum == 0)
+        {
+            alert("请输入商品数量");
+        }
         //采购金额
         var caAllmoney = parseFloat($("#cmony").text());
         //备注
         var stack = $("#TextTask").val();
+        //仓库Id
+        var cuId = parseInt($("#cu").val());
         //结算账户Id
         var accountId = parseInt($("#account").val());
 
@@ -330,6 +378,7 @@
         obj.Remark = stack;
         obj.PayMent = state;
         obj.IsState = 1;
+        obj.WId = cuId;
 
        // console.log(obj);
         $.ajax({

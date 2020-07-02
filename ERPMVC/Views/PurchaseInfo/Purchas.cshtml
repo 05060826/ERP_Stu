@@ -48,7 +48,7 @@
                 <td>单据编号</td>
                 <td>供应商</td>
                 <td>购货金额</td>
-                <td>已付款</td>
+                <td>实际付款</td>
                 <td>付款状态</td>
                 <td>操作</td>
             </tr>
@@ -119,7 +119,7 @@
                         '<td>' + this.receIptsCode + '</td>' +
                         '<td>' + this.gname + '</td>' +
                       '<td>' + this.cMoney + '</td>' +
-                      '<td>' + (this.cMoney - this.discount)+ '</td>' +
+                      '<td>' + this.cMoney + '</td>' +
                       '<td>' + (this.payMent == 1 ? "已付款" : "未付款") + '</td>' +       //<button type="button" onclick="updateInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i>退货</button>
                       '<td><button type="button" onclick="updateInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm">退货</button>     <button type="button" onclick="deleteInfo(' + this.receIptsId +')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i></button> </td>'
 

@@ -14,7 +14,7 @@ namespace DataAccess
 
         //连接字符串
 
-        string strconn = "Data Source=192.168.1.104;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456";
+        string strconn = "Data Source=192.168.1.115;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456";
 
 
         /// <summary>
@@ -56,8 +56,28 @@ namespace DataAccess
             using (SqlConnection conn = new SqlConnection(strconn))
             {
 
-                return conn.Execute($"insert into Purchase values ('{model.ReceIptsCode}',{model.SId},{model.GId},{model.Number},{model.Rate},{model.Discount},{model.CMoney},{model.AId},'{model.Datetime}',{model.PayMent},'{model.Remark}',{model.IsState})");
+                return conn.Execute($"insert into Purchase values ('{model.ReceIptsCode}',{model.SId},{model.GId},{model.Number},{model.Rate},{model.Discount},{model.CMoney},{model.AId},'{model.Datetime}',{model.PayMent},'{model.Remark}',{model.IsState},{model.WId})");
             }
+        }
+
+
+
+        /// <summary>
+        /// 仓库显示数据
+        /// </summary>
+        /// <returns></returns>
+
+        public List<WarehouseModel> CangKu()
+        {
+
+
+            using (SqlConnection conn = new SqlConnection(strconn))
+            {
+
+                return conn.Query<WarehouseModel>("select * from Warehouse").ToList();
+            }
+
+
         }
         /// <summary>
         /// 显示所有采购数据
@@ -93,7 +113,7 @@ namespace DataAccess
 
             using (SqlConnection conn = new SqlConnection(strconn))
             {
-                return conn.Query<ComityModel>($"select * from Commodity  co join Warehouse ws on co.WId=ws.WId where Sid={sid}").FirstOrDefault();
+                return conn.Query<ComityModel>($"select * from Commodity  where Sid={sid}").FirstOrDefault();
             }
         }
         /// <summary>
@@ -119,7 +139,7 @@ namespace DataAccess
         {
             using (SqlConnection conn = new SqlConnection(strconn))
             {
-                return conn.Query<PurchModel>($"select * from Purchase  p join  Supplier su on su.Gid=p.GId join  Commodity co on p.SId=co.Sid join  Warehouse wa on co.WId=wa.WId where ReceIptsId={rid}").FirstOrDefault();
+                return conn.Query<PurchModel>($"select * from Purchase  p join  Supplier su on su.Gid=p.GId join  Commodity co on p.SId=co.Sid join  Warehouse wa on p.WId=wa.WId where ReceIptsId={rid}").FirstOrDefault();
             }
 
         }
@@ -174,6 +194,24 @@ namespace DataAccess
             {
                 return conn.Query<PurchModel>("select * from Purchase  p join  Supplier su on su.Gid=p.GId where p.IsState=1 and  (p.PayMent=3 or  p.PayMent=4 )").ToList();
             }
+        }
+
+
+
+
+        /// <summary>
+        /// 显示采购报表列表
+        /// </summary>
+        /// <returns></returns>
+        public List<PurchModel> BaoPurchaseInfo()
+        {
+            using (SqlConnection conn = new SqlConnection(strconn))
+            {
+                return conn.Query<PurchModel>("select SName,SUM(p.Number) Number  from Commodity co left  join Purchase   p on co.Sid=p.SId left join  Supplier su on su.Gid=p.GId where  p.PayMent=1 or p.PayMent=0 group by  SName ").ToList();
+
+            }
+
+
         }
     }
 }
