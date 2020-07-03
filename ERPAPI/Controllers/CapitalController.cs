@@ -36,6 +36,10 @@ namespace ERPAPI.Controllers
                 sql += $" and RTime='{dateTime}'";
             }
             List<DtoReceiptModel> list= _business.Select<DtoReceiptModel>(sql);
+            foreach (var s in list)
+            {
+                s.RTime = Convert.ToDateTime(s.RTime).ToString("yyyy-MM-dd");
+            };
             List<DtoReceiptModel> slist = list.Skip((pageName-1)* limitName).Take(limitName).ToList();
             Dictionary<string, object> obj = new Dictionary<string, object>();
 
@@ -91,6 +95,10 @@ namespace ERPAPI.Controllers
                 sql += $" and RTime='{dateTime}'";
             }
             List<DtoPayMentModel> list= _business.Select<DtoPayMentModel>(sql);
+            foreach (var s in list)
+            {
+                s.RTime = Convert.ToDateTime(s.RTime).ToString("yyyy-MM-dd");
+            };
             List<DtoPayMentModel>  slist = list.Skip((pageName - 1) * limitName).Take(limitName).ToList();
             Dictionary<string, object> obj = new Dictionary<string, object>();
 
