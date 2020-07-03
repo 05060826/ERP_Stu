@@ -29,5 +29,10 @@ namespace ERPMVC.Controllers
         {
             return View();
         }
+
+        public IActionResult BaoBiaoPurchas()
+        {
+            return View();
+        }
     }
 }

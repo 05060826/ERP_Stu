@@ -55,6 +55,20 @@ namespace ERPAPI.Controllers
             return _dal.showSupplier();
         }
 
+        [HttpGet]
+        /// <summary>
+        /// 仓库显示数据
+        /// </summary>
+        /// <returns></returns>
+
+        public List<WarehouseModel> CangKu()
+        {
+
+
+            return _dal.CangKu();
+
+        }
+
         /// <summary>
         /// 结算账户
         /// </summary>
@@ -265,6 +279,18 @@ namespace ERPAPI.Controllers
 
 
 
+
+
+        }
+
+
+        /// <summary>
+        /// 显示采购报表列表
+        /// </summary>
+        /// <returns></returns>
+        public List<PurchModel> BaoPurchaseInfo()
+        {
+            return _dal.BaoPurchaseInfo();
 
 
         }

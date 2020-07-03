@@ -1,0 +1,129 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BaoBiaoPurchas</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+</head>
+<body>
+    <div id="tb" style="height:300px;width:1000px;float:left">
+
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        ShowOut();
+        
+
+    });
+
+
+    function ShowOut()
+    {
+        $.ajax({
+            url: "https://localhost:44300/api/Purchase/BaoPurchaseInfo",
+            type: "get",
+            dataType: "json",
+            success: function (result) {
+                ShowList(result);
+
+                var xx = [];
+                var yy = [];
+                $(result).each(function () {
+                    xx.push(this.sName);
+                    yy.push(this.number);
+
+                })
+                Bandle(xx, yy);
+
+
+            }
+        });
+    }
+   
+
+
+
+    function ShowList(result) {
+        $("#tb").empty();
+        var list = "";
+        $.each(result, function (i, n) {
+
+            list = '<tr style="text-align:center">'
+
+                + '<td>' + n.sName + '</td>'
+                + '<td>' + n.number + '</td>'
+                + '</tr>';
+
+
+        });
+        $("#tb").append(list);
+    }
+   
+
+    function Bandle(xx, yy) {
+
+        var dom = document.getElementById("tb");
+        var myChart = echarts.init(dom);
+        option = null;
+        option = {
+            color: "brown",
+
+            title: {
+                left: 'center',
+                text: '采购报表',
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: xx,//['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '直接访问',
+                    type: 'bar',      //line是折线图  bar是柱状图
+                    barWidth: '60%',
+                    data: yy,//[10, 52, 200, 334, 390, 330, 220]
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+
+    }
+
+    
+
+
+</script>

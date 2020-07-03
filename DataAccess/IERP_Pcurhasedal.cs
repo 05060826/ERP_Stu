@@ -27,6 +27,16 @@ namespace DataAccess
         /// <param name="model"></param>
         /// <returns></returns>
         int add(PurchModel model);
+
+
+
+        /// <summary>
+        /// 仓库显示数据
+        /// </summary>
+        /// <returns></returns>
+
+        List<WarehouseModel> CangKu();
+
         /// <summary>
         /// 显示采购列表
         /// </summary>
@@ -88,6 +98,16 @@ namespace DataAccess
         /// </summary>
         /// <returns></returns>
         List<PurchModel> ShowPurchasTh();
-            
+
+        /// <summary>
+        /// 显示采购报表列表
+        /// </summary>
+        /// <returns></returns>
+        List<PurchModel> BaoPurchaseInfo();
+
+
+
+
+
     }
 }
