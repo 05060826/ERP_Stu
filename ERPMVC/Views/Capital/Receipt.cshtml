@@ -92,7 +92,7 @@
             var laypage = layui.laypage;
             table.render({
                 elem: '#test'
-                , url: 'https://localhost:44300/api/capital/GetReceiptData?where=' + where + '&dateTime=' + dateTime + '&pageName=' + currentPageNo + '&limitName=' + pageSize + ''
+                , url: 'http://49.234.34.192:7086/api/capital/GetReceiptData?where=' + where + '&dateTime=' + dateTime + '&pageName=' + currentPageNo + '&limitName=' + pageSize + ''
                 , title: '收款单列表'
                 , totalRow: true
                 , method: 'get'
@@ -141,7 +141,7 @@
             if (obj.event === 'del') {
                 layer.confirm('确定要删除嘛?', function (index) {
                     $.ajax({
-                        url: "https://localhost:44300/api/capital/DelReceiptData?receiptId=" + obj.data.ReceiptId + "",
+                        url: "http://49.234.34.192:7086/api/capital/DelReceiptData?receiptId=" + obj.data.ReceiptId + "",
                         type: "get",
                         dataType: "text",
                         success: function (result) {

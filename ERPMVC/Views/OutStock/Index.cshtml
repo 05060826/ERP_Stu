@@ -98,7 +98,7 @@
     function Xiao() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showXiao",
+            url: "http://49.234.34.192:7086/api/showXiao",
             type: "get",
             dataType: "json",
             contentType: "application/json",
@@ -158,7 +158,7 @@
         }
 
         $.ajax({
-            url: "https://localhost:44300/api/show?pageSize=" + pageSize + "&pageNumber=" + pageNumber + "&where=" + where + "&date=" + date + "&xiao=" + xiao + "&shou=" + shou,
+            url: "http://49.234.34.192:7086/api/show?pageSize=" + pageSize + "&pageNumber=" + pageNumber + "&where=" + where + "&date=" + date + "&xiao=" + xiao + "&shou=" + shou,
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -208,7 +208,7 @@
     function Shan(id) {
 
         $.ajax({
-            url: "https://localhost:44300/api/shan?shanId=" + id,
+            url: "http://49.234.34.192:7086/api/shan?shanId=" + id,
             type: "get",
             dataType: "json",
             success: function (result) {

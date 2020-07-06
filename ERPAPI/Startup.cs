@@ -40,7 +40,7 @@ namespace ERPAPI
                 options.AddPolicy("myCors", policy =>
                 {
                     // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
-                    policy.WithOrigins("https://localhost:44300", "http://localhost:53337")
+                    policy.WithOrigins("http://localhost:44300", "http://localhost:53337", "http://49.234.34.192:7086", "http://49.234.34.192:7085")
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials();

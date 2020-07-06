@@ -89,7 +89,7 @@
             var laypage = layui.laypage;
             table.render({
                 elem: '#test'
-                , url: 'https://localhost:44300/api/capital/GetPayMentData?where=' + where + '&dateTime=' + dateTime + '&pageName=' + currentPageNo + '&limitName=' + pageSize + ''
+                , url: 'http://49.234.34.192:7086/api/capital/GetPayMentData?where=' + where + '&dateTime=' + dateTime + '&pageName=' + currentPageNo + '&limitName=' + pageSize + ''
                 , title: '付款单列表'
                 , totalRow: true
                 , cols: [[
@@ -137,7 +137,7 @@
             if (obj.event === 'del') {
                 layer.confirm('确定要删除嘛?', function (index) {
                     $.ajax({
-                        url: "https://localhost:44300/api/capital/DelPayMentData?paymentId=" + obj.data.PaymentId + "",
+                        url: "http://49.234.34.192:7086/api/capital/DelPayMentData?paymentId=" + obj.data.PaymentId + "",
                         type: "get",
                         dataType: "text",
                         success: function (result) {

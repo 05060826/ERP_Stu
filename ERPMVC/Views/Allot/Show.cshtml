@@ -72,7 +72,7 @@
 
             table.render({
                 elem: '#test'
-                , url: "https://localhost:44300/api/Allot/ShowPageAllot?AllotCode=" + where + "&&WName=" + WName + "&&Ename=" + Ename+''
+                , url: "http://49.234.34.192:7086/api/Allot/ShowPageAllot?AllotCode=" + where + "&&WName=" + WName + "&&Ename=" + Ename+''
                 , title: '调拨页面'
                 , totalRow: true
                 , cols: [[
@@ -100,7 +100,7 @@
             if (obj.event === 'del') {
                 layer.confirm('确定要删除嘛?', function (index) {
                     $.ajax({
-                        url: "https://localhost:44300/api/Allot/Update?Id=" + obj.data.AllotId + "",
+                        url: "http://49.234.34.192:7086/api/Allot/Update?Id=" + obj.data.AllotId + "",
                         type: "get",
                         dataType: "text",
                         success: function (result) {

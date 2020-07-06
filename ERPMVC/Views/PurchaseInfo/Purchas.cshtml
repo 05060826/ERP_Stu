@@ -33,7 +33,7 @@
                     @* class="layui-btn jump_refresh_url"  <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm"  value="新增采购" onclick="btnAdd()" />*@
                     <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="新增采购" onclick="btnAdd()" />
                     @*<a href="/PurchaseInfo/AddPurchas">跳转新增</a>*@
-
+                    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="采购报表" onclick="btnBiao()" />
 
 
                 </td>
@@ -102,7 +102,7 @@
 
 
         $.ajax({
-            url: "https://localhost:44300/api/Purchase/ShowAllInfo?gname=" + gname + "&&time=" + times + "&&state=" + tates + "&&pageIndex=" + indes + "&&pageSize=" + sizes,
+            url: "http://49.234.34.192:7086/api/Purchase/ShowAllInfo?gname=" + gname + "&&time=" + times + "&&state=" + tates + "&&pageIndex=" + indes + "&&pageSize=" + sizes,
             type: "get",
             dataType:"json",
             success: function (data)
@@ -206,6 +206,15 @@
 
 
     }
+    //采购报表
+
+    function btnBiao()
+    {
+
+        location.href = "/PurchaseInfo/BaoBiaoPurchas";
+
+
+    }
     //页面删除
     function deleteInfo(rid)
     {
@@ -215,7 +224,7 @@
         
         $.ajax({
 
-            url: "https://localhost:44300/api/Purchase/UpdateIstate?rid=" + rid,
+            url: "http://49.234.34.192:7086/api/Purchase/UpdateIstate?rid=" + rid,
             type: "put",
             dataType: "json",
             success: function (data) {

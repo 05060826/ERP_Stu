@@ -115,7 +115,7 @@
     $(function () {
         //显示客户
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetClientPData",
+            url: "http://49.234.34.192:7086/api/capital/GetClientPData",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -133,7 +133,7 @@
         });
         //显示源单
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetPurchaseData",
+            url: "http://49.234.34.192:7086/api/capital/GetPurchaseData",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -163,7 +163,7 @@
     //根据源单显示数据
     function selectClear(clearNumber) {
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetPurchaseData?receIptsCode=" + clearNumber + "",
+            url: "http://49.234.34.192:7086/api/capital/GetPurchaseData?receIptsCode=" + clearNumber + "",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -195,7 +195,7 @@
         obj.Aid = parseInt($("#aid").html());
         obj.Remark = $("#remark").val();
         $.ajax({
-            url: "https://localhost:44300/api/capital/AddPayMentData",
+            url: "http://49.234.34.192:7086/api/capital/AddPayMentData",
             data: JSON.stringify(obj),
             type: "post",
             dataType: "text",
@@ -217,7 +217,7 @@
         obj.Aid = parseInt($("#aid").html());
         obj.Remark = $("#remark").val();
         $.ajax({
-            url: "https://localhost:44300/api/capital/AddPayMentData",
+            url: "http://49.234.34.192:7086/api/capital/AddPayMentData",
             data: JSON.stringify(obj),
             type: "post",
             dataType: "text",

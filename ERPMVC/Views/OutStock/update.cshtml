@@ -149,7 +149,7 @@
     function Client() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showClient",
+            url: "http://49.234.34.192:7086/api/showClient",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -169,7 +169,7 @@
     function Xiao() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showXiao",
+            url: "http://49.234.34.192:7086/api/showXiao",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -189,7 +189,7 @@
     function Commind() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showCommind",
+            url: "http://49.234.34.192:7086/api/showCommind",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -208,7 +208,7 @@
     function Account() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showPay",
+            url: "http://49.234.34.192:7086/api/showPay",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -228,7 +228,7 @@
     function fan() {
 
         $.ajax({
-            url: "https://localhost:44300/api/showOnly?id="+@ViewBag.id,
+            url: "http://49.234.34.192:7086/api/showOnly?id="+@ViewBag.id,
             type: "get",
             dataType: "json",
             contentType: "application/json",
@@ -326,7 +326,7 @@
         list.AId = parseInt($("#AId").val());
 
         $.ajax({
-            url: "https://localhost:44300/api/update",
+            url: "http://49.234.34.192:7086/api/update",
             data: JSON.stringify(list),
             type: "put",
             dataType: "text",

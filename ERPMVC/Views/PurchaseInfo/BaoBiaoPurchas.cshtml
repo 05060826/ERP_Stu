@@ -9,6 +9,8 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>BaoBiaoPurchas</title>
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 
@@ -17,6 +19,9 @@
     <div id="tb" style="height:300px;width:1000px;float:left">
 
     </div>
+
+    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="采购" onclick="btnAdd()" />
+    <input id="ButtonAdd" type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-primary layui-btn-sm" value="退货" onclick="btnTui()" />
 </body>
 </html>
 <script>
@@ -26,11 +31,11 @@
 
     });
 
-
+    //显示报表
     function ShowOut()
     {
         $.ajax({
-            url: "https://localhost:44300/api/Purchase/BaoPurchaseInfo",
+            url: "http://49.234.34.192:7086/api/Purchase/BaoPurchaseInfo",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -110,7 +115,7 @@
             ],
             series: [
                 {
-                    name: '直接访问',
+                    name: '商品数量',
                     type: 'bar',      //line是折线图  bar是柱状图
                     barWidth: '60%',
                     data: yy,//[10, 52, 200, 334, 390, 330, 220]
@@ -122,7 +127,20 @@
         }
 
     }
+    //采购
+    function btnAdd()
+    {
 
+        location.href = "/PurchaseInfo/AddPurchas";
+
+
+
+    }
+    //退货
+    function btnTui() {
+        location.href = "/PurchaseInfo/UpdatePurchas";
+
+    }
     
 
 

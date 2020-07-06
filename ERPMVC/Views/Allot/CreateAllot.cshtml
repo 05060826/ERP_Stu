@@ -99,7 +99,7 @@
     function ShowCo() {
         $.ajax({
 
-            url: "https://localhost:44300/api/Allot/ShowComm",
+            url: "http://49.234.34.192:7086/api/Allot/ShowComm",
             type: "get",
             success: function (data) {
                 $("#Sid").empty();
@@ -119,7 +119,7 @@
     function ShowWa() {
         $.ajax({
 
-            url: "https://localhost:44300/api/Allot/ShowWare",
+            url: "http://49.234.34.192:7086/api/Allot/ShowWare",
             type: "get",
             success: function (data) {
                 $("#Chung").empty();
@@ -136,7 +136,7 @@
     function ShowEx() {
         $.ajax({
 
-            url: "https://localhost:44300/api/Allot/ShowExportSto",
+            url: "http://49.234.34.192:7086/api/Allot/ShowExportSto",
             type: "get",
             success: function (data) {
                 $("#Eid").empty();
@@ -213,7 +213,7 @@
         obj.Remark = Remark;
         obj.IsState = 1;
         $.ajax({
-            url: "https://localhost:44300/api/Allot/CeeateAllot",
+            url: "http://49.234.34.192:7086/api/Allot/CeeateAllot",
             type: "post",
             data: JSON.stringify(obj),
             dataType: "json",

@@ -10,7 +10,7 @@ namespace DataAccess.AdoNet
 {
     public class DBHelper
     {
-        static string strconn = "Data Source=192.168.1.115;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=123456";
+        static string strconn = "Data Source=49.234.34.192;Initial Catalog=ERPDB;Persist Security Info=True;User ID=sa;Pwd=sa1234..";
 
         static public DataTable GetDataTable(string sql)
         {

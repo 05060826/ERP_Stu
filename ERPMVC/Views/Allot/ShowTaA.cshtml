@@ -87,7 +87,7 @@
         //每页多少条
         var sizes = $("#pagesize").text();
         $.ajax({
-            url: "https://localhost:44300/api/Allot/ShowPageAllot?AllotCode=" + where + "&&WName=" + WName + "&&Ename=" + Ename + " &&pageIndex=" + indes + "&&pageSize=" + sizes,
+            url: "http://49.234.34.192:7086/api/Allot/ShowPageAllot?AllotCode=" + where + "&&WName=" + WName + "&&Ename=" + Ename + " &&pageIndex=" + indes + "&&pageSize=" + sizes,
             type: "get",
             dataType:"json",
             success: function (data)
@@ -191,7 +191,7 @@
 
         $.ajax({
 
-            url: "https://localhost:44300/api/Allot/Update?Id=" + rid,
+            url: "http://49.234.34.192:7086/api/Allot/Update?Id=" + rid,
             type: "put",
             dataType: "json",
             success: function (data) {

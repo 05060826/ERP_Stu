@@ -91,7 +91,7 @@
 
 
         $.ajax({
-            url: "https://localhost:44300/api/Purchase/ShowPurchasTh?gname=" + gname + "&&time=" + times + "&&state=" + tates + "&&pageIndex=" + indes + "&&pageSize=" + sizes,
+            url: "http://49.234.34.192:7086/api/Purchase/ShowPurchasTh?gname=" + gname + "&&time=" + times + "&&state=" + tates + "&&pageIndex=" + indes + "&&pageSize=" + sizes,
             type: "get",
             dataType: "json",
             success: function (data) {
@@ -124,7 +124,7 @@
                         '<td>' + this.cMoney + '</td>' +
                         '<td>' + comys + '</td>' +
                         '<td>' + (this.payMent == 3 ? "已退款" : (this.payMent==4?"未退款":"退款中")) + '</td>' +
-                        '<td><button type="button" onclick="updateInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm">编辑</button> <button type="button" onclick="deleteInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i></button> </td>'
+                        '<td><button type="button" onclick="upAddInfo()" class="layui-btn layui-btn-normal layui-btn-sm">采购</button> <button type="button" onclick="deleteInfo(' + this.receIptsId + ')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i></button> </td>'
 
                         + '</tr>';
                     $("#tab1").append(str);
@@ -198,9 +198,9 @@
 
     }
     //修改跳转到退货页面反填数据修改状态
-    function updateInfo(rid) {
+    function upAddInfo() {
 
-        location.href = "/PurchaseInfo/UpdatePurchas?rid=" + rid;
+        location.href = "/PurchaseInfo/AddPurchas";
 
 
 
@@ -212,7 +212,7 @@
 
             $.ajax({
 
-                url: "https://localhost:44300/api/Purchase/UpdateIstate?rid=" + rid,
+                url: "http://49.234.34.192:7086/api/Purchase/UpdateIstate?rid=" + rid,
                 type: "put",
                 dataType: "json",
                 success: function (data) {

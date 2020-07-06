@@ -108,7 +108,7 @@
         //判断退货Id是否为空
         if (rid != 0) {
             $.ajax({
-                url: "https://localhost:44300/api/Purchase/FanTian?rid=" + rid,
+                url: "http://49.234.34.192:7086/api/Purchase/FanTian?rid=" + rid,
                 type: "get",
                 dataType: "json",
                 success: function (data) {
@@ -142,7 +142,7 @@
 
 
                 $.ajax({
-                    url: "https://localhost:44300/api/Purchase/FanTian?rid=" + droprid,
+                    url: "http://49.234.34.192:7086/api/Purchase/FanTian?rid=" + droprid,
                     type: "get",
                     dataType: "json",
                     success: function (data) {
@@ -176,7 +176,7 @@
     function dropaccount() {
         $.ajax({
 
-            url: "https://localhost:44300/api/Purchase/AccountModels",
+            url: "http://49.234.34.192:7086/api/Purchase/AccountModels",
             type: "get",
             success: function (data) {
                 $("#account").empty();
@@ -199,7 +199,7 @@
 
         $.ajax({
 
-            url: "https://localhost:44300/api/Purchase/ShowInfo",
+            url: "http://49.234.34.192:7086/api/Purchase/ShowInfo",
             type: "get",
             success: function (data) {
                 $("#selDropCode").empty();
@@ -265,7 +265,7 @@
         var cgthcode = $("#cgtubian").text();
 
         $.ajax({
-            url: "https://localhost:44300/api/Purchase/UpdatePaMent?rid=" + rid + "&cgthCode=" + cgthcode,
+            url: "http://49.234.34.192:7086/api/Purchase/UpdatePaMent?rid=" + rid + "&cgthCode=" + cgthcode,
             type: "put",
             dataType: "json",
             success: function (data) {
@@ -288,7 +288,7 @@
 
         var cgthcode = $("#cgtubian").text();
         $.ajax({
-            url: "https://localhost:44300/api/Purchase/UpdatePaMents?rid=" + rid + "&cgthCode=" + cgthcode,
+            url: "http://49.234.34.192:7086/api/Purchase/UpdatePaMents?rid=" + rid + "&cgthCode=" + cgthcode,
             type: "put",
             dataType: "json",
             success: function (data) {

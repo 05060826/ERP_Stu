@@ -24,7 +24,7 @@
 <script>
     $(function () {
         $.ajax({
-            url: "https://localhost:44300/api/capital/Statement",
+            url: "http://49.234.34.192:7086/api/capital/Statement",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -38,7 +38,7 @@
             }
         })
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetStatement",
+            url: "http://49.234.34.192:7086/api/capital/GetStatement",
             type: "get",
             dataType: "json",
             success: function (result) {
