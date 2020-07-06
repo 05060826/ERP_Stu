@@ -36,6 +36,10 @@ namespace ERPAPI.Controllers
                 sql += $" and RTime='{dateTime}'";
             }
             List<DtoReceiptModel> list= _business.Select<DtoReceiptModel>(sql);
+            foreach (var s in list)
+            {
+                s.RTime = Convert.ToDateTime(s.RTime).ToString("yyyy-MM-dd");
+            };
             List<DtoReceiptModel> slist = list.Skip((pageName-1)* limitName).Take(limitName).ToList();
             Dictionary<string, object> obj = new Dictionary<string, object>();
 
@@ -68,12 +72,30 @@ namespace ERPAPI.Controllers
             }
             return _business.Select<ClearModel>(sql);
         }
+        [HttpGet]
+        public List<ReceiptModel> GetReceiptsData(string clearNumber = "")
+        {
+            string sql = "select * from receipt where 1=1 ";
+            if (!string.IsNullOrEmpty(clearNumber))
+            {
+                sql += " and receiptCode='" + clearNumber + "'";
+            }
+            return _business.Select<ReceiptModel>(sql);
+        }
         [HttpPost]
         public int AddReceiptData(ReceiptModel model)
         {
             model.RTime = DateTime.Now;
             model.IsState = 1;
             string sql = $"insert into Receipt (ReceiptCode,ClientId,ClearId,CNumber,Aid,RTime,Remark,IsState) values('{model.ReceiptCode}','{model.ClientId}','{model.ClearId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
+            return DapperHelper<ReceiptModel>.CRD(sql);
+        }
+        [HttpPost]
+        public int UpdReceiptData(ReceiptModel model)
+        {
+            model.RTime = DateTime.Now;
+            model.IsState = 1;
+            string sql = $"update Receipt set  ClientId='{model.ClientId}',ClearId='{model.ClearId}',CNumber='{model.CNumber}',Aid='{model.Aid}',RTime='{model.RTime}',Remark='{model.Remark}',IsState='{model.IsState}' where ReceiptCode='{model.ReceiptCode}'";
             return DapperHelper<ReceiptModel>.CRD(sql);
         }
 
@@ -91,6 +113,10 @@ namespace ERPAPI.Controllers
                 sql += $" and RTime='{dateTime}'";
             }
             List<DtoPayMentModel> list= _business.Select<DtoPayMentModel>(sql);
+            foreach (var s in list)
+            {
+                s.RTime = Convert.ToDateTime(s.RTime).ToString("yyyy-MM-dd");
+            };
             List<DtoPayMentModel>  slist = list.Skip((pageName - 1) * limitName).Take(limitName).ToList();
             Dictionary<string, object> obj = new Dictionary<string, object>();
 
@@ -102,7 +128,7 @@ namespace ERPAPI.Controllers
             return JsonConvert.SerializeObject(obj);
         }
         [HttpGet]
-        public int DelPayMentData(int paymentId)
+        public int DelPayMentData(int paymentId)                                                
         {
             string sql = "update  PayMent set isstate=0 where PaymentId=" + paymentId + "";
             return _business.Delete(sql);
@@ -123,12 +149,30 @@ namespace ERPAPI.Controllers
             }
             return _business.Select<PurchModel>(sql);
         }
+        [HttpGet]
+        public List<PaymentModel> GetPurchasesData(string receIptsCode = "")
+        {
+            string sql = "select * from payment where 1=1 ";
+            if (!string.IsNullOrEmpty(receIptsCode))
+            {
+                sql += " and PaymentCode='" + receIptsCode + "'";
+            }
+            return _business.Select<PaymentModel>(sql);
+        }
         [HttpPost]
         public int AddPayMentData(PaymentModel model)
         {
             model.RTime = DateTime.Now;
             model.IsState = 1;
             string sql = $"insert into PayMent (PaymentCode,ClientId,ReceIptsId,CNumber,Aid,RTime,Remark,IsState) values('{model.PaymentCode}','{model.ClientId}','{model.ReceIptsId}','{model.CNumber}','{model.Aid}','{model.RTime}','{model.Remark}','{model.IsState}')";
+            return DapperHelper<PaymentModel>.CRD(sql);
+        }
+        [HttpPost]
+        public int UpdPayMentData(PaymentModel model)
+        {
+            model.RTime = DateTime.Now;
+            model.IsState = 1;
+            string sql = $"update PayMent set PaymentCode='{model.PaymentCode}',ClientId='{model.ClientId}',ReceIptsId='{model.ReceIptsId}',CNumber='{model.CNumber}',Aid='{model.Aid}',RTime='{model.RTime}',Remark='{model.Remark}',IsState='{model.IsState}' where PaymentCode='{model.PaymentCode}' ";
             return DapperHelper<PaymentModel>.CRD(sql);
         }
         [HttpGet]
@@ -141,7 +185,7 @@ namespace ERPAPI.Controllers
         public List<Statement> GetStatement()
         {
             string sql = "select datepart(month,RTime) as Yue,sum(CNumber) as Zong  from Payment group by datepart(month,RTime)";
-            return _business.Select<Statement>(sql);
-        }
+            return _business.Select<Statement>(sql);            
+        }    
     }
 }

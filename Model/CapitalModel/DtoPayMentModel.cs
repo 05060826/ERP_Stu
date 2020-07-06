@@ -33,7 +33,7 @@ namespace Model.CapitalModel
 		/// <summary>
 		/// 录单时间
 		/// </summary>
-		public DateTime RTime { get; set; }
+		public string RTime { get; set; }
 		/// <summary>
 		/// 备注
 		/// </summary>

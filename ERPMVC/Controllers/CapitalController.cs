@@ -16,11 +16,19 @@ namespace ERPMVC.Controllers
         {
             return View();
         }
+        public IActionResult UpdReceipt()
+        {
+            return View();
+        }
         public IActionResult PayMent()
         {
             return View();
         }
         public IActionResult AddPayMent()
+        {
+            return View();
+        }
+        public IActionResult UpdPayMent()
         {
             return View();
         }

@@ -107,8 +107,6 @@
                       '<td>' + this.wName+ '</td>' +
                       '<td>' + this.ename  + '</td>' +       
                       '<td><button type="button" onclick="deleteInfo(' + this.allotId +')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"></i></button> </td>'
-
-
                         + '</tr>';
                     $("#tab1").append(str);
 
@@ -123,9 +121,6 @@
     //分页
     function showpage(name)
     {
-
-
-
         //当前第几页
         var index = Number($("#pageindex").text());
         //每页多少条
@@ -134,9 +129,7 @@
         //var tatal = Number($("#totalCount").text());
         //总页数
         var pagetatal = Number($("#totalPage").text());
-
         switch (name) {
-
             case 'first':
                 index = 1
                 break;
@@ -146,35 +139,26 @@
                 }
                 else {
                     $("#pageindex").text(1);
-
                 }
-
                 break;
             case 'next':
-
                 if (index < pagetatal) {
                     index++;
                 }
                 else {
 
                     $("#pageindex").text(pagetatal);
-
                 }
-
                 break;
             case 'last':
-
                 index = pagetatal;
                 break;
             default:
                 break;
-
-
         }
         $("#pageindex").text(index);
 
         btnCha();
-
     };
     //新增采购
     function btnAdd()
@@ -187,8 +171,6 @@
     {
         if (confirm("确定删除吗？"))
         {
-
-
         $.ajax({
 
             url: "http://49.234.34.192:7086/api/Allot/Update?Id=" + rid,
