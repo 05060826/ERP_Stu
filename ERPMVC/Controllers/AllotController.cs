@@ -18,7 +18,6 @@ namespace ERPMVC.Controllers
             return View();
         }
 
-
         public IActionResult ShowChecks()
         {
             return View();
