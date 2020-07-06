@@ -102,7 +102,7 @@
        var clearNumber= this.location.href.split('?')[1].split('=')[1];
         //显示客户
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetClientData",
+            url: "http://49.234.34.192:7086/api/capital/GetClientData",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -124,7 +124,7 @@
     //根据源单显示数据
     function selectClear(clearNumber) {
         $.ajax({
-            url: "https://localhost:44300/api/capital/GetReceiptsData?clearNumber=" + clearNumber + "",
+            url: "http://49.234.34.192:7086/api/capital/GetReceiptsData?clearNumber=" + clearNumber + "",
             type: "get",
             dataType: "json",
             success: function (result) {
@@ -156,7 +156,7 @@
         obj.Aid = parseInt($("#aid").html());
         obj.Remark = $("#remark").val();
         $.ajax({
-            url: "https://localhost:44300/api/capital/UpdReceiptData",
+            url: "http://49.234.34.192:7086/api/capital/UpdReceiptData",
             data: JSON.stringify(obj),
             type: "post",
             dataType: "text",
